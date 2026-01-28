@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import "./Navbar.scss"
 
 import logo from "../../../assets/Logo/elite-paws-logo.webp"
-// import mediaKit from "../../../Assets/Common/IMedia-Media-kit.pdf"
 
 import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from "framer-motion"

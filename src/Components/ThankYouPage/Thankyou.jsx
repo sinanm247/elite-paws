@@ -2,7 +2,7 @@ import React from "react";
 import "./ThankYou.css";
 
 import Helmet from "../../General/Helmet";
-import thankyou_icon from "../../Assets/Common/thank-you.svg";
+import thankyou_icon from "../../assets/Common/thank-you.svg";
 
 export default function Thankyou() {    
     return (

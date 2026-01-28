@@ -1,4 +1,4 @@
-import unAuthorized from "../../Assets/Common/un-authorized.svg"
+import unAuthorized from "../../assets/Common/un-authorized.svg"
 import "./UnAuthorized.scss"
 
 export default function UnAuthorized() {
