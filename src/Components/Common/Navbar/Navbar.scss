@@ -1,0 +1,785 @@
+// Import color variables from the main index.scss
+@import '../../../index.scss';
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10001;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: $black;
+    padding: 5px 60px;
+    transition: all 0.3s ease;
+    background: $white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba($primary, 0.1);
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        z-index: 10003;
+        position: relative;
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+
+            &:hover {
+                .brand-name {
+                    color: $primary;
+                }
+            }
+        }
+
+        .logo-div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+            width: 70px;
+            height: 70px;
+            transition: all 0.3s ease;
+            position: relative;
+            border-radius: 100%;
+            background: $white;
+            border: 2px solid rgba($primary, 0.1);
+            flex-shrink: 0;
+
+            .menu-icon-close {
+                display: none;
+            }
+
+            .close-menu {
+                display: none;
+            }
+
+            .logo {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+                border-radius: 100%;
+            }
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: $black;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+
+            @media (max-width: 1024px) {
+                font-size: 24px;
+            }
+
+            @media (max-width: 768px) {
+                font-size: 20px;
+            }
+
+            @media (max-width: 480px) {
+                font-size: 18px;
+            }
+        }
+
+        &:hover .logo-div .logo {
+            transform: scale(1.05);
+        }
+    }
+
+    .nav-links-div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+        margin: 0 40px;
+
+        .mobile-menu-header {
+            display: none;
+        }
+
+        .mobile-menu-footer {
+            display: none;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+
+            li {
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                letter-spacing: 0.3px;
+                text-decoration: none;
+                font-size: 15px;
+                font-weight: 500;
+                text-transform: none;
+                cursor: pointer;
+                padding: 8px 16px;
+                border-radius: 8px;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    border-radius: 8px;
+                    background: rgba($primary, 0.08);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+
+                svg {
+                    font-size: 14px;
+                    color: $gray;
+                    margin-left: 4px;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                // Dropdown toggle button
+                .dropdown-toggle {
+                    display: inline-flex;
+                    align-items: center;
+                    cursor: pointer;
+                    margin-left: 4px;
+                    
+                    svg {
+                        color: $gray;
+                        font-size: 18px;
+                        margin-left: 0;
+                        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+
+                    &:hover svg {
+                        color: $primary;
+                    }
+                }
+
+                // Rotate icon when dropdown is open
+                &.dropdown-open {
+                    .dropdown-toggle svg {
+                        color: $primary;
+                        transform: rotate(180deg);
+                    }
+                }
+
+                &:hover {
+                    background: rgba($primary, 0.08);
+                    color: $primary;
+
+                    &::before {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            a {
+                color: $black;
+                position: relative;
+                z-index: 1;
+                transition: color 0.3s ease;
+            }
+
+            li:hover a {
+                color: $primary;
+            }
+
+            a.active {
+                color: $primary;
+                font-weight: 600;
+            }
+
+            .dropdown {
+                position: absolute;
+                top: calc(100% + 30px);
+                left: 0;
+                z-index: 10001;
+                color: $black;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15),
+                            0 4px 12px rgba(126, 82, 26, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 16px;
+                min-width: 220px;
+                padding: 8px;
+                overflow: hidden; // For smooth height animation
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+                // Hide mobile dropdown on desktop
+                &.mobile-dropdown {
+                    @media (min-width: 1025px) {
+                        display: none !important;
+                    }
+                    
+                    // Show on mobile
+                    @media (max-width: 1024px) {
+                        display: block !important;
+                    }
+                }
+
+                // Hide desktop dropdown on mobile
+                &.desktop-dropdown {
+                    @media (max-width: 1024px) {
+                        display: none !important;
+                    }
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: -6px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 12px;
+                    height: 12px;
+                    background: rgba(255, 255, 255, 0.98);
+                    border-left: 1px solid rgba(255, 255, 255, 0.3);
+                    border-top: 1px solid rgba(255, 255, 255, 0.3);
+                    transform: translateX(-50%) rotate(45deg);
+                }
+
+                ul {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    text-align: left;
+                    align-items: stretch;
+                    gap: 4px;
+                    padding: 4px;
+                    
+                    li {
+                        padding: 10px 16px;
+                        border-radius: 16px;
+                        margin: 0;
+                        color: $black;
+                        width: 100%;
+
+                        a {
+                            font-weight: 500;
+                            font-size: 14px;
+                            text-transform: none;
+                            letter-spacing: 0;
+                            transition: all 0.3s ease;
+                        }
+
+                        &:hover {
+                            background: linear-gradient(135deg, rgba($primary, 0.08) 0%, rgba($secondary, 0.08) 100%);
+                            color: $primary;
+                            transform: translateX(4px);
+                        }
+
+                        &.active {
+                            color: $primary;
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+
+            // Show dropdown on hover for desktop (above 1024px)
+            @media (min-width: 1025px) {
+                li:hover .dropdown.desktop-dropdown {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+                }
+
+                li:hover .dropdown-toggle svg,
+                li:hover svg {
+                    color: $primary;
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        .menu-hr {
+            height: 20px;
+            width: 2px;
+        }
+
+        .login-icon {
+            font-size: 25px;
+            cursor: pointer;
+            transition: .3s;
+            color: $white;
+        }
+
+        .login-icon:hover {
+            color: $primary;
+            transition: .3s;
+        }
+    }
+
+    .button-div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        z-index: 10003;
+        position: relative;
+
+        @media (max-width: 1024px) {
+            display: none;
+        }
+    }
+}
+
+.navbar.sticky {
+    top: 0;
+    // padding: 15px 60px;
+    background: $white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba($primary, 0.15);
+
+    // .logo-div {
+    //     width: 100px;
+    //     height: 55px;
+    // }
+
+    // .nav-links-div ul .dropdown {
+    //     top: calc(100% + 20px);
+    // }
+
+    .nav-links-div ul li, 
+    .nav-links-div ul li a, 
+    .nav-links-div .login-icon {
+        color: $black;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links-div ul li:hover {
+        background: rgba($primary, 0.08);
+    }
+
+    .nav-links-div ul li:hover, 
+    .nav-links-div ul li a:hover, 
+    .nav-links-div .login-icon:hover {
+        color: $primary;
+    }
+
+    .nav-links-div ul li svg {
+        color: $gray;
+    }
+
+    .nav-links-div ul li:hover svg {
+        color: $primary;
+    }
+
+    .button-div .btn {
+        box-shadow: 0 4px 12px rgba($primary, 0.3);
+    }
+}
+
+// Navbar when mobile menu is active
+.navbar.mobile-menu-active {
+    @media (max-width: 1024px) {
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 0 !important;
+        background: rgba(255, 255, 255, 1) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        border: none !important;
+        padding: 12px 20px !important;
+        margin: 0 !important;
+
+        .logo-container {
+            .logo-div {
+                img {
+                    filter: none !important;
+                }
+            }
+
+            .brand-name {
+                color: $black !important;
+            }
+        }
+
+        .nav-links-div ul li, 
+        .nav-links-div ul li a {
+            color: $black !important;
+        }
+
+        .nav-links-div ul li svg {
+            color: $secondary !important;
+        }
+    }
+}
+
+// Mobile Menu Toggle Button
+.mobile-menu-toggle {
+    display: none;
+    z-index: 10003; // Above everything
+    cursor: pointer;
+    position: relative;
+
+    @media (max-width: 1024px) {
+        display: block;
+    }
+}
+
+// Mobile Menu Overlay
+.mobile-menu-overlay {
+    display: none;
+    
+    @media (max-width: 1024px) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 9999; // Below navbar but above page content
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+
+        &.active {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+// Mobile Menu Styles
+@media (max-width: 1024px) {
+    .nav-links-div {
+        position: fixed;
+        top: 0;
+        right: -45px;
+        left: auto;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.98);
+        // backdrop-filter: blur(20px) saturate(180%);
+        // -webkit-backdrop-filter: blur(20px) saturate(180%);
+        box-shadow: -4px 0 32px rgba(0, 0, 0, 0.15);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        z-index: 10002; // Above navbar
+        width: 350px;
+        transform: translateX(100%);
+        will-change: transform;
+        pointer-events: none; // Disable interaction when hidden
+
+        // Full width for screens below 450px
+        @media (max-width: 450px) {
+            width: 104% !important;
+            right: -45px;
+            // left: 0 !important;
+        }
+
+        ul.mobile-menu-open {
+            padding: 100px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+            height: 100%;
+            overflow-y: auto;
+            width: 100%;
+
+            li {
+                width: 100%;
+                padding: 15px 25px;
+                border: 1px solid rgba($primary, 0.1);
+                justify-content: flex-start;
+                border-radius: 0;
+                display: flex;
+                flex-wrap: wrap; // Allow wrapping
+                flex-direction: row; // Keep link and icon on same line
+                align-items: center;
+                gap: 0;
+                background: transparent;
+                border-radius: 25px;
+                margin-bottom: 5px;
+                margin-left: -7.5px;
+                position: relative;
+                z-index: 1;
+                // overflow: hidden;
+
+                &::before {
+                    // display: none;
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    border-radius: 25px;
+                    background: linear-gradient(135deg, rgba($primary, 0.1) 0%, rgba($secondary, 0.1) 100%);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+
+                // Link - keep on first line
+                > a {
+                    display: flex;
+                    align-items: center;
+                    flex: 1;
+                    min-width: 0;
+                    order: 1;
+                    color: $black;
+                    font-size: 16px;
+                }
+
+                // Icon (sibling of link) - keep on same line as link
+                > svg {
+                    color: $secondary;
+                    margin-left: 8px;
+                    flex-shrink: 0;
+                    order: 2; // After link but on same line
+                    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+                    cursor: pointer;
+                }
+
+                // Dropdown toggle for mobile
+                .dropdown-toggle {
+                    display: inline-flex;
+                    align-items: center;
+                    cursor: pointer;
+                    margin-left: 8px;
+                    flex-shrink: 0;
+                    order: 2;
+                    position: relative;
+                    z-index: 10; // Ensure it's above other elements
+                    pointer-events: auto !important; // Ensure clicks work
+                    
+                    svg {
+                        margin-left: 0;
+                        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+                        pointer-events: none; // Let the span handle clicks
+                    }
+                }
+
+                // Rotate icon when dropdown is open (mobile)
+                &.dropdown-open {
+                    > svg,
+                    .dropdown-toggle svg {
+                        color: $primary;
+                        transform: rotate(180deg);
+                        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+                    }
+                }
+
+                &:hover {
+                    background: transparent;
+                    padding-left: 30px;
+                    transition: all 0.3s ease;
+
+                    a {
+                        color: $primary;
+                    }
+                }
+
+                .dropdown {
+                    position: static;
+                    transform: none;
+                    margin-top: 10px;
+                    margin-left: -15px;
+                    margin-right: 0;
+                    box-shadow: none;
+                    border: none;
+                    background: rgba($primary, 0.05);
+                    border-radius: 20px;
+                    order: 10; // Ensure dropdown appears below (wraps to next line)
+                    width: 100%; // Match li content width
+                    max-width: 100%;
+                    align-self: stretch; // Stretch to match li width
+                    box-sizing: border-box;
+                    overflow: hidden; // For smooth height animation
+                    min-width: 260px;
+
+                    @media (max-width: 450px) {
+                        min-width: 100%;
+                    }
+                    
+                    // Mobile dropdown should be visible when rendered
+                    &.mobile-dropdown {
+                        display: block !important;
+                        position: static !important;
+                        transform: none !important;
+                        opacity: 1 !important; // Ensure it's visible
+                        visibility: visible !important; // Ensure it's visible
+                        // Animation will handle the transitions
+                    }
+                    
+                    // Hide desktop dropdown in mobile menu
+                    &.desktop-dropdown {
+                        display: none !important;
+                    }
+                    
+                    // Smooth transition for mobile dropdown content
+                    &.mobile-dropdown ul {
+                        transform-origin: top;
+                        transition: transform 0.3s ease-out;
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                    }
+
+                    &::before {
+                        display: none;
+                    }
+
+                    ul {
+                        padding: 8px 0;
+                        gap: 0;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        opacity: 1 !important;
+                        visibility: visible !important;
+
+                        li {
+                            // border-bottom: 1px solid rgba($primary, 0.08);
+                            padding-top: 0px;
+                            padding: 12px 20px;
+                            width: 100%;
+                            border-radius: 25px;
+                            margin-bottom: 5px;
+                            opacity: 1 !important;
+                            visibility: visible !important;
+
+                            // &:last-child {
+                            //     border-bottom: none;
+                            // }
+
+                            a {
+                                font-size: 14px;
+                                width: 100%;
+                                display: block;
+                            }
+
+                            &:hover {
+                                // background: rgba(126, 82, 26, 0.08);
+                                padding-left: 20px;
+                                transition: all 0.3s ease;
+
+                                a {
+                                    color: $primary;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        ul.hide-mobile-menu {
+            display: none;
+        }
+
+        // Show menu when open - transform the container
+        &.menu-open {
+            transform: translateX(0) !important;
+            pointer-events: auto; // Enable interaction when visible
+        }
+
+        // Ensure menu is fully hidden when closed
+        &:not(.menu-open) {
+            transform: translateX(100%) !important;
+            pointer-events: none;
+        }
+    }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 15px 30px;
+
+        .logo-container {
+            .logo-div {
+                width: 60px;
+                height: 60px;
+            }
+
+            .brand-name {
+                font-size: 22px;
+            }
+        }
+
+        .button-div {
+            .btn {
+                padding: 10px 24px;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 12px 20px;
+
+        .logo-container {
+            .logo-div {
+                width: 50px;
+                height: 50px;
+            }
+
+            .brand-name {
+                font-size: 18px;
+            }
+
+            .logo-link {
+                gap: 10px;
+            }
+        }
+
+        .button-div .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+    }
+
+    .navbar.sticky {
+        padding: 12px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        .logo-container {
+            .logo-div {
+                width: 45px;
+                height: 45px;
+            }
+
+            .brand-name {
+                font-size: 16px;
+            }
+
+            .logo-link {
+                gap: 8px;
+            }
+        }
+    }
+}

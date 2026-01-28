@@ -1,0 +1,235 @@
+@import '../../../index.scss';
+
+.trust-us-section {
+    padding: 60px 0;
+    background: $white;
+    position: relative;
+
+    .trust-us-container {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+
+        @media (max-width: 768px) {
+            padding: 0 20px;
+        }
+    }
+
+    .trust-us-content {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 60px;
+        align-items: center;
+        justify-content: center;
+
+        @media (max-width: 1024px) {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+    }
+
+    // Left Side
+    .trust-left {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .trust-header {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0;
+
+            .trust-logo {
+                display: flex;
+                gap: 4px;
+                align-items: center;
+
+                .paw-icon {
+                    color: $primary;
+                    font-size: 16px;
+                }
+            }
+
+            .trust-title-small {
+                font-size: 14px;
+                font-weight: 600;
+                color: $primary;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+        }
+
+        .trust-main-title {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: $black;
+            margin: 0;
+
+            @media (max-width: 1024px) {
+                font-size: 38px;
+            }
+
+            @media (max-width: 768px) {
+                font-size: 28px;
+            }
+        }
+
+        .trust-description {
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+            color: $gray;
+            max-width: 600px;
+        }
+
+        .awards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+
+            .award-divider {
+                height: 1px;
+                background: rgba($primary, 0.2);
+                // margin: 20px 0;
+            }
+
+            .award-item {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                padding: 20px 0;
+
+                .award-icon {
+                    width: 80px;
+                    height: 80px;
+                    flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                    }
+                }
+
+                .award-content {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    .award-title {
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: $black;
+                        margin: 0;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                        line-height: 1.4;
+                    }
+
+                    .award-stars {
+                        font-size: 14px;
+                        color: $primary;
+                        letter-spacing: 2px;
+                    }
+
+                    .award-certification {
+                        font-size: 16px;
+                        font-weight: 600;
+                        color: $black;
+                        margin: 0;
+                    }
+
+                    .award-date {
+                        font-size: 14px;
+                        color: $gray;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    // Right Side
+    .trust-right {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+
+        .trust-image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            z-index: 2;
+
+            .trust-vet-image {
+                width: 600px;
+                height: 100%;
+                object-fit: contain;
+                position: relative;
+                z-index: 2;
+            }
+
+            .trust-bg-elements {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 1;
+
+                .bg-paw {
+                    position: absolute;
+                    top: 10%;
+                    left: 5%;
+                    font-size: 120px;
+                    color: rgba($gray, 0.15);
+                    transform: rotate(-15deg);
+                    z-index: 1;
+                }
+
+                .bg-wave {
+                    position: absolute;
+                    top: 25%;
+                    right: -10%;
+                    font-size: 100px;
+                    color: rgba($gray, 0.15);
+                    transform: rotate(45deg);
+                    z-index: 1;
+                }
+
+                .bg-bone {
+                    position: absolute;
+                    bottom: -10%;
+                    right: 0%;
+                    font-size: 100px;
+                    color: rgba($gray, 0.15);
+                    transform: rotate(-30deg);
+                    z-index: 1;
+
+                    // &::before {
+                    //     content: '';
+                    //     position: absolute;
+                    //     top: 50%;
+                    //     left: 50%;
+                    //     transform: translate(-50%, -50%);
+                    //     width: 60%;
+                    //     height: 60%;
+                    //     background: rgba($tertiary, 0.5);
+                    //     border-radius: 50%;
+                    // }
+                }
+            }
+        }
+    }
+}
+

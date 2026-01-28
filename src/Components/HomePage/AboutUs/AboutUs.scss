@@ -1,0 +1,237 @@
+@import '../../../index.scss';
+
+.about-us-section {
+    padding: 100px 0;
+    background: $white;
+    position: relative;
+
+    .about-us-container {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+
+        @media (max-width: 768px) {
+            padding: 0 20px;
+        }
+    }
+
+    .about-us-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1.5fr;
+        gap: 30px;
+        align-items: stretch;
+
+        @media (max-width: 1024px) {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+    }
+
+    // Left Section
+    .about-left {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        height: 100%;
+
+        .about-image-card {
+            background: $white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+
+            .about-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+        }
+
+        .testimonial-section {
+            background: rgba($tertiary, 0.5);
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            border-radius: 24px;
+
+            .top-section {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .client-avatars {
+                display: flex;
+                gap: -8px;
+
+                .avatar {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    border: 3px solid $white;
+                    margin-left: -12px;
+                    overflow: hidden;
+                    position: relative;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: block;
+                    }
+                }
+            }
+
+            .testimonial-stats {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+
+                .stat-percentage {
+                    font-size: 32px;
+                    font-weight: 700;
+                    color: $primary;
+                    line-height: 1;
+                }
+            }
+
+            .stat-label {
+                font-size: 18px;
+                color: $black;
+                font-weight: 600;
+            }
+        }
+    }
+
+    // Center Section
+    .about-center {
+        .about-image-card {
+            border-radius: 24px;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-height: 550px;
+            position: relative;
+
+            &.center-card {
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 60%;
+                    background: rgba($tertiary, 0.5);
+                    z-index: 0;
+                    border-radius: 0 0 24px 24px;
+                    border-radius: 24px;
+                }
+            }
+
+            .about-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                background-position: top;
+                display: block;
+                position: relative;
+                z-index: 1;
+            }
+        }
+    }
+
+    // Right Section
+    .about-right {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        padding: 20px 0;
+        margin-left: 50px;
+
+        .about-header {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: $primary;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            .paw-icon {
+                font-size: 16px;
+            }
+        }
+
+        .about-title {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: $black;
+            margin: 0;
+
+            @media (max-width: 1024px) {
+                font-size: 36px;
+            }
+
+            @media (max-width: 768px) {
+                font-size: 28px;
+            }
+        }
+
+        .about-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: $gray;
+            margin: 0;
+        }
+
+        .about-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+
+            li {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+
+                .bone-icon {
+                    color: $primary;
+                    font-size: 18px;
+                    margin-top: 4px;
+                    flex-shrink: 0;
+                }
+
+                span {
+                    font-size: 16px;
+                    line-height: 1.6;
+                    color: $black;
+                }
+            }
+        }
+
+        .btn {
+            align-self: flex-start;
+            margin-top: 10px;
+        }
+    }
+}
+
