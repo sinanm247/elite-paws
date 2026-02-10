@@ -15,11 +15,11 @@ export default function HomePage() {
             <Helmet title="Elite Paws - Home">
                 <HomeHero />
                 <AboutUs />
+                <PricingPlans />
                 <TrustUs />
                 <FeaturesSlide />
                 <Services />
                 <CTASection />
-                <PricingPlans />
                 <Testimonials />
             </Helmet>
         </Fragment>
