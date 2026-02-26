@@ -1,5 +1,5 @@
 import "./AppLoader.scss";
-import logo from "../../assets/Logo/elite-paws-logo.webp";
+import logo from "../../assets/Logo/elite-paws-logo-light.png"
 
 export default function AppLoader({ isVisible }) {
   return (
