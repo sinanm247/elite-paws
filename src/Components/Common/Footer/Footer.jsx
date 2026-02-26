@@ -1,4 +1,5 @@
-import logo from "../../../assets/Logo/elite-paws-logo.webp"
+// Dark logo for light backgrounds (footer main)
+import logoDark from "../../../assets/Logo/elite-paws-logo-dark.png"
 import { FaFacebook, FaYoutube, FaPhone, FaGlobe, FaPaw, FaMapMarkerAlt } from "react-icons/fa";
 import "./Footer.scss"
 import { RiInstagramFill } from "react-icons/ri"
@@ -19,11 +20,7 @@ export default function Footer() {
                     <div className="footer-top-header">
                         <h1 className="footer-headline">Keeping Your Pets Healthy, Happy, and Groomed</h1>
                         <div className="footer-logo-section">
-                            <div className="footer-logo-wrapper">
-                                <img className="footer-logo-icon" src={logo} alt="Elite Paws Logo" />
-                                <span className="footer-brand-name">ELITE PAWS</span>
-                            </div>
-                            {/* <p className="footer-tagline">Veterinary and Pet Grooming</p> */}
+                            <img className="footer-logo-icon" src={logoDark} alt="Elite Paws Logo" />
                         </div>
                     </div>
 

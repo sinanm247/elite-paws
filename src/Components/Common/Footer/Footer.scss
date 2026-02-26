@@ -4,9 +4,9 @@ footer {
     width: 100%;
     position: relative;
 
-    // Main Footer Content - Light Background
+    // Main Footer Content - no background
     .footer-main {
-        background: rgba($tertiary, 0.3);
+        background: transparent;
         padding: 60px 0 40px 0;
         position: relative;
         // overflow: hidden;
@@ -84,33 +84,10 @@ footer {
                     text-align: left;
                 }
 
-                .footer-logo-wrapper {
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    margin-bottom: 8px;
-
-                    .footer-logo-icon {
-                        color: $primary;
-                        font-size: 32px;
-                        width: 70px;
-                        height: 70px;
-                        object-fit: cover;
-                        border-radius: 100%;
-                        border: 2px solid rgba($primary, 0.1);
-                        background: $white;
-                    }
-
-                    .footer-brand-name {
-                        font-size: 32px;
-                        font-weight: 700;
-                        color: $primary;
-                        letter-spacing: 1px;
-
-                        @media (max-width: 768px) {
-                            font-size: 28px;
-                        }
-                    }
+                .footer-logo-icon {
+                    width: 120px;
+                    height: 100%;
+                    object-fit: contain;
                 }
 
                 .footer-tagline {
@@ -340,7 +317,7 @@ footer {
                     font-size: 15px;
                     outline: none;
                     transition: all 0.3s ease;
-                    font-family: 'Anek Latin', sans-serif;
+                    font-family: 'Helvetica Neue', sans-serif;
 
                     &::placeholder {
                         color: $gray;
@@ -367,7 +344,7 @@ footer {
                     gap: 10px;
                     transition: all 0.3s ease;
                     white-space: nowrap;
-                    font-family: 'Anek Latin', sans-serif;
+                    font-family: 'Helvetica Neue', sans-serif;
 
                     @media (max-width: 768px) {
                         width: 100%;
@@ -397,12 +374,13 @@ footer {
         }
     }
 
-    // Footer Bottom - Dark Background
+    // Footer Bottom - no background/border
     .footer-bottom {
-        background: rgba($black, 0.9);
+        background: transparent;
         padding: 25px 0;
         position: relative;
         padding-left: 500px !important;
+        border: none;
 
         .footer-bottom-container {
             max-width: 1400px;

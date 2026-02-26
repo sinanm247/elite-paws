@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./PricingPlans.scss"
 import { FaPaw, FaCrown, FaShower, FaCut, FaSpa, FaGem, FaCheck, FaTimes, FaStethoscope, FaBath, FaHeart, FaUserFriends, FaStar } from "react-icons/fa"
 import { FaScissors } from "react-icons/fa6";
 import { IoSparkles } from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io"
 
+const COLUMNS_PER_ROW = 3
+
 export default function PricingPlans() {
+    const [expandedRowIndex, setExpandedRowIndex] = useState(null)
+
+    const toggleRow = (rowIndex) => {
+        setExpandedRowIndex((prev) => (prev === rowIndex ? null : rowIndex))
+    }
+
     const plans = [
         {
             id: 1,
@@ -107,7 +115,7 @@ export default function PricingPlans() {
                 {
                     title: "Full Groom & Styling",
                     items: [
-                        "Full body haircut (breed standard or owner preference)",
+                        // "Full body haircut (breed standard or owner preference)",
                         "Face shaping & detailing",
                         "Sanitary trim",
                         "Paw pad trim",
@@ -262,102 +270,117 @@ export default function PricingPlans() {
 
                 {/* Pricing Cards */}
                 <div className="pricing-cards">
-                    {plans.map((plan) => {
+                    {plans.map((plan, index) => {
                         const IconComponent = plan.icon
+                        const rowIndex = Math.floor(index / COLUMNS_PER_ROW)
+                        const isExpanded = expandedRowIndex === rowIndex
                         return (
-                            <div key={plan.id} className="pricing-card">
+                            <div key={plan.id} className={`pricing-card ${isExpanded ? 'pricing-card--expanded' : ''}`}>
                                 <div className="pricing-card-icon">
                                     <IconComponent />
                                 </div>
 
                                 <div className="pricing-card-body">
-                                    <h3 className="pricing-card-name">{plan.name}</h3>
+                                    <div className={`pricing-card-content ${isExpanded ? 'pricing-card-content--expanded' : ''}`}>
+                                        <h3 className="pricing-card-name">{plan.name}</h3>
 
-                                    {plan.subtitle && (
-                                        <p className="pricing-card-subtitle">{plan.subtitle}</p>
-                                    )}
+                                        {plan.subtitle && (
+                                            <p className="pricing-card-subtitle">{plan.subtitle}</p>
+                                        )}
 
-                                    <div className="pricing-card-price">
-                                        <span className="price-amount">{plan.price}</span>
-                                    </div>
-
-                                    {plan.secondaryPrice && (
-                                        <p className="pricing-card-secondary-price">{plan.secondaryPrice}</p>
-                                    )}
-
-                                    {(plan.duration || plan.time) && (
-                                        <div className="pricing-meta">
-                                            {plan.duration && <span className="meta-pill">{plan.duration}</span>}
-                                            {plan.time && <span className="meta-pill">{plan.time}</span>}
+                                        <div className="pricing-card-price">
+                                            <span className="price-amount">{plan.price}</span>
                                         </div>
-                                    )}
 
-                                    {plan.note && (
-                                        <p className="pricing-card-description">{plan.note}</p>
-                                    )}
+                                        {plan.secondaryPrice && (
+                                            <p className="pricing-card-secondary-price">{plan.secondaryPrice}</p>
+                                        )}
 
-                                    <div className="hr-line"></div>
-
-                                    {plan.includesGroups?.length ? (
-                                        <div className="pricing-list-block">
-                                            <div className="pricing-list-title">Includes</div>
-
-                                            <div className="pricing-groups">
-                                                {plan.includesGroups.map((group, gi) => {
-                                                    const GroupIconComponent = getGroupIcon(group.title)
-                                                    return (
-                                                        <div key={gi} className="pricing-group">
-                                                            <div className="pricing-group-title">
-                                                                <GroupIconComponent className="group-title-icon" />
-                                                                <span>{group.title}</span>
-                                                            </div>
-                                                            <ul className="pricing-features">
-                                                                {group.items.map((item, ii) => (
-                                                                    <li key={ii} className="pricing-feature-item">
-                                                                        <FaCheck className="feature-check-icon" />
-                                                                        <span>{item}</span>
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        </div>
-                                                    )
-                                                })}
+                                        {(plan.duration || plan.time) && (
+                                            <div className="pricing-meta">
+                                                {plan.duration && <span className="meta-pill">{plan.duration}</span>}
+                                                {plan.time && <span className="meta-pill">{plan.time}</span>}
                                             </div>
-                                        </div>
-                                    ) : plan.includes?.length ? (
-                                        <div className="pricing-list-block">
-                                            <div className="pricing-list-title">Includes</div>
-                                            <ul className="pricing-features">
-                                                {plan.includes.map((item, index) => (
-                                                    <li key={index} className="pricing-feature-item">
-                                                        <FaCheck className="feature-check-icon" />
-                                                        <span>{item}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    ) : null}
+                                        )}
 
-                                    {plan.bonus ? (
-                                        <div className="pricing-bonus">
-                                            <div className="pricing-bonus-title">Bonus</div>
-                                            <div className="pricing-bonus-text">{plan.bonus}</div>
-                                        </div>
-                                    ) : null}
+                                        {plan.note && (
+                                            <p className="pricing-card-description">{plan.note}</p>
+                                        )}
 
-                                    {plan.notIncluded?.length ? (
-                                        <div className="pricing-list-block not-included">
-                                            <div className="pricing-list-title">Not Included</div>
-                                            <ul className="pricing-features">
-                                                {plan.notIncluded.map((item, index) => (
-                                                    <li key={index} className="pricing-feature-item">
-                                                        <FaTimes className="feature-times-icon" />
-                                                        <span>{item}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    ) : null}
+                                        <div className="hr-line"></div>
+
+                                        {plan.includesGroups?.length ? (
+                                            <div className="pricing-list-block">
+                                                <div className="pricing-list-title">Includes</div>
+
+                                                <div className="pricing-groups">
+                                                    {plan.includesGroups.map((group, gi) => {
+                                                        const GroupIconComponent = getGroupIcon(group.title)
+                                                        return (
+                                                            <div key={gi} className="pricing-group">
+                                                                <div className="pricing-group-title">
+                                                                    <GroupIconComponent className="group-title-icon" />
+                                                                    <span>{group.title}</span>
+                                                                </div>
+                                                                <ul className="pricing-features">
+                                                                    {group.items.map((item, ii) => (
+                                                                        <li key={ii} className="pricing-feature-item">
+                                                                            <FaCheck className="feature-check-icon" />
+                                                                            <span>{item}</span>
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                        ) : plan.includes?.length ? (
+                                            <div className="pricing-list-block">
+                                                <div className="pricing-list-title">Includes</div>
+                                                <ul className="pricing-features">
+                                                    {plan.includes.map((item, index) => (
+                                                        <li key={index} className="pricing-feature-item">
+                                                            <FaCheck className="feature-check-icon" />
+                                                            <span>{item}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        ) : null}
+
+                                        {plan.bonus ? (
+                                            <div className="pricing-bonus">
+                                                <div className="pricing-bonus-title">Bonus</div>
+                                                <div className="pricing-bonus-text">{plan.bonus}</div>
+                                            </div>
+                                        ) : null}
+
+                                        {plan.notIncluded?.length ? (
+                                            <div className="pricing-list-block not-included">
+                                                <div className="pricing-list-title">Not Included</div>
+                                                <ul className="pricing-features">
+                                                    {plan.notIncluded.map((item, index) => (
+                                                        <li key={index} className="pricing-feature-item">
+                                                            <FaTimes className="feature-times-icon" />
+                                                            <span>{item}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                </div>
+
+                                <div className="pricing-card-actions">
+                                    <button
+                                        type="button"
+                                        className="pricing-see-more-btn"
+                                        onClick={() => toggleRow(rowIndex)}
+                                        aria-expanded={isExpanded}
+                                    >
+                                        {isExpanded ? 'See less' : 'See more'}
+                                    </button>
                                 </div>
 
                                 <div className="pricing-card-footer">

@@ -16,7 +16,7 @@ export default function HomePage() {
                 <HomeHero />
                 <AboutUs />
                 <PricingPlans />
-                <TrustUs />
+                {/* <TrustUs /> */}
                 <FeaturesSlide />
                 <Services />
                 <CTASection />

@@ -1,60 +1,38 @@
-@font-face {
-  font-family: 'Anek Latin';
-  src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+@import './fonts.scss';
 
-@font-face {
-  font-family: 'Anek Latin';
-  src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Anek Latin';
-  src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Anek Latin';
-  src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Anek Latin';
-  src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-ExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Anek Latin';
-  src: url('./assets/Fonts/Anek_Latin/AnekLatin-VariableFont_wdth,wght.ttf') format('truetype-variations');
-  font-weight: 100 800;
-  font-stretch: 75% 125%;
-  font-style: normal;
-  font-display: swap;
-}
+// (Previous Anek Latin @font-face kept in assets – uncomment if reverting fonts)
+// @font-face {
+//   font-family: 'Anek Latin';
+//   src: url('./assets/Fonts/Anek_Latin/static/AnekLatin-Regular.ttf') format('truetype');
+//   font-weight: 400;
+//   font-style: normal;
+//   font-display: swap;
+// }
+// … (other Anek Latin weights)
 
 // ===========================================
 // SIMPLE COLOR SYSTEM
 // ===========================================
 
-// Your Brand Colors
-$primary: #B89948;      // Your main brand color (Gold)
-$secondary: #8B6F2F;   // Your secondary brand color (Darker Bronze/Gold)
-$tertiary: #D4B87A;    // Your tertiary brand color (Light Cream Gold)
+// --- Logo-only palette (active) ---
+$logo-light: #EFEEEA;
+$logo-dark: #2C2C2C;
+$primary: $logo-dark;
+$secondary: $logo-dark;
+$tertiary: $logo-dark;
+$quaternary: $logo-dark;
+$quinary: $logo-light;
+$logo-light-bg: $logo-light;  // Use dark logo on this
+$logo-dark-bg: $logo-dark;    // Use light logo on this
+
+// --- Previous brand colors (commented for revert) ---
+// $primary: #ee9f9b;     // Coral / Salmon – main accent, CTAs
+// $secondary: #f5cb5e;   // Warm yellow / Gold – secondary accent, highlights
+// $tertiary: #447e49;    // Green – nature, success, complementary sections
+// $quaternary: #7eb6e7;  // Soft blue – trust, links, optional accent
+// $quinary: #efeeea;    // Off-white / Cream – light backgrounds (header, sections)
+// $logo-light-bg: #efeeea;  // Use dark logo on this
+// $logo-dark-bg: #2c2c2c;   // Use light logo on this
 
 // Basic Colors
 $white: #ffffff;
@@ -62,7 +40,7 @@ $black: #000000;
 $gray: #6c757d;
 
 :root {
-  font-family: 'Anek Latin', sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -92,7 +70,14 @@ body {
 }
 
 code {
-  font-family: 'Anek Latin', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Titles and subtitles – Pawcinno */
+h1, h2, h3, h4, h5, h6,
+.main-title, .top-title,
+.font-title {
+  font-family: 'Pawcinno', serif;
 }
 
 html {
@@ -125,10 +110,10 @@ a:hover {
   transition: .5s;
 }
 
-button, 
+button,
 input,
 textarea {
-  font-family: 'Anek Latin', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
 }
 
 .btn {
@@ -241,6 +226,9 @@ textarea {
 // Text Colors
 .text-primary { color: $primary !important; }
 .text-secondary { color: $secondary !important; }
+.text-tertiary { color: $tertiary !important; }
+.text-quaternary { color: $quaternary !important; }
+.text-quinary { color: $quinary !important; }
 .text-white { color: $white !important; }
 .text-black { color: $black !important; }
 .text-gray { color: $gray !important; }
@@ -248,12 +236,15 @@ textarea {
 // Background Colors
 .bg-primary { background-color: $primary !important; }
 .bg-secondary { background-color: $secondary !important; }
+.bg-tertiary { background-color: $tertiary !important; }
+.bg-quaternary { background-color: $quaternary !important; }
+.bg-quinary { background-color: $quinary !important; }
 .bg-white { background-color: $white !important; }
 .bg-black { background-color: $black !important; }
 
-// Brand Font
+// Brand Font (titles / subtitles)
 .brand-font {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Pawcinno', serif;
   font-weight: 700;
   letter-spacing: 0.5px;
 }

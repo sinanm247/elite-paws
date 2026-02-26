@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import "./Navbar.scss"
 
-import logo from "../../../assets/Logo/elite-paws-logo.webp"
+// Dark logo for light backgrounds (header)
+import logoDark from "../../../assets/Logo/elite-paws-logo-dark.png"
 
 import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from "framer-motion"
@@ -79,10 +80,7 @@ export default function Navbar(){
         <div className={`navbar ${isSticky ? "sticky" : ""} ${mobileMenu ? "mobile-menu-active" : ""}`}>
             <div className="logo-container">
                 <a href="/" className="logo-link">
-                    <div className="logo-div">
-                        <img src={logo} alt="Elite Paws Logo" className="logo"/>
-                    </div>
-                    <span className="brand-name brand-font">Elite Paws</span>
+                    <img src={logoDark} alt="Elite Paws Logo" className="logo"/>
                 </a>
             </div>
             <div className="mobile-menu-toggle">
