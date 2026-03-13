@@ -4,11 +4,20 @@ footer {
     width: 100%;
     position: relative;
 
-    // Main Footer Content - no background
+    .footer-scroll-bg {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+    }
+
     .footer-main {
         background: transparent;
         padding: 60px 0 40px 0;
         position: relative;
+        z-index: 1;
         // overflow: hidden;
 
         // Decorative wave element
@@ -379,6 +388,7 @@ footer {
         background: transparent;
         padding: 25px 0;
         position: relative;
+        z-index: 1;
         padding-left: 500px !important;
         border: none;
 

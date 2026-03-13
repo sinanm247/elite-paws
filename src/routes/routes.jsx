@@ -2,11 +2,17 @@ import PageNotFound from "../Components/PageNotFound/PageNotFound.jsx";
 import Thankyou from "../Components/ThankYouPage/Thankyou.jsx";
 import UnAuthorized from "../Components/UnAuthorized/UnAuthorixed.jsx";
 import HomePage from "../Pages/HomePage.jsx";
+import ElitePawsHome from "../Pages/ElitePawsHome.jsx";
 
 const routes = [
   {
     path: "/",
     element: <HomePage/>,
+    isProtected: false,
+  },
+  {
+    path: "/elite-paws-home",
+    element: <ElitePawsHome/>,
     isProtected: false,
   },
   {

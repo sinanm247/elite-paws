@@ -1,0 +1,402 @@
+@import '../../../index.scss';
+
+$hero-bg-light: #f5f0eb;
+$hero-bg-bold: #2C2C2C;
+$hero-bg-mid: #2d3e50;
+$hero-accent: #ee9f9b;
+
+.elite-hero {
+  position: relative;
+}
+
+// ---------- Sticky bg: behind sections and cards; scroll-driven color; scrolls away with hero ----------
+.elite-hero-sticky-bg {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  margin-bottom: -100vh;
+  flex-shrink: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.elite-hero-sticky-bg .elite-hero-bg-color {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: background-color 0.5s ease;
+}
+
+// ---------- Sticky cards: on top of section text; scrolls away with hero ----------
+.elite-hero-sticky-cards {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.elite-hero-sticky-cards .elite-hero-cards-wrap {
+  pointer-events: auto;
+}
+
+// ---------- Section texts: between bg (z0) and cards (z2), so text is visible ----------
+.elite-hero-bg-stack {
+  position: relative;
+  margin-top: -100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.elite-hero-bg-stack .elite-hero-bg-section {
+  pointer-events: auto;
+}
+
+.elite-hero-bg-section {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+// Section 1: company name + copy
+.elite-hero-bg-section-1 {
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 30px;
+  padding-bottom: 0;
+}
+
+.elite-hero-bg-text {
+  font-family: 'Pawcinno', serif;
+  font-size: clamp(6rem, 18vw, 15rem);
+  font-weight: 700;
+  color: rgba($hero-bg-bold, 0.14);
+  white-space: nowrap;
+  user-select: none;
+  margin: 0;
+}
+
+.elite-hero-copy.elite-hero-bg-copy {
+  position: absolute;
+  bottom: 0px;
+  left: 4%;
+  max-width: 500px;
+  text-align: left;
+
+  @media (max-width: 768px) {
+    left: 5%;
+    bottom: 10%;
+    max-width: 85%;
+  }
+}
+
+.elite-hero-copy-label {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: $gray;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 8px 0;
+}
+
+.elite-hero-copy-title {
+  font-family: 'Pawcinno', serif;
+  text-transform: uppercase;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  color: $hero-bg-bold;
+  line-height: 1.2;
+  margin: 0;
+}
+
+// Section 2: full-screen, left + right text (same layout style as section 1)
+.elite-hero-bg-section-2 {
+  display: block;
+}
+
+.elite-hero-bg-section-2-left {
+  position: absolute;
+  left: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 320px;
+  text-align: left;
+
+  @media (max-width: 768px) {
+    left: 5%;
+    max-width: 85%;
+  }
+}
+
+.elite-hero-bg-section-2-right {
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 320px;
+  text-align: right;
+
+  @media (max-width: 768px) {
+    right: 5%;
+    left: 5%;
+    text-align: left;
+    max-width: 85%;
+  }
+}
+
+.elite-hero-s2-line {
+  font-family: 'Pawcinno', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: $white;
+  margin: 0;
+  line-height: 1.2;
+
+  &.elite-hero-s2-accent {
+    color: $hero-accent;
+  }
+}
+
+// Section 3: full-screen, left headline + right paragraph (Elite Paws)
+.elite-hero-bg-section-3 {
+  display: block;
+}
+
+.elite-hero-bg-section-3-left {
+  position: absolute;
+  left: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 360px;
+  text-align: left;
+
+  @media (max-width: 768px) {
+    left: 5%;
+    max-width: 85%;
+  }
+}
+
+.elite-hero-s3-headline {
+  font-family: 'Pawcinno', serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  color: $white;
+  margin: 0;
+  line-height: 1.15;
+
+  &.elite-hero-s2-accent {
+    color: $hero-accent;
+  }
+}
+
+.elite-hero-bg-section-3-right {
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 450px;
+  text-align: left;
+
+  @media (max-width: 768px) {
+    right: 5%;
+    left: 5%;
+    text-align: left;
+    max-width: 85%;
+  }
+}
+
+.elite-hero-s3-para {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: clamp(0.8rem, 1.8vw, 1rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+
+  span {
+    color: #ee9f9b;
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
+}
+
+.elite-hero-cards-wrap {
+  position: relative;
+  width: min(90vw, 1000px);
+  height: min(65vh, 520px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.elite-hero-card-slot {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.2s ease;
+}
+
+.elite-hero-card-slot.elite-hero-card-left {
+  left: 2%;
+  top: 50%;
+  transform: translateY(-50%);
+  transform-origin: center center;
+  width: 40%;
+  max-width: 340px;
+}
+
+.elite-hero-card-slot.elite-hero-card-center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 52%;
+  max-width: 420px;
+}
+
+.elite-hero-card-slot.elite-hero-card-right {
+  right: 2%;
+  top: 50%;
+  transform: translateY(-50%);
+  transform-origin: center center;
+  width: 40%;
+  max-width: 340px;
+}
+
+.elite-hero-image-card.card-left {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.25s ease;
+}
+
+.elite-hero-image-card.card-center {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.25s ease;
+}
+
+.elite-hero-image-card.card-right {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.25s ease;
+}
+
+.elite-hero-image-card {
+  width: 100%;
+  min-height: 260px;
+  border-radius: inherit;
+  overflow: hidden;
+  will-change: transform;
+
+  img {
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.elite-hero-image-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.elite-hero-video-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+
+  .elite-hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.elite-hero-video-layer.is-active {
+  opacity: 1;
+}
+
+.elite-hero-video-controls {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.elite-hero-video-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1a1a1a;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+
+  svg {
+    // width: 14px;
+    // height: 14px;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  &:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.elite-hero-video-btn.play-pause {
+  svg {
+    font-size: 10px;
+  }
+}
+
+.elite-hero-card-slot .elite-hero-image-card {
+  width: 100%;
+  min-height: 280px;
+}

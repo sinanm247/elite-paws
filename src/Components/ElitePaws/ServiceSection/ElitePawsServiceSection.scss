@@ -1,0 +1,236 @@
+@import '../../../index.scss';
+
+$service-bg: #e8e6e3;
+$service-heading-color: #2C2C2C;
+$service-desc-color: rgba(#2C2C2C, 0.6);
+$service-title-color: #2C2C2C;
+$service-tag-border: rgba(#2C2C2C, 0.3);
+$service-tag-color: #2C2C2C;
+
+.elite-paws-services {
+  position: relative;
+  background: transparent;
+  height: 300vh;
+}
+
+.elite-paws-services-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.elite-paws-services-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.elite-paws-services-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.elite-paws-services-left {
+  position: absolute;
+  left: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: calc(50vw - 350px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+}
+
+.elite-paws-services-heading {
+  font-family: 'Pawcinno', serif;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: $service-heading-color;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  margin: 0 0 24px 0;
+}
+
+.elite-paws-services-desc {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: $service-desc-color;
+  line-height: 1.6;
+  margin: 0 0 auto 0;
+  max-width: 280px;
+}
+
+.elite-paws-services-link {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $service-heading-color;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  border-bottom: 1.5px solid $service-heading-color;
+  padding-bottom: 2px;
+  align-self: flex-start;
+  margin-top: 40px;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+// Center image slider - centered on viewport
+.elite-paws-services-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.elite-paws-services-slider {
+  position: relative;
+  width: 380px;
+  aspect-ratio: 3 / 4;
+}
+
+.elite-paws-services-slide {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s ease,
+              z-index 0s;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &.is-active {
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
+  }
+}
+
+// Right service list
+.elite-paws-services-right {
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: calc(50vw - 350px);
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.elite-paws-services-item {
+  padding: 28px 0;
+  cursor: pointer;
+  transition: padding 0.3s ease;
+
+  & + & {
+    border-top: 1px solid rgba(#2C2C2C, 0.12);
+  }
+}
+
+.elite-paws-services-item-title {
+  font-family: 'Pawcinno', serif;
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  font-weight: 700;
+  color: $service-title-color;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0;
+  line-height: 1.2;
+  transition: opacity 0.3s ease;
+}
+
+.elite-paws-services-item:not(.is-active) .elite-paws-services-item-title {
+  opacity: 0.45;
+}
+
+.elite-paws-services-item:not(.is-active):hover .elite-paws-services-item-title {
+  opacity: 0.7;
+}
+
+// Tags - hidden by default, shown when active
+.elite-paws-services-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.35s ease 0.1s,
+              margin 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 0;
+}
+
+.elite-paws-services-item.is-active .elite-paws-services-tags {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 16px;
+}
+
+.elite-paws-services-tag {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 0.8rem;
+  color: $service-tag-color;
+  border: 1px solid $service-tag-border;
+  border-radius: 50px;
+  padding: 8px 18px;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: $service-heading-color;
+    color: #fff;
+  }
+}
+
+@media (max-width: 1024px) {
+  .elite-paws-services {
+    padding: 80px 0;
+    min-height: auto;
+  }
+
+  .elite-paws-services-inner {
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+    gap: 48px;
+  }
+
+  .elite-paws-services-left,
+  .elite-paws-services-center,
+  .elite-paws-services-right {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+    max-width: 100%;
+  }
+
+  .elite-paws-services-slider {
+    width: 280px;
+    margin: 0 auto;
+  }
+}

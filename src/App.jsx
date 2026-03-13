@@ -4,6 +4,7 @@ import AppLoader from './Components/AppLoader/AppLoader';
 import AppRouter from './Components/AppRouter/AppRouter';
 import routes from './routes/routes';
 import Navbar from './Components/Common/Navbar/Navbar';
+import ElitePawsNavbar from './Components/ElitePaws/ElitePawsNavbar/ElitePawsNavbar';
 import Footer from './Components/Common/Footer/Footer';
 
 
@@ -26,7 +27,7 @@ export default function App() {
       <AppLoader isVisible={pageLoading} />
         {!pageLoading && (
           <Fragment>
-            <Navbar />
+            {location.pathname === '/elite-paws-home' ? <ElitePawsNavbar /> : <Navbar />}
             <AppRouter routes={routes} />
             <Footer />
           </Fragment>

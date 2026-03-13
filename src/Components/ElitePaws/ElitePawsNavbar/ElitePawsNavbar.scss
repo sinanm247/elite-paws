@@ -1,0 +1,84 @@
+@import '../../../index.scss';
+
+.elite-paws-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0px 50px;
+  background: transparent;
+  transition: background 0.25s ease;
+  height: 100px;
+
+  &.elite-paws-navbar-scrolled {
+    // background: rgba(245, 240, 235, 0.92);
+    // backdrop-filter: blur(8px);
+  }
+}
+
+.elite-paws-navbar-inner {
+  // max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.elite-paws-navbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #ee9f9b;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease, background 0.2s ease;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.elite-paws-navbar-btn-menu {
+  svg {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.elite-paws-navbar-btn-whatsapp {
+  text-decoration: none;
+  color: #ee9f9b;
+}
+
+.elite-paws-navbar-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.elite-paws-navbar-logo {
+  height: 100px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  display: block;
+}

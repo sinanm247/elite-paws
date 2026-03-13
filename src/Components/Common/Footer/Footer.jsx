@@ -1,4 +1,5 @@
-// Dark logo for light backgrounds (footer main)
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import logoDark from "../../../assets/Logo/elite-paws-logo-dark.png"
 import { FaFacebook, FaYoutube, FaPhone, FaGlobe, FaPaw, FaMapMarkerAlt } from "react-icons/fa";
 import "./Footer.scss"
@@ -8,11 +9,58 @@ import { FaXTwitter } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io"
 import footerDogImage from "../../../assets/Gallery/image-14.png"
 
+const PREV_BG = '#7eb6e7';
+const FOOTER_BG = '#efeeea';
+
 export default function Footer() {
     const location = useLocation()
+    const footerRef = useRef(null);
+
+    const { scrollYProgress: bgScrollYProgress } = useScroll({
+        target: footerRef,
+        offset: ['start end', 'start start'],
+    });
+
+    const backgroundColor = useTransform(
+        bgScrollYProgress,
+        [0, 0.5, 1],
+        [PREV_BG, FOOTER_BG, FOOTER_BG]
+    );
+
+    const [showBg, setShowBg] = useState(false);
+    useEffect(() => {
+        const el = footerRef.current;
+        if (!el) return;
+
+        let raf = null;
+        const check = () => {
+            const rect = el.getBoundingClientRect();
+            const inView = rect.top < window.innerHeight && rect.bottom > 0;
+            setShowBg(inView);
+        };
+        const onScroll = () => {
+            if (raf != null) cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => { check(); raf = null; });
+        };
+        check();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        return () => {
+            if (raf != null) cancelAnimationFrame(raf);
+            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', onScroll);
+        };
+    }, []);
 
     return (
-        <footer>
+        <footer ref={footerRef}>
+            {showBg && (
+                <motion.div
+                    className="footer-scroll-bg"
+                    style={{ backgroundColor }}
+                    aria-hidden="true"
+                />
+            )}
             {/* Main Footer Content - Light Background */}
             <div className="footer-main">
                 <div className="footer-main-container">
