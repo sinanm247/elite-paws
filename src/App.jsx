@@ -6,6 +6,7 @@ import routes from './routes/routes';
 import Navbar from './Components/Common/Navbar/Navbar';
 import ElitePawsNavbar from './Components/ElitePaws/ElitePawsNavbar/ElitePawsNavbar';
 import Footer from './Components/Common/Footer/Footer';
+import ElitePawsFooter from './Components/ElitePaws/Footer/ElitePawsFooter';
 
 
 export default function App() {
@@ -29,7 +30,7 @@ export default function App() {
           <Fragment>
             {location.pathname === '/elite-paws-home' ? <ElitePawsNavbar /> : <Navbar />}
             <AppRouter routes={routes} />
-            <Footer />
+            {location.pathname === '/elite-paws-home' ? <ElitePawsFooter /> : <Footer />}
           </Fragment>
         )}
     </>

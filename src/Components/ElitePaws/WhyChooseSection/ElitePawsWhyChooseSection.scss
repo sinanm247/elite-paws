@@ -1,0 +1,183 @@
+@import '../../../index.scss';
+
+$why-pink: #e0497a;
+$why-card-green: #1a4d3e;
+
+.elite-paws-why-choose {
+  position: relative;
+  height: 480vh;
+  background: transparent;
+}
+
+.elite-paws-why-choose-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.elite-paws-why-choose-sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(72px, 10vh, 100px) clamp(24px, 3vw, 48px) clamp(32px, 5vh, 56px);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.elite-paws-why-choose-hero {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: min(1100px, 92vw);
+  text-align: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.elite-paws-why-choose-title {
+  font-family: 'Pawcinno', sans-serif;
+  font-size: clamp(3rem, 14vw, 11rem);
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.95);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.elite-paws-why-choose-title-line {
+  display: block;
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.12);
+}
+
+.elite-paws-why-choose-title-accent {
+  opacity: 0.88;
+  font-size: 0.72em;
+  margin-top: 0.06em;
+}
+
+.elite-paws-why-choose-stack {
+  position: relative;
+  z-index: 3;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  max-width: min(1600px, 96vw);
+  min-height: min(56vh, 560px);
+}
+
+.elite-paws-why-choose-card {
+  position: relative;
+  flex: 0 0 calc((100% - 54px) / 4);
+  width: calc((100% - 54px) / 4);
+  max-width: calc((100% - 54px) / 4);
+  min-height: min(58vh, 610px);
+  max-height: min(64vh, 680px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: clamp(14px, 2vh, 22px);
+  background: $why-card-green;
+  border-radius: 20px;
+  padding: clamp(20px, 2.5vh, 32px) clamp(14px, 1.2vw, 22px) clamp(24px, 3vh, 36px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+
+.elite-paws-why-choose-card-icon {
+  display: block;
+  width: clamp(64px, 6vw, 88px);
+  height: clamp(64px, 6vw, 88px);
+  object-fit: contain;
+  margin: 0 auto;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
+}
+
+.elite-paws-why-choose-card-title {
+  font-family: 'Pawcinno', serif;
+  font-size: clamp(1.35rem, 3.2vw, 2rem);
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-align: center;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.elite-paws-why-choose-card-text {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.55;
+  margin: 0;
+  text-align: center;
+  max-width: 22ch;
+  flex: 0 1 auto;
+}
+
+@media (max-width: 1024px) {
+  .elite-paws-why-choose {
+    height: 420vh;
+  }
+
+  .elite-paws-why-choose-stack {
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+    row-gap: 20px;
+    min-height: auto;
+  }
+
+  .elite-paws-why-choose-card {
+    flex: 0 0 calc((100% - 18px) / 2);
+    max-width: calc((100% - 18px) / 2);
+    min-height: min(46vh, 420px);
+    max-height: min(52vh, 480px);
+  }
+}
+
+@media (max-width: 600px) {
+  .elite-paws-why-choose {
+    height: 400vh;
+  }
+
+  .elite-paws-why-choose-stack {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .elite-paws-why-choose-card {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 320px;
+    min-height: auto;
+    max-height: none;
+    padding: 22px 20px 26px;
+  }
+}

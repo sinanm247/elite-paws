@@ -1,0 +1,192 @@
+@import '../../../index.scss';
+
+.elite-paws-contact-modal-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+}
+
+.elite-paws-contact-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(18, 10, 20, 0.28);
+  cursor: pointer;
+}
+
+.elite-paws-contact-modal {
+  position: relative;
+  width: min(680px, 92vw);
+  min-height: 520px;
+  background: #f2dfde;
+  border-radius: 28px;
+  padding: 50px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+  clip-path: polygon(14% 0, 86% 0, 100% 22%, 92% 52%, 100% 82%, 86% 100%, 14% 100%, 0 80%, 8% 50%, 0 20%);
+  overflow: hidden;
+  transform-origin: center center;
+  z-index: 3;
+}
+
+.elite-paws-contact-modal-wrap.is-open .elite-paws-contact-modal {
+  animation: modalBookOpen 0.56s cubic-bezier(0.6, 0.06, 0.22, 1) forwards;
+}
+
+.elite-paws-contact-modal-wrap.is-closing .elite-paws-contact-modal {
+  animation: modalBookClose 0.56s cubic-bezier(0.6, 0.06, 0.22, 1) forwards;
+}
+
+.elite-paws-contact-modal-content {
+  position: absolute;
+  inset: 0;
+  padding: 50px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #d22e83;
+}
+
+.elite-paws-contact-modal-close {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #ee9f9b;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease, background 0.2s ease;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+
+  svg {
+    font-size: 1.5rem;
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.elite-paws-contact-modal-step {
+  margin: 0 0 6px;
+  font-family: 'Pawcinno', serif;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.elite-paws-contact-modal-content h3 {
+  margin: 0 0 14px;
+  font-family: 'Pawcinno', serif;
+  text-transform: uppercase;
+  line-height: 1;
+  font-size: clamp(2rem, 4.6vw, 3rem);
+}
+
+.elite-paws-contact-modal-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+  width: min(430px, 90%);
+  margin: 0 auto;
+}
+
+.elite-paws-contact-modal-form label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #d22e83;
+}
+
+.elite-paws-contact-modal-form label.full {
+  grid-column: 1 / -1;
+  width: 55%;
+  margin: 0 auto;
+}
+
+.elite-paws-contact-modal-form input {
+  margin-top: 4px;
+  height: 34px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 0.85rem;
+  font-family: 'Helvetica Neue', sans-serif;
+  color: #686868;
+  background: #fff;
+}
+
+.elite-paws-contact-modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.elite-paws-contact-modal-actions button {
+  border: 0;
+  border-radius: 8px;
+  height: 34px;
+  padding: 0 16px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.elite-paws-contact-modal-actions .ghost {
+  background: #f2cad9;
+  color: #fff;
+}
+
+.elite-paws-contact-modal-actions .primary {
+  background: #d7d8f7;
+  color: #fff;
+}
+
+.elite-paws-contact-modal-note {
+  margin: 16px 0 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+@keyframes modalBookOpen {
+  from {
+    transform: scaleX(0.03) scaleY(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1) scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes modalBookClose {
+  from {
+    transform: scaleX(1) scaleY(1);
+    opacity: 1;
+  }
+  to {
+    transform: scaleX(0.03) scaleY(0.92);
+    opacity: 0;
+  }
+}

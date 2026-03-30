@@ -9,7 +9,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io"
 import footerDogImage from "../../../assets/Gallery/image-14.png"
 
-const PREV_BG = '#7eb6e7';
+const PREV_BG = '#efeeea';
 const FOOTER_BG = '#efeeea';
 
 export default function Footer() {
