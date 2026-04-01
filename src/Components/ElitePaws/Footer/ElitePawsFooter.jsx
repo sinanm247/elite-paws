@@ -1,13 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { FaInstagram, FaWhatsapp, FaFacebookF, FaLinkedinIn } from 'react-icons/fa';
-import teamImage from '../../../assets/New/image-1.jpeg';
+import teamImage from '../../../assets/Gallery/Image-8.jpeg';
 import './ElitePawsFooter.scss';
 import ElitePawsContactModal from '../ContactModal/ElitePawsContactModal';
 
+import instagramIcon from '../../../assets/Icons/instagram-icon-color.png';
+import tiktokIcon from '../../../assets/Icons/tiktok-icon-color.png';
+import pinterestIcon from '../../../assets/Icons/pinterest-icon-color.png';
+import linkedinIcon from '../../../assets/Icons/linkedin-icon-color.png';
+
 // Start from the end color of ElitePawsWhyChooseSection to avoid a visible jump.
-const WHYCHOICE_END_BG = '#e0497a';
-const FOOTER_BG = '#dd8fb3';
+const WHYCHOICE_END_BG = '#fcf2e0';
+const FOOTER_BG = '#b7d6a0';
 
 export default function ElitePawsFooter() {
   const footerRef = useRef(null);
@@ -98,12 +102,12 @@ export default function ElitePawsFooter() {
       <h2 className="elite-paws-footer-wordmark" aria-hidden="true">Elite Paws</h2>
 
       <div className="elite-paws-footer-meta">
-        <div className="elite-paws-footer-social">
-          <a href="#" aria-label="Instagram"><FaInstagram /></a>
-          <a href="#" aria-label="WhatsApp"><FaWhatsapp /></a>
-          <a href="#" aria-label="Facebook"><FaFacebookF /></a>
-          <a href="#" aria-label="LinkedIn"><FaLinkedinIn /></a>
-        </div>
+        <div className="elite-paws-menu-social-footer">
+            <a href="#" aria-label="Instagram"><img src={instagramIcon} alt="" /></a>
+            <a href="#" aria-label="TikTok"><img src={tiktokIcon} alt="" /></a>
+            <a href="#" aria-label="Pinterest"><img src={pinterestIcon} alt="" /></a>
+            <a href="#" aria-label="LinkedIn"><img src={linkedinIcon} alt="" /></a>
+          </div>
 
         <div className="elite-paws-footer-links">
           <a href="/privacy-policy">Confidentiality</a>

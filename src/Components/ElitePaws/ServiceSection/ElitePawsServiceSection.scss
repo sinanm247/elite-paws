@@ -1,11 +1,11 @@
 @import '../../../index.scss';
 
-$service-bg: #e8e6e3;
-$service-heading-color: #2C2C2C;
-$service-desc-color: rgba(#2C2C2C, 0.6);
-$service-title-color: #2C2C2C;
-$service-tag-border: rgba(#2C2C2C, 0.3);
-$service-tag-color: #2C2C2C;
+$service-bg: $quaternary;
+$service-heading-color: $primary;
+$service-desc-color: rgba($primary, 0.78);
+$service-title-color: $primary;
+$service-tag-border: rgba($primary, 0.35);
+$service-tag-color: rgba($primary, 0.92);
 
 .elite-paws-services {
   position: relative;
@@ -29,6 +29,7 @@ $service-tag-color: #2C2C2C;
   height: 100%;
   z-index: 0;
   pointer-events: none;
+  transition: opacity 0.32s ease;
 }
 
 .elite-paws-services-inner {
@@ -62,7 +63,7 @@ $service-tag-color: #2C2C2C;
 }
 
 .elite-paws-services-desc {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
   font-size: 0.95rem;
   font-style: italic;
   color: $service-desc-color;
@@ -72,7 +73,7 @@ $service-tag-color: #2C2C2C;
 }
 
 .elite-paws-services-link {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
   color: $service-heading-color;
@@ -142,10 +143,10 @@ $service-tag-color: #2C2C2C;
 .elite-paws-services-item {
   padding: 28px 0;
   cursor: pointer;
-  transition: padding 0.3s ease;
+  transition: padding 0.38s cubic-bezier(0.4, 0, 0.2, 1);
 
   & + & {
-    border-top: 1px solid rgba(#2C2C2C, 0.12);
+    border-top: 1px solid rgba($primary, 0.18);
   }
 }
 
@@ -162,11 +163,107 @@ $service-tag-color: #2C2C2C;
 }
 
 .elite-paws-services-item:not(.is-active) .elite-paws-services-item-title {
-  opacity: 0.45;
+  opacity: 0.6;
 }
 
 .elite-paws-services-item:not(.is-active):hover .elite-paws-services-item-title {
   opacity: 0.7;
+}
+
+.elite-paws-services-item-subtitle {
+  margin: 10px 0 8px;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba($secondary, 0.9);
+  line-height: 1.4;
+  transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.elite-paws-services-item-details {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(10px);
+  transition:
+    max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.28s ease,
+    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: max-height, opacity, transform;
+}
+
+.elite-paws-services-item.is-active .elite-paws-services-item-details,
+.elite-paws-services-item-details.is-active {
+  max-height: 260px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.elite-paws-services-item.is-active {
+  padding: 34px 0;
+}
+
+.elite-paws-services-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 10px;
+}
+
+.elite-paws-services-item-price,
+.elite-paws-services-item-duration {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba($primary, 0.95);
+  border: 1px solid rgba($primary, 0.22);
+  background: rgba($primary, 0.06);
+}
+
+.elite-paws-services-item-desc {
+  margin: 0;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba($primary, 0.82);
+  max-width: 52ch;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.elite-paws-services-item-desc.is-expanded {
+  line-clamp: unset;
+  -webkit-line-clamp: unset;
+  max-height: none;
+}
+
+.elite-paws-services-item-more {
+  margin-top: 10px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $secondary;
+  cursor: pointer;
+  opacity: 0.95;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+
+  &:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+  }
 }
 
 // Tags - hidden by default, shown when active
@@ -190,7 +287,7 @@ $service-tag-color: #2C2C2C;
 }
 
 .elite-paws-services-tag {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
   font-size: 0.8rem;
   color: $service-tag-color;
   border: 1px solid $service-tag-border;
@@ -200,8 +297,8 @@ $service-tag-color: #2C2C2C;
   transition: background 0.2s ease, color 0.2s ease;
 
   &:hover {
-    background: $service-heading-color;
-    color: #fff;
+    background: $secondary;
+    color: $quaternary;
   }
 }
 

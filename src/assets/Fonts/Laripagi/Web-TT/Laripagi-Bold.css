@@ -1,0 +1,12 @@
+/* Webfont: Laripagi-Bold */@font-face {
+    font-family: 'Laripagi';
+    src: url('Laripagi-Bold.eot'); /* IE9 Compat Modes */
+    src: url('Laripagi-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('Laripagi-Bold.woff') format('woff'), /* Modern Browsers */
+         url('Laripagi-Bold.woff2') format('woff2'), /* Modern Browsers */
+         url('Laripagi-Bold.ttf') format('truetype'); /* Safari, Android, iOS */
+             font-style: normal;
+    font-weight: bold;
+    text-rendering: optimizeLegibility;
+}
+

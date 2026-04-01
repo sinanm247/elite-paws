@@ -71,7 +71,7 @@
                 top: 15%;
                 left: 2%;
                 font-size: 100px;
-                color: rgba($gray, 0.08);
+                color: rgba($black, 0.08);
                 transform: rotate(-45deg);
                 z-index: 0;
 
@@ -96,7 +96,7 @@
                 top: 5%;
                 right: 30%;
                 font-size: 100px;
-                color: rgba($gray, 0.08);
+                color: rgba($black, 0.08);
                 transform: rotate(45deg);
                 z-index: 0;
 
@@ -123,7 +123,7 @@
                 right: 5%;
                 width: 100px;
                 height: 80px;
-                background: rgba($gray, 0.05);
+                background: rgba($black, 0.05);
                 border-radius: 50% 50% 0 0;
                 transform: rotate(-30deg);
                 z-index: 0;
@@ -268,7 +268,7 @@
             .cta-description {
                 font-size: 18px;
                 line-height: 1.6;
-                color: $gray;
+                color: $black;
                 margin: 0;
                 max-width: 600px;
 

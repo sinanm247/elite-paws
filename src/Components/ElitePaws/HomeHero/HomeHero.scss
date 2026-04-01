@@ -1,9 +1,9 @@
 @import '../../../index.scss';
 
-$hero-bg-light: #f5f0eb;
-$hero-bg-bold: #2C2C2C;
-$hero-bg-mid: #2d3e50;
-$hero-accent: #ee9f9b;
+$hero-bg-light: $quinary;
+$hero-bg-bold: $logo-dark-bg;
+$hero-bg-mid: $tertiary;
+$hero-accent: $secondary;
 
 .elite-hero {
   position: relative;
@@ -86,7 +86,7 @@ $hero-accent: #ee9f9b;
   font-family: 'Pawcinno', serif;
   font-size: clamp(6rem, 18vw, 15rem);
   font-weight: 700;
-  color: rgba($hero-bg-bold, 0.14);
+  color: rgba($secondary, 1);
   white-space: nowrap;
   user-select: none;
   margin: 0;
@@ -107,10 +107,10 @@ $hero-accent: #ee9f9b;
 }
 
 .elite-hero-copy-label {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: $gray;
+  color: $secondary;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin: 0 0 8px 0;
@@ -121,7 +121,7 @@ $hero-accent: #ee9f9b;
   text-transform: uppercase;
   font-size: clamp(1.75rem, 4vw, 2.75rem);
   font-weight: 700;
-  color: $hero-bg-bold;
+  color: $tertiary;
   line-height: 1.2;
   margin: 0;
 }
@@ -161,16 +161,38 @@ $hero-accent: #ee9f9b;
   }
 }
 
+.elite-hero-s2-right-image {
+  display: block;
+  width: min(400px, 100%);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  margin: 18px 0 0 auto;
+  border-radius: 14px;
+  // box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+  // border: 1px solid rgba($quinary, 0.12);
+}
+
 .elite-hero-s2-line {
   font-family: 'Pawcinno', serif;
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
-  color: $white;
+  color: $quinary;
   margin: 0;
   line-height: 1.2;
 
   &.elite-hero-s2-accent {
-    color: $hero-accent;
+    color: $secondary;
+  }
+}
+
+// Section 2 uses $secondary bg -> keep text dark
+.elite-hero-bg-section-2 {
+  .elite-hero-s2-line {
+    color: $tertiary;
+  }
+
+  .elite-hero-s2-line.elite-hero-s2-accent {
+    color: $logo-dark-bg;
   }
 }
 
@@ -193,16 +215,29 @@ $hero-accent: #ee9f9b;
   }
 }
 
+.elite-hero-s3-left-image {
+  position: absolute;
+  left: 120px;
+  top: 90px;
+  transform: translateY(-50%);
+  // display: none;
+  width: min(150px, 100%);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  margin: 18px 0 0 auto;
+  border-radius: 14px;
+}
+
 .elite-hero-s3-headline {
   font-family: 'Pawcinno', serif;
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 700;
-  color: $white;
+  color: $quinary;
   margin: 0;
   line-height: 1.15;
 
   &.elite-hero-s2-accent {
-    color: $hero-accent;
+    color: $secondary;
   }
 }
 
@@ -223,14 +258,17 @@ $hero-accent: #ee9f9b;
 }
 
 .elite-hero-s3-para {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
   font-size: clamp(0.8rem, 1.8vw, 1rem);
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba($quinary, 0.88);
   margin: 0;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 
   span {
-    color: #ee9f9b;
+    color: $secondary;
     font-weight: 700;
   }
 
@@ -254,6 +292,7 @@ $hero-accent: #ee9f9b;
   align-items: center;
   justify-content: center;
   transition: filter 0.2s ease;
+  overflow: visible;
 }
 
 .elite-hero-card-slot.elite-hero-card-left {
@@ -325,6 +364,49 @@ $hero-accent: #ee9f9b;
   height: 100%;
 }
 
+.elite-hero-video-hint {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.28));
+}
+
+.elite-hero-video-hint--outside {
+  top: 50px;
+  left: -40px;
+  right: auto;
+}
+
+.elite-hero-video-hint-icon {
+  width: 70px;
+  height: auto;
+  opacity: 0.92;
+  // transform: scaleX(-1) rotate(45deg);
+  transform: rotate(deg);
+}
+
+.elite-hero-video-hint-text {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+  left: auto;
+  font-family: 'Biro Script', 'Pawcinno', serif;
+  font-size: 18px;
+  line-height: 1.05;
+  color: rgba($tertiary, 1);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-align: center;
+  transform: rotate(15deg);
+}
+
 .elite-hero-video-layer {
   position: absolute;
   inset: 0;
@@ -366,8 +448,8 @@ $hero-accent: #ee9f9b;
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  color: #1a1a1a;
+  background: rgba($quinary, 0.95);
+  color: $tertiary;
   cursor: pointer;
   pointer-events: auto;
   transition: opacity 0.2s ease, transform 0.15s ease;

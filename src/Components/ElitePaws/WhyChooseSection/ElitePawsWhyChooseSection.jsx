@@ -6,8 +6,8 @@ import icon3 from '../../../assets/Icons/whychoose-icon-3.avif';
 import icon4 from '../../../assets/Icons/whychoose-icon-4.avif';
 import './ElitePawsWhyChooseSection.scss';
 
-const SERVICE_END_BG = '#7eb6e7';
-const HERO_PINK_BG = '#e0497a';
+const SERVICE_END_BG = '#212920';
+const WHY_BG = '#fcf2e0';
 
 const REASONS = [
   {
@@ -95,8 +95,8 @@ export default function ElitePawsWhyChooseSection() {
 
   const backgroundColor = useTransform(
     bgScrollYProgress,
-    [0, 0.45, 1],
-    [SERVICE_END_BG, HERO_PINK_BG, HERO_PINK_BG]
+    [0, 0.25, 0.4],
+    [SERVICE_END_BG, WHY_BG, WHY_BG]
   );
 
   useEffect(() => {
@@ -127,13 +127,11 @@ export default function ElitePawsWhyChooseSection() {
 
   return (
     <section ref={sectionRef} className="elite-paws-why-choose">
-      {showBg && (
-        <motion.div
-          className="elite-paws-why-choose-bg"
-          style={{ backgroundColor }}
-          aria-hidden="true"
-        />
-      )}
+      <motion.div
+        className="elite-paws-why-choose-bg"
+        style={{ backgroundColor, opacity: showBg ? 1 : 0 }}
+        aria-hidden="true"
+      />
 
       <div className="elite-paws-why-choose-sticky">
         <div className="elite-paws-why-choose-hero">

@@ -81,7 +81,7 @@
             margin-top: 20px;
             font-size: 18px;
             line-height: 1.6;
-            color: $gray;
+            color: $black;
             max-width: 600px;
         }
 
@@ -148,7 +148,7 @@
 
                     .award-date {
                         font-size: 14px;
-                        color: $gray;
+                        color: $black;
                         margin: 0;
                     }
                 }
@@ -192,7 +192,7 @@
                     top: 10%;
                     left: 5%;
                     font-size: 120px;
-                    color: rgba($gray, 0.15);
+                    color: rgba($black, 0.15);
                     transform: rotate(-15deg);
                     z-index: 1;
                 }
@@ -202,7 +202,7 @@
                     top: 25%;
                     right: -10%;
                     font-size: 100px;
-                    color: rgba($gray, 0.15);
+                    color: rgba($black, 0.15);
                     transform: rotate(45deg);
                     z-index: 1;
                 }
@@ -212,7 +212,7 @@
                     bottom: -10%;
                     right: 0%;
                     font-size: 100px;
-                    color: rgba($gray, 0.15);
+                    color: rgba($black, 0.15);
                     transform: rotate(-30deg);
                     z-index: 1;
 

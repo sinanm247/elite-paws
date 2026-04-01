@@ -37,3 +37,50 @@
   font-style: normal;
   font-display: swap;
 }
+
+// --- Biro Script (handwritten accent) ---
+@font-face {
+  font-family: 'Biro Script';
+  src: url('./assets/Fonts/Biro-Script/Biro_Script_reduced.otf') format('opentype'),
+       url('./assets/Fonts/Biro-Script/Biro_Script_reduced.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+// --- Laripagi (content font) ---
+@font-face {
+  font-family: 'Laripagi';
+  src: url('./assets/Fonts/Laripagi/Laripagi-Regular.otf') format('opentype'),
+       url('./assets/Fonts/Laripagi/Laripagi-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Laripagi';
+  src: url('./assets/Fonts/Laripagi/Laripagi-Italic.otf') format('opentype'),
+       url('./assets/Fonts/Laripagi/Laripagi-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Laripagi';
+  src: url('./assets/Fonts/Laripagi/Laripagi-Bold.otf') format('opentype'),
+       url('./assets/Fonts/Laripagi/Laripagi-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Laripagi';
+  src: url('./assets/Fonts/Laripagi/Laripagi-BoldItalic.otf') format('opentype'),
+       url('./assets/Fonts/Laripagi/Laripagi-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}

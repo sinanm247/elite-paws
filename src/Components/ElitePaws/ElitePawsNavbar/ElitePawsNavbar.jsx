@@ -5,7 +5,7 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
 import logoDark from '../../../assets/Logo/elite-paws-logo-dark.png';
 import logoIcon from '../../../assets/Logo/logo-icon.png';
-import qrCode from '../../../assets/Common/qr-code.svg';
+import qrCode from '../../../assets/Common/qr-code.png';
 import instagramIcon from '../../../assets/Icons/instagram-icon.png';
 import tiktokIcon from '../../../assets/Icons/tiktok-icon.png';
 import pinterestIcon from '../../../assets/Icons/pinterest-icon.png';
@@ -89,12 +89,12 @@ export default function ElitePawsNavbar() {
           </button>
 
           <nav className="elite-paws-menu-links">
-            <a href="/">Home</a>
-            <a href="/about-us">Agency</a>
-            <a href="/gallery">Projects</a>
-            <a href="/services">Expertise</a>
-            <a href="/faqs">FAQ</a>
-            <a href="/contact-us">Contact</a>
+            <a href="/#">Home</a>
+            <a href="/#">About Us</a>
+            <a href="/#">Elite Paws Plans</a>
+            <a href="/#">Services</a>
+            <a href="/#">Portfolio</a>
+            <a href="/#">Contact</a>
           </nav>
 
           <img className="elite-paws-menu-join-logo" src={logoIcon} alt="Elite Paws" />

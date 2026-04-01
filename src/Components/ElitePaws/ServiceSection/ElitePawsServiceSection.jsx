@@ -12,29 +12,13 @@ const SERVICE_IMAGES = {
   3: img3,
 };
 
-const SERVICE_TAGS = {
-  1: [
-    'Comprehensive health assessment',
-    'Weight & nutrition review',
-    'Early disease detection',
-    'Preventive care planning',
-  ],
-  2: [
-    'Core vaccinations',
-    'Booster schedules',
-    'Puppy & kitten protocols',
-    'Travel immunization',
-  ],
-  3: [
-    'Teeth cleaning & polishing',
-    'Oral health examination',
-    'Tartar & plaque removal',
-    'Dental health education',
-  ],
-};
+function getServiceTags(service) {
+  const items = service?.includesDetailed || [];
+  return items.slice(0, 4).map((x) => x.title);
+}
 
-const PRICING_BG = '#e8e6e3';
-const SERVICE_BG = '#7eb6e7';
+const PRICING_BG = '#b7d6a0';
+const SERVICE_BG = '#212920';
 
 function getSlotPosition(index, activeIndex, total) {
   const diff = ((index - activeIndex) % total + total) % total;
@@ -46,6 +30,7 @@ function getSlotPosition(index, activeIndex, total) {
 export default function ElitePawsServiceSection() {
   const sectionRef = useRef(null);
   const [activeService, setActiveService] = useState(services[0]?.id ?? null);
+  const [expandedService, setExpandedService] = useState(services[0]?.id ?? null);
 
   const { scrollYProgress: bgScrollYProgress } = useScroll({
     target: sectionRef,
@@ -54,7 +39,7 @@ export default function ElitePawsServiceSection() {
 
   const backgroundColor = useTransform(
     bgScrollYProgress,
-    [0, 0.5, 1],
+    [0, 0.25, 0.4],
     [PRICING_BG, SERVICE_BG, SERVICE_BG]
   );
 
@@ -70,6 +55,10 @@ export default function ElitePawsServiceSection() {
     const newId = services[idx]?.id;
     if (newId != null) setActiveService(newId);
   });
+
+  useEffect(() => {
+    if (activeService != null) setExpandedService(activeService);
+  }, [activeService]);
 
   const [showBg, setShowBg] = useState(false);
   useEffect(() => {
@@ -100,13 +89,11 @@ export default function ElitePawsServiceSection() {
 
   return (
     <section ref={sectionRef} className="elite-paws-services">
-      {showBg && (
-        <motion.div
-          className="elite-paws-services-bg"
-          style={{ backgroundColor }}
-          aria-hidden="true"
-        />
-      )}
+      <motion.div
+        className="elite-paws-services-bg"
+        style={{ backgroundColor, opacity: showBg ? 1 : 0 }}
+        aria-hidden="true"
+      />
 
       <div className="elite-paws-services-sticky">
         <div className="elite-paws-services-inner">
@@ -119,11 +106,11 @@ export default function ElitePawsServiceSection() {
             Pet Care.
           </h2>
           <p className="elite-paws-services-desc">
-            Elite Paws is a pet care service founded on three strong areas of expertise.
+            Specialized grooming treatments designed for comfort, coat health, and stress-free care.
           </p>
-          <a href="#services" className="elite-paws-services-link">
+          {/* <a href="#services" className="elite-paws-services-link">
             Explore All Services
-          </a>
+          </a> */}
         </div>
 
         <div className="elite-paws-services-center">
@@ -143,7 +130,7 @@ export default function ElitePawsServiceSection() {
                   className={`elite-paws-services-slide ${slot === 'center' ? 'is-active' : ''}`}
                   style={slotStyles[slot]}
                 >
-                  <img src={SERVICE_IMAGES[service.id]} alt={service.title} />
+                  <img src={service.image} alt={service.title} />
                 </div>
               );
             })}
@@ -153,7 +140,7 @@ export default function ElitePawsServiceSection() {
         <div className="elite-paws-services-right">
           {services.map((service) => {
             const isActive = activeService === service.id;
-            const tags = SERVICE_TAGS[service.id] || [];
+            const isExpanded = expandedService === service.id;
 
             return (
               <div
@@ -165,6 +152,36 @@ export default function ElitePawsServiceSection() {
                 onKeyDown={(e) => e.key === 'Enter' && setActiveService(service.id)}
               >
                 <h3 className="elite-paws-services-item-title">{service.title}</h3>
+
+                {service.subtitle ? (
+                  <p className="elite-paws-services-item-subtitle">{service.subtitle}</p>
+                ) : null}
+
+                <div className={`elite-paws-services-item-details ${isActive ? 'is-active' : ''}`}>
+                  <div className="elite-paws-services-item-meta">
+                    {service.price ? <span className="elite-paws-services-item-price">{service.price}</span> : null}
+                    {service.duration ? <span className="elite-paws-services-item-duration">{service.duration}</span> : null}
+                  </div>
+
+                  {service.description ? (
+                    <p className={`elite-paws-services-item-desc ${isExpanded ? 'is-expanded' : ''}`}>
+                      {service.description}
+                    </p>
+                  ) : null}
+
+                  <button
+                    type="button"
+                    className="elite-paws-services-item-more"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setExpandedService((prev) => (prev === service.id ? null : service.id));
+                    }}
+                  >
+                    {isExpanded ? 'See less' : 'See more'}
+                  </button>
+                </div>
+
+                {/*
                 {tags.length > 0 && (
                   <div className="elite-paws-services-tags">
                     {tags.map((tag) => (
@@ -174,6 +191,7 @@ export default function ElitePawsServiceSection() {
                     ))}
                   </div>
                 )}
+                */}
               </div>
             );
           })}

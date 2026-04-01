@@ -3,10 +3,13 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionVa
 import { FaPlay, FaPause } from 'react-icons/fa';
 import { FaVolumeHigh, FaVolumeXmark } from 'react-icons/fa6';
 import './HomeHero.scss';
-import imgLeft from '../../../assets/New/image-2.jpeg';
-import imgCenter from '../../../assets/New/image-1.jpeg';
-import imgRight from '../../../assets/New/image-3.jpg';
-import videoLeft from '../../../assets/New/video-1.mp4';
+import imgLeft from '../../../assets/Gallery/Image-1.jpeg';
+import imgCenter from '../../../assets/Gallery/Image-24.jpeg';
+import imgRight from '../../../assets/Gallery/Image-29.jpeg';
+import videoLeft from '../../../assets/Videos/Video-1.mp4';
+import arrowIcon from '../../../assets/Icons/arrow-1.png';
+import section2RightImage from '../../../assets/Images/Image-1.png';
+import element1 from '../../../assets/Elements/Element-1.png';
 
 const HOVER_MOVE = 18;
 const HOVER_ROTATE = 6;
@@ -292,7 +295,7 @@ export default function HomeHero() {
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.25, 0.38, 0.58, 0.72, 1],
-    ['#f5f0eb', '#f5f0eb', '#2C2C2C', '#2C2C2C', '#2d3e50', '#2d3e50']
+    ['#fcf2e0', '#fcf2e0', '#b7d6a0', '#b7d6a0', '#07211e', '#07211e']
   );
 
   // Hide sticky layers when hero has scrolled out (sticky doesn't unstick in this layout)
@@ -350,6 +353,12 @@ export default function HomeHero() {
                   zIndex: leftSlotZIndex,
                 }}
               >
+                {isSection2Active && (
+                  <div className="elite-hero-video-hint elite-hero-video-hint--outside" aria-hidden="true">
+                    <img src={arrowIcon} alt="" className="elite-hero-video-hint-icon" />
+                    <span className="elite-hero-video-hint-text">Click here to<br/> play video</span>
+                  </div>
+                )}
                 <LeftVideoCard
                   imgSrc={imgLeft}
                   videoSrc={videoLeft}
@@ -418,12 +427,26 @@ export default function HomeHero() {
             <p className="elite-hero-s2-line elite-hero-s2-accent">care your pet deserves.</p>
           </div>
           <div className="elite-hero-bg-section-2-right">
+            <img
+              className="elite-hero-s2-right-image"
+              src={section2RightImage}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+            />
             <p className="elite-hero-s2-line">You are</p>
             <p className="elite-hero-s2-line elite-hero-s2-accent">family.</p>
           </div>
         </div>
         <div className="elite-hero-bg-section elite-hero-bg-section-3">
           <div className="elite-hero-bg-section-3-left">
+          <img
+              className="elite-hero-s3-left-image"
+              src={element1}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+            />
             <p className="elite-hero-s3-headline">We care for</p>
             <p className="elite-hero-s3-headline elite-hero-s2-accent">your pets.</p>
           </div>

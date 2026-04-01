@@ -14,39 +14,26 @@
 // SIMPLE COLOR SYSTEM
 // ===========================================
 
-// --- Logo-only palette (active) ---
-$logo-light: #EFEEEA;
-$logo-dark: #2C2C2C;
-$primary: $logo-dark;
-$secondary: $logo-dark;
-$tertiary: $logo-dark;
-$quaternary: $logo-dark;
-$quinary: $logo-light;
-$logo-light-bg: $logo-light;  // Use dark logo on this
-$logo-dark-bg: $logo-dark;    // Use light logo on this
-
-// --- Previous brand colors (commented for revert) ---
-$primary: #ee9f9b;     // Coral / Salmon – main accent, CTAs
-$secondary: #f5cb5e;   // Warm yellow / Gold – secondary accent, highlights
-$tertiary: #447e49;    // Green – nature, success, complementary sections
-$quaternary: #7eb6e7;  // Soft blue – trust, links, optional accent
+// --- Website theme palette (active) ---
+$primary: #fcf2e0;     // Butter
+$secondary: #b7d6a0;   // Pastel green
+$tertiary: #07211e;    // Forest
+$quaternary: #212920;  // Dark green
 $quinary: #efeeea;    // Off-white / Cream – light backgrounds (header, sections)
 $logo-light-bg: #efeeea;  // Use dark logo on this
 $logo-dark-bg: #2c2c2c;   // Use light logo on this
 
 // Basic Colors
-$white: #ffffff;
-$black: #000000;
-$gray: #6c757d;
+$white: $quinary;
+$black: $logo-dark-bg;
 
 :root {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Laripagi', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: white;
+  color: $logo-dark-bg;
+  background-color: $quinary;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -70,7 +57,7 @@ body {
 }
 
 code {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
 }
 
 /* Titles and subtitles – Pawcinno */
@@ -113,7 +100,7 @@ a:hover {
 button,
 input,
 textarea {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
 }
 
 .btn {
@@ -231,7 +218,7 @@ textarea {
 .text-quinary { color: $quinary !important; }
 .text-white { color: $white !important; }
 .text-black { color: $black !important; }
-.text-gray { color: $gray !important; }
+.text-black { color: $black !important; }
 
 // Background Colors
 .bg-primary { background-color: $primary !important; }

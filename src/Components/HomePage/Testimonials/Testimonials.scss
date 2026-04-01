@@ -145,7 +145,7 @@
         .testimonials-description {
             font-size: 18px;
             line-height: 1.6;
-            color: $gray;
+            color: $black;
             margin: 0;
 
             @media (max-width: 768px) {
@@ -229,7 +229,7 @@
 
             .author-designation {
                 font-size: 16px;
-                color: $gray;
+                color: $black;
                 margin: 0;
 
                 @media (max-width: 768px) {
@@ -249,7 +249,7 @@
                 height: 12px;
                 border-radius: 50%;
                 border: none;
-                background: rgba($gray, 0.3);
+                background: rgba($black, 0.3);
                 cursor: pointer;
                 transition: all 0.3s ease;
                 padding: 0;
@@ -318,7 +318,7 @@
 
                 .stat-label {
                     font-size: 16px;
-                    color: $gray;
+                    color: $black;
                     font-weight: 400;
                 }
             }

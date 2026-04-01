@@ -29,7 +29,7 @@
 .elite-paws-footer-photo-card,
 .elite-paws-footer-cta-card {
   border-radius: 18px;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 18px 48px rgba($tertiary, 0.22);
 }
 
 .elite-paws-footer-photo-card {
@@ -37,6 +37,8 @@
   aspect-ratio: 3 / 4;
   overflow: hidden;
   transform: translateY(-18px) rotate(-2.5deg);
+  margin-bottom: -50px;
+  z-index: 2;
 
   img {
     width: 100%;
@@ -47,9 +49,10 @@
 }
 
 .elite-paws-footer-cta-card {
+  z-index: 3;
   width: min(420px, 46vw);
-  background: #d4368a;
-  color: #fff;
+  background: rgba($quinary, 0.92);
+  color: $tertiary;
   padding: clamp(20px, 2.8vw, 28px);
   min-height: clamp(300px, 26vh, 350px);
   display: flex;
@@ -64,7 +67,7 @@
   margin: 0 0 8px;
   font-size: 0.72rem;
   text-transform: uppercase;
-  opacity: 0.85;
+  color: rgba($tertiary, 0.72);
 }
 
 .elite-paws-footer-cta-card h3 {
@@ -77,18 +80,18 @@
 
 .elite-paws-footer-cta-copy {
   margin: 12px 0 18px;
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
   font-size: 0.95rem;
   line-height: 1.45;
-  opacity: 0.95;
+  color: rgba($tertiary, 0.82);
 }
 
 .elite-paws-footer-cta-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #F29EBD;
-  color: white;
+  background: $tertiary;
+  color: $quinary;
   border-radius: 7px;
   padding: 9px 14px;
   font-family: 'Pawcinno', serif;
@@ -100,6 +103,18 @@
   width: 150px;
   margin: 0 auto;
   cursor: pointer;
+  box-shadow: 0 10px 26px rgba($tertiary, 0.22);
+  transition: transform 0.18s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 14px 34px rgba($tertiary, 0.26);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 .elite-paws-footer-wordmark {
@@ -107,21 +122,23 @@
   z-index: 2;
   margin: clamp(16px, 4vh, 42px) 0 0;
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
   white-space: nowrap;
   font-family: 'Pawcinno', serif;
   font-weight: 800;
   text-transform: uppercase;
-  // letter-spacing: -0.06em;
-  color: #0d5a3f;
+  letter-spacing: -0.02em;
+  color: $logo-dark-bg;
   font-size: clamp(5rem, 15.5vw, 18rem);
   line-height: 0.78;
   user-select: none;
   max-width: 100%;
   // padding: 0 8vw;
   display: inline-block;
-  transform: scaleY(2);
-  margin-top: 100px;
-  margin-bottom: 70px;
+  // transform: scaleY(2);
+  // margin-top: 100px;
+  // margin-bottom: 70px;
   transform-origin: center center;
 }
 
@@ -137,29 +154,53 @@
   gap: 12px;
 }
 
-.elite-paws-footer-social,
+.elite-paws-menu-social-footer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    // background: rgba($quinary, 0.85);
+    // border: 1px solid rgba($tertiary, 0.12);
+    // box-shadow: 0 10px 26px rgba($tertiary, 0.16);
+    transition: transform 0.18s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 34px rgba($tertiary, 0.18);
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      opacity: 0.98;
+    }
+  }
+}
+
 .elite-paws-footer-links {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.elite-paws-footer-social a,
 .elite-paws-footer-links a {
-  color: rgba(12, 28, 22, 0.72);
+  color: rgba($tertiary, 0.78);
   text-decoration: none;
   font-size: 0.8rem;
-}
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
 
-.elite-paws-footer-social a {
-  width: 30px;
-  height: 30px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 1px solid rgba(12, 28, 22, 0.3);
-  font-size: .9rem;
+  &:hover {
+    color: rgba($tertiary, 0.92);
+  }
 }
 
 .elite-paws-footer-modal-wrap {
@@ -174,7 +215,7 @@
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(18, 10, 20, 0.28);
+  background: rgba($tertiary, 0.28);
   cursor: pointer;
 }
 
@@ -182,10 +223,10 @@
   position: relative;
   width: min(680px, 92vw);
   min-height: 520px;
-  background: #f2dfde;
+  background: $primary;
   border-radius: 28px;
   padding: 28px 26px 24px;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 24px 64px rgba($tertiary, 0.25);
   clip-path: polygon(14% 0, 86% 0, 100% 22%, 92% 52%, 100% 82%, 86% 100%, 14% 100%, 0 80%, 8% 50%, 0 20%);
   overflow: hidden;
   transform-origin: center center;
@@ -210,7 +251,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #d22e83;
+  color: $tertiary;
 }
 
 .elite-paws-footer-modal-close {
@@ -227,11 +268,11 @@
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  color: #ee9f9b;
+  background: rgba($quinary, 0.95);
+  color: $secondary;
   cursor: pointer !important;
   transition: opacity 0.2s ease, transform 0.15s ease, background 0.2s ease;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 6px rgba($tertiary, 0.12);
 
   svg {
     font-size: 1.5rem;
@@ -278,7 +319,7 @@
   text-align: left;
   font-size: 0.72rem;
   font-weight: 700;
-  color: #d22e83;
+  color: $tertiary;
 }
 
 .elite-paws-footer-modal-form label.full {
@@ -290,13 +331,13 @@
 .elite-paws-footer-modal-form input {
   margin-top: 4px;
   height: 34px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba($tertiary, 0.14);
   border-radius: 8px;
   padding: 0 12px;
   font-size: 0.85rem;
-  font-family: 'Helvetica Neue', sans-serif;
-  color: #686868;
-  background: #fff;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  color: $tertiary;
+  background: $quinary;
 }
 
 .elite-paws-footer-modal-actions {
@@ -317,13 +358,13 @@
 }
 
 .elite-paws-footer-modal-actions .ghost {
-  background: #f2cad9;
-  color: #fff;
+  background: $quinary;
+  color: $tertiary;
 }
 
 .elite-paws-footer-modal-actions .primary {
-  background: #d7d8f7;
-  color: #fff;
+  background: $secondary;
+  color: $tertiary;
 }
 
 .elite-paws-footer-modal-note {

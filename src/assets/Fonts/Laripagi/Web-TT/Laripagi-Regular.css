@@ -1,0 +1,12 @@
+/* Webfont: Laripagi-Regular */@font-face {
+    font-family: 'Laripagi';
+    src: url('Laripagi-Regular.eot'); /* IE9 Compat Modes */
+    src: url('Laripagi-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('Laripagi-Regular.woff') format('woff'), /* Modern Browsers */
+         url('Laripagi-Regular.woff2') format('woff2'), /* Modern Browsers */
+         url('Laripagi-Regular.ttf') format('truetype'); /* Safari, Android, iOS */
+             font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+

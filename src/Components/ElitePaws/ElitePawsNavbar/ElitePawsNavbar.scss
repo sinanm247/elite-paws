@@ -30,8 +30,10 @@
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  color: #ee9f9b;
+  // background: rgba($secondary, 1);
+  // color: $tertiary;
+  background: rgba($primary, 1);
+  color: $secondary;
   cursor: pointer;
   transition: opacity 0.2s ease, transform 0.15s ease, background 0.2s ease;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
@@ -61,7 +63,7 @@
 
 .elite-paws-navbar-btn-whatsapp {
   text-decoration: none;
-  color: #ee9f9b;
+  color: $secondary;
 
   &.is-open {
     transform: translate(-8px, 8px);
@@ -93,7 +95,7 @@
     position: absolute;
     inset: 0;
     border: 0;
-    background: rgba(221, 143, 179, 0.8);
+    background: rgba($tertiary, 0.26);
     opacity: 0;
     transition: opacity 0.32s ease;
   }
@@ -106,9 +108,9 @@
     min-height: 600px;
     height: auto;
     min-width: 450px;
-    background: #0d5a3f;
+    background: $tertiary;
     border-radius: 18px;
-    color: #fff;
+    color: $quinary;
     padding: 70px 26px 24px;
     text-align: center;
     box-shadow: 0 22px 56px rgba(0, 0, 0, 0.28);
@@ -118,11 +120,11 @@
     transition: transform 0.42s cubic-bezier(0.6, 0.06, 0.22, 1), opacity 0.28s ease;
 
     .elite-paws-whatsapp-qr {
-      width: 112px;
-      height: 112px;
+      width: 200px;
+      height: 200px;
       object-fit: contain;
       margin: 0 auto 16px;
-      background: #fff;
+      // background: $quinary;
       padding: 6px;
       border-radius: 8px;
     }
@@ -137,22 +139,22 @@
 
     p {
       margin: 0 0 18px;
-      font-family: 'Helvetica Neue', sans-serif;
+      font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
       font-size: 0.9rem;
       line-height: 1.45;
-      color: rgba(255, 255, 255, 0.95);
+      color: rgba($quinary, 0.92);
     }
 
     a {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: #dd8fb3;
-      color: #113327;
+      background: $secondary;
+      color: $tertiary;
       text-decoration: none;
       border-radius: 10px;
       padding: 10px 16px;
-      font-family: 'Helvetica Neue', sans-serif;
+      font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
       font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
@@ -183,7 +185,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: #dd8fb3;
+    background: $primary;
     opacity: 0;
     transition: opacity 0.35s ease;
     z-index: 0;
@@ -196,7 +198,7 @@
   top: 0;
   bottom: 0;
   width: 50%;
-  background: #0d5a3f;
+  background: $tertiary;
   transition: transform 0.58s cubic-bezier(0.6, 0.06, 0.22, 1);
   display: flex;
   flex-direction: column;
@@ -267,7 +269,7 @@
     font-family: 'Pawcinno', serif;
     font-size: clamp(2rem, 4vw, 7rem);
     text-transform: uppercase;
-    color: #fff;
+    color: $quinary;
     line-height: 0.95;
     text-decoration: none;
     transition: opacity 0.2s ease;
@@ -305,7 +307,7 @@
 .elite-paws-menu-connect {
   margin: auto auto auto 22%;
   // max-width: 400px;
-  color: #fff;
+  color: $quinary;
   text-align: center;
 
   .elite-paws-menu-qr {
@@ -327,23 +329,23 @@
   }
 
   p {
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
     font-size: 0.95rem;
     line-height: 1.45;
     margin: 0 0 20px;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba($quinary, 0.9);
   }
 
   a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #dd8fb3;
-    color: #113327;
+    background: $secondary;
+    color: $tertiary;
     text-decoration: none;
     border-radius: 10px;
     padding: 10px 16px;
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
     font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;

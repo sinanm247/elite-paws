@@ -101,7 +101,7 @@ footer {
 
                 .footer-tagline {
                     font-size: 14px;
-                    color: $gray;
+                    color: $black;
                     margin: 0;
                     font-weight: 500;
                 }
@@ -320,16 +320,16 @@ footer {
                 .footer-newsletter-input {
                     flex: 1;
                     padding: 14px 20px;
-                    border: 1px solid rgba($gray, 0.3);
+                    border: 1px solid rgba($black, 0.3);
                     border-radius: 30px;
                     background: rgba($white, 0.8);
                     font-size: 15px;
                     outline: none;
                     transition: all 0.3s ease;
-                    font-family: 'Helvetica Neue', sans-serif;
+                    font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
 
                     &::placeholder {
-                        color: $gray;
+                        color: $black;
                     }
 
                     &:focus {
@@ -353,7 +353,7 @@ footer {
                     gap: 10px;
                     transition: all 0.3s ease;
                     white-space: nowrap;
-                    font-family: 'Helvetica Neue', sans-serif;
+                    font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
 
                     @media (max-width: 768px) {
                         width: 100%;

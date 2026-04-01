@@ -12,7 +12,7 @@
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(18, 10, 20, 0.28);
+  background: rgba($tertiary, 0.28);
   cursor: pointer;
 }
 
@@ -20,10 +20,10 @@
   position: relative;
   width: min(680px, 92vw);
   min-height: 520px;
-  background: #f2dfde;
+  background: $primary;
   border-radius: 28px;
   padding: 50px;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 24px 64px rgba($tertiary, 0.25);
   clip-path: polygon(14% 0, 86% 0, 100% 22%, 92% 52%, 100% 82%, 86% 100%, 14% 100%, 0 80%, 8% 50%, 0 20%);
   overflow: hidden;
   transform-origin: center center;
@@ -48,7 +48,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #d22e83;
+  color: $tertiary;
 }
 
 .elite-paws-contact-modal-close {
@@ -65,11 +65,11 @@
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  color: #ee9f9b;
+  background: rgba($quinary, 0.95);
+  color: $secondary;
   cursor: pointer;
   transition: opacity 0.2s ease, transform 0.15s ease, background 0.2s ease;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 6px rgba($tertiary, 0.12);
 
   svg {
     font-size: 1.5rem;
@@ -115,7 +115,7 @@
   text-align: left;
   font-size: 0.72rem;
   font-weight: 700;
-  color: #d22e83;
+  color: $tertiary;
 }
 
 .elite-paws-contact-modal-form label.full {
@@ -127,13 +127,13 @@
 .elite-paws-contact-modal-form input {
   margin-top: 4px;
   height: 34px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba($tertiary, 0.14);
   border-radius: 8px;
   padding: 0 12px;
   font-size: 0.85rem;
-  font-family: 'Helvetica Neue', sans-serif;
-  color: #686868;
-  background: #fff;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  color: $tertiary;
+  background: $quinary;
 }
 
 .elite-paws-contact-modal-actions {
@@ -154,13 +154,13 @@
 }
 
 .elite-paws-contact-modal-actions .ghost {
-  background: #f2cad9;
-  color: #fff;
+  background: $quinary;
+  color: $tertiary;
 }
 
 .elite-paws-contact-modal-actions .primary {
-  background: #d7d8f7;
-  color: #fff;
+  background: $secondary;
+  color: $tertiary;
 }
 
 .elite-paws-contact-modal-note {

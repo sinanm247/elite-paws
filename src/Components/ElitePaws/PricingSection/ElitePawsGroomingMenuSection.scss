@@ -1,0 +1,664 @@
+@import '../../../index.scss';
+
+$pricing-bg-left: $primary;
+$pricing-card-overlay: rgba(0, 0, 0, 0.35);
+$pricing-accent: $secondary;
+
+// Tall section so vertical scroll drives horizontal card movement
+.elite-paws-pricing {
+  position: relative;
+  height: 350vh;
+  background: transparent;
+}
+
+.elite-paws-pricing-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+// -------- Grooming Menu details modal (anchored to card) --------
+.elite-paws-grooming-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1600;
+  pointer-events: none;
+}
+
+.elite-paws-grooming-modal.is-open {
+  pointer-events: auto;
+}
+
+.elite-paws-grooming-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba($tertiary, 0.22);
+  opacity: 0;
+  transition: opacity 0.32s ease;
+  cursor: pointer;
+}
+
+.elite-paws-grooming-modal.is-open .elite-paws-grooming-modal-backdrop {
+  opacity: 1;
+}
+
+.elite-paws-grooming-modal-panel {
+  position: fixed;
+  border-radius: 16px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 425px 1fr;
+  background: $quinary;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  transform: translateY(-14px) scale(0.2);
+  transform-origin: top right;
+  transition: transform 0.42s cubic-bezier(0.6, 0.06, 0.22, 1), opacity 0.28s ease;
+}
+
+.elite-paws-grooming-modal.is-open .elite-paws-grooming-modal-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.elite-paws-grooming-modal-left {
+  position: relative;
+  background: $tertiary;
+}
+
+.elite-paws-grooming-modal-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.elite-paws-grooming-modal-card-bottom {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.elite-paws-grooming-modal-right {
+  position: relative;
+  padding: 22px 22px 20px;
+  color: $tertiary;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  perspective: 1000px;
+  background: $quinary;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('../../../assets/Patterns/Pattern-1.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.16;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+    height: 100%;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.elite-paws-grooming-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.elite-paws-grooming-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.elite-paws-grooming-modal-nav {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba($primary, 0.9);
+  color: $tertiary;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+    transform: none;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.elite-paws-grooming-modal-kicker {
+  margin: 0;
+  font-family: 'Pawcinno', serif;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.elite-paws-grooming-modal-close {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba($secondary, 0.9);
+  color: $tertiary;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+
+.elite-paws-grooming-modal-close:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.elite-paws-grooming-modal-desc {
+  margin: 0;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba($tertiary, 0.9);
+}
+
+.elite-paws-grooming-modal-list {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  padding-right: 6px;
+  flex: 1;
+}
+
+.elite-paws-grooming-modal-pagewrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.elite-paws-grooming-modal-list::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.elite-paws-grooming-modal-item {
+  background: rgba($primary, 1);
+  border: 1px solid rgba($tertiary, 0.14);
+  border-radius: 12px;
+  padding: 12px 12px 10px;
+}
+
+.elite-paws-grooming-modal-item-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.elite-paws-grooming-modal-item-title {
+  margin: 0;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $tertiary;
+}
+
+.elite-paws-grooming-modal-item-time {
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba($tertiary, 0.9);
+  white-space: nowrap;
+}
+
+.elite-paws-grooming-modal-item-desc {
+  margin: 6px 0 0;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: rgba($tertiary, 0.86);
+}
+
+.elite-paws-grooming-modal-page {
+  margin: auto 0 0;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba($tertiary, 0.7);
+  text-align: right;
+}
+
+// Sticky inner: stays on screen while you scroll through the section
+.elite-paws-pricing-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.elite-paws-pricing-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.elite-paws-pricing-left {
+  position: absolute;
+  left: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+  max-width: calc(50vw - 200px - 48px - 24px);
+}
+
+.elite-paws-pricing-heading {
+  font-family: 'Pawcinno', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: $tertiary;
+  line-height: 1.2;
+  // text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 0 12px 0;
+}
+
+.elite-paws-pricing-sub {
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: rgba($tertiary, 0.78);
+  margin: 0;
+}
+
+.elite-paws-pricing-cards-wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+}
+
+.elite-paws-pricing-cards-stack {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 600px;
+  margin-left: calc(50vw - 200px);
+}
+
+.elite-paws-pricing-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 425px;
+  height: 650px;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  will-change: transform;
+  box-shadow: -3px 0 12px rgba(0, 0, 0, 0.08);
+}
+
+.elite-paws-pricing-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.elite-paws-pricing-card.is-selected .elite-paws-pricing-card-bg {
+  transform: scale(1.08);
+}
+
+.elite-paws-pricing-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: $pricing-card-overlay;
+}
+
+.elite-paws-pricing-card-name-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  transform: translateY(-50%);
+  transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              align-items 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.elite-paws-pricing-card.is-selected .elite-paws-pricing-card-name-wrap {
+  top: 0;
+  transform: translateY(0);
+  // align-items: flex-start;
+  padding: 28px 24px 0;
+}
+
+.elite-paws-pricing-card-name {
+  font-family: 'Pawcinno', serif;
+  font-size: clamp(3.5rem, 2.2vw, 4rem);
+  font-weight: 700;
+  color: $quinary;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+  text-align: center;
+  transition: text-align 0.4s ease;
+}
+
+.elite-paws-pricing-card.is-selected .elite-paws-pricing-card-name {
+  // text-align: left;
+  font-size: clamp(2.5rem, 2.2vw, 3rem);
+}
+
+.elite-paws-pricing-card-subtitle {
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.9rem;
+  color: rgba($quinary, 0.9);
+  margin: 0;
+  max-width: 350px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
+  text-align: center;
+}
+
+.elite-paws-pricing-card.is-selected .elite-paws-pricing-card-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.elite-paws-pricing-card-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding: 20px 24px 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
+}
+
+.elite-paws-pricing-card.is-selected .elite-paws-pricing-card-bottom {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.elite-paws-pricing-card-left-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.elite-paws-pricing-card-price {
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: $quinary;
+  margin: 0;
+}
+
+.elite-paws-price-amount {
+  font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.elite-paws-price-currency {
+  font-size: 0.95rem;
+  font-weight: 700;
+  opacity: 0.92;
+}
+
+.elite-paws-price-rest {
+  font-size: 0.95rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.elite-paws-pricing-card-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.elite-paws-pricing-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  position: relative;
+  overflow: visible;
+
+  &:first-child {
+    background: $pricing-accent;
+    color: $tertiary;
+  }
+
+  &:last-child {
+    background: rgba($tertiary, 0.95);
+    color: $pricing-accent;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+.elite-paws-pricing-heart-btn:active {
+  transform: scale(0.96);
+}
+
+.elite-paws-heart-burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.elite-paws-heart-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  line-height: 1;
+  color: $secondary;
+  text-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  animation: elitePawsHeartPop var(--d, 1.05s) cubic-bezier(0.6, 0.06, 0.22, 1) var(--delay, 0s) forwards;
+}
+
+@keyframes elitePawsHeartPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(calc(var(--s, 1) * 1.1));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, -120px))) rotate(var(--r, 0deg)) scale(var(--s, 1));
+  }
+}
+
+.elite-paws-pricing-card-right-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  max-width: 55%;
+}
+
+.elite-paws-pricing-includes-tag {
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.75rem;
+  color: rgba($tertiary, 0.9);
+  background: rgba($primary, 1);
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.elite-paws-pricing-cta-card {
+  background: $primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.elite-paws-pricing-cta-card .elite-paws-pricing-card-bg,
+.elite-paws-pricing-cta-card .elite-paws-pricing-card-overlay {
+  display: none;
+}
+
+.elite-paws-pricing-cta-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 32px;
+  gap: 16px;
+}
+
+.elite-paws-pricing-cta-title {
+  font-family: 'Pawcinno', serif;
+  font-size: clamp(2.5rem, 2.2vw, 3rem);
+  font-weight: 700;
+  color: $secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.elite-paws-pricing-cta-desc {
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.95rem;
+  // color: rgba(255, 255, 255, 0.55);
+  color: $tertiary;
+  margin: 0;
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+.elite-paws-pricing-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 50px;
+  background: $secondary;
+  color: $primary;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+
+  &:hover {
+    opacity: 0.9;
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@media (max-width: 1024px) {
+  .elite-paws-pricing {
+    height: 250vh;
+  }
+
+  .elite-paws-pricing-inner {
+    flex-direction: column;
+  }
+
+  .elite-paws-pricing-left {
+    flex: none;
+    padding: 32px 24px 16px;
+  }
+
+  .elite-paws-pricing-cards-wrap {
+    padding: 0 16px 32px;
+    height: auto;
+  }
+
+  .elite-paws-pricing-card {
+    flex: 0 0 280px;
+    min-height: 420px;
+  }
+}

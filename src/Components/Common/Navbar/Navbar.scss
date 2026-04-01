@@ -96,7 +96,7 @@
 
                 svg {
                     font-size: 14px;
-                    color: $gray;
+                    color: $black;
                     margin-left: 4px;
                     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 }
@@ -109,7 +109,7 @@
                     margin-left: 4px;
                     
                     svg {
-                        color: $gray;
+                        color: $black;
                         font-size: 18px;
                         margin-left: 0;
                         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -326,7 +326,7 @@
     }
 
     .nav-links-div ul li svg {
-        color: $gray;
+        color: $black;
     }
 
     .nav-links-div ul li:hover svg {

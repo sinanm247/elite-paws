@@ -5,7 +5,7 @@ import AppRouter from './Components/AppRouter/AppRouter';
 import routes from './routes/routes';
 import Navbar from './Components/Common/Navbar/Navbar';
 import ElitePawsNavbar from './Components/ElitePaws/ElitePawsNavbar/ElitePawsNavbar';
-import Footer from './Components/Common/Footer/Footer';
+// import Footer from './Components/Common/Footer/Footer';
 import ElitePawsFooter from './Components/ElitePaws/Footer/ElitePawsFooter';
 
 
@@ -18,7 +18,7 @@ export default function App() {
 
     const timeout = setTimeout(() => {
       setPageLoading(false);
-    }, 1500); // Adjust loader duration
+    }, 1000); // Adjust loader duration
 
     return () => clearTimeout(timeout);
   }, [location.pathname]);
@@ -30,7 +30,8 @@ export default function App() {
           <Fragment>
             {location.pathname === '/elite-paws-home' ? <ElitePawsNavbar /> : <Navbar />}
             <AppRouter routes={routes} />
-            {location.pathname === '/elite-paws-home' ? <ElitePawsFooter /> : <Footer />}
+            {/* {location.pathname === '/elite-paws-home' ? <ElitePawsFooter /> : <Footer />} */}
+            <ElitePawsFooter />
           </Fragment>
         )}
     </>

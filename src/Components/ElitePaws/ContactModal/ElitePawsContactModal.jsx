@@ -50,8 +50,9 @@ export default function ElitePawsContactModal({ isClosing, onClose }) {
           </form>
 
           <div className="elite-paws-contact-modal-actions">
-            <button type="button" className="ghost">Previous</button>
-            <button type="button" className="primary">Final step</button>
+            {/* <button type="button" className="ghost">Previous</button> */}
+            {/* <button type="button" className="primary">Final step</button> */}
+            <button type="button" className="primary">Submit</button>
           </div>
           <p className="elite-paws-contact-modal-note">All fields are required</p>
         </div>
