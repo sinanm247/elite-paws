@@ -266,7 +266,7 @@ export default function ElitePawsNavbar() {
               className={activeMenuLink === 'plans' ? 'is-active' : ''}
               onClick={handleMenuSectionClick('plans', 'plans')}
             >
-              Elite Paws<br/> Plans
+              Grooming Menu
             </a>
             <a
               href="#services"
@@ -305,7 +305,7 @@ export default function ElitePawsNavbar() {
           <img className="elite-paws-menu-join-logo" src={logoIcon} alt="Elite Paws" />
 
           <div className="elite-paws-menu-social-navbar">
-            <a href="#" aria-label="Instagram"><img src={instagramIcon} alt="" /></a>
+            <a href="https://www.instagram.com/elitepaws.ae?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram"><img src={instagramIcon} alt="" /></a>
             <a href="#" aria-label="TikTok"><img src={tiktokIcon} alt="" /></a>
             {/* <a href="#" aria-label="Pinterest"><img src={pinterestIcon} alt="" /></a> */}
             <a href="#" aria-label="LinkedIn"><img src={linkedinIcon} alt="" /></a>

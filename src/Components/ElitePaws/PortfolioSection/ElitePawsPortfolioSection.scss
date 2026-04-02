@@ -113,8 +113,8 @@
 }
 
 .elite-paws-portfolio-card-text {
-  background: #7a5a45;
-  color: $primary;
+  background: $primary;
+  color: $tertiary;
   padding: 28px;
   display: flex;
   flex-direction: column;
@@ -133,7 +133,7 @@
 }
 
 .elite-paws-portfolio-card-metric {
-  background: #7a5a45;
+  background: $secondary;
   color: $primary;
   padding: 28px 22px;
   display: flex;

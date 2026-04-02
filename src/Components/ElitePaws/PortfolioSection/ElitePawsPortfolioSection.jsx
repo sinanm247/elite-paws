@@ -65,7 +65,7 @@ export default function ElitePawsPortfolioSection() {
           </div>
           <h1 className="elite-paws-portfolio-title">Elite Paws Gallery</h1>
           <p className="elite-paws-portfolio-subtitle">Real grooming moments, real happy tails.</p>
-          <a href="/" className="elite-paws-portfolio-back">Back to Projects</a>
+          {/* <a href="/" className="elite-paws-portfolio-back">Back to Projects</a> */}
         </aside>
 
         <div className="elite-paws-portfolio-right">

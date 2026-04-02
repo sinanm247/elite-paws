@@ -86,7 +86,7 @@ $hero-accent: $secondary;
   font-family: 'Pawcinno', serif;
   font-size: clamp(6rem, 18vw, 15rem);
   font-weight: 700;
-  color: rgba($secondary, 1);
+  color: rgba($tertiary, 1);
   white-space: nowrap;
   user-select: none;
   margin: 0;
@@ -221,7 +221,7 @@ $hero-accent: $secondary;
   line-height: 1.2;
 
   &.elite-hero-s2-accent {
-    color: $secondary;
+    color: $primary;
   }
 }
 
@@ -232,7 +232,7 @@ $hero-accent: $secondary;
   }
 
   .elite-hero-s2-line.elite-hero-s2-accent {
-    color: $logo-dark-bg;
+    color: $primary;
   }
 }
 
