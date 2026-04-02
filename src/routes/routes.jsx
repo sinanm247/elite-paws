@@ -1,18 +1,18 @@
 import PageNotFound from "../Components/PageNotFound/PageNotFound.jsx";
 import Thankyou from "../Components/ThankYouPage/Thankyou.jsx";
 import UnAuthorized from "../Components/UnAuthorized/UnAuthorixed.jsx";
-import HomePage from "../Pages/HomePage.jsx";
 import ElitePawsHome from "../Pages/ElitePawsHome.jsx";
+import PortfolioPage from "../Pages/PortfolioPage.jsx";
 
 const routes = [
-  // {
-  //   path: "/",
-  //   element: <HomePage/>,
-  //   isProtected: false,
-  // },
   {
-    path: "/elite-paws-home",
+    path: "/",
     element: <ElitePawsHome/>,
+    isProtected: false,
+  },
+  {
+    path: "/portfolio",
+    element: <PortfolioPage/>,
     isProtected: false,
   },
   {

@@ -1,0 +1,189 @@
+@import '../../../index.scss';
+
+.elite-paws-portfolio {
+  min-height: 100vh;
+  background: $tertiary;
+  padding: 120px 24px 56px;
+}
+
+.elite-paws-portfolio-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: calc(100vh - 176px);
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.elite-paws-portfolio-left {
+  flex: 0 0 320px;
+  position: sticky;
+  top: 50vh;
+  transform: translateY(-50%);
+  height: fit-content;
+  align-self: start;
+}
+
+.elite-paws-portfolio-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+
+  span {
+    background: rgba($primary, 0.95);
+    border: 1px solid rgba($tertiary, 0.16);
+    color: rgba($tertiary, 0.9);
+    font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+    font-size: 0.74rem;
+    border-radius: 999px;
+    padding: 6px 10px;
+    white-space: nowrap;
+  }
+}
+
+.elite-paws-portfolio-title {
+  margin: 0 0 10px;
+  color: $primary;
+  font-family: 'Pawcinno', serif;
+  font-size: clamp(2.2rem, 4.6vw, 4.7rem);
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.elite-paws-portfolio-subtitle {
+  margin: 0;
+  color: rgba($primary, 0.92);
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.elite-paws-portfolio-back {
+  margin-top: 24px;
+  display: inline-block;
+  color: $primary;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+  text-decoration: underline;
+}
+
+.elite-paws-portfolio-right {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 425px));
+  gap: 20px;
+  align-content: start;
+  justify-content: start;
+}
+
+.elite-paws-portfolio-card {
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba($tertiary, 0.2);
+  min-height: 160px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.elite-paws-portfolio-card-main {
+  grid-row: span 1;
+}
+
+.elite-paws-portfolio-card-text {
+  background: #7a5a45;
+  color: $primary;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+
+  p {
+    margin: 0;
+    font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+}
+
+.elite-paws-portfolio-card-wide {
+  min-height: 220px;
+}
+
+.elite-paws-portfolio-card-metric {
+  background: #7a5a45;
+  color: $primary;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  h3 {
+    margin: 0 0 10px;
+    font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    text-transform: none;
+  }
+
+  p {
+    margin: 0;
+    font-family: 'Pawcinno', serif;
+    font-size: clamp(3.2rem, 6vw, 5.4rem);
+    line-height: 0.9;
+  }
+}
+
+.elite-paws-portfolio-card-tall {
+  grid-row: span 1;
+  min-height: 320px;
+}
+
+.elite-paws-portfolio-card-bottom {
+  min-height: 240px;
+}
+
+.elite-paws-portfolio-card-image {
+  width: 100%;
+  min-height: 280px;
+}
+
+.elite-paws-portfolio-card-main.elite-paws-portfolio-card-image {
+  width: 425px;
+  height: 650px;
+  min-height: 650px;
+}
+
+@media (max-width: 1080px) {
+  .elite-paws-portfolio-inner {
+    display: block;
+  }
+
+  .elite-paws-portfolio-left {
+    position: relative;
+    top: auto;
+    transform: none;
+    margin-bottom: 24px;
+  }
+
+  .elite-paws-portfolio-right {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  .elite-paws-portfolio-card-main.elite-paws-portfolio-card-image {
+    width: 100%;
+    max-width: 425px;
+  }
+}

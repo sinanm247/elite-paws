@@ -16,9 +16,9 @@
 
 // --- Website theme palette (active) ---
 $primary: #fcf2e0;     // Butter
-$secondary: #b7d6a0;   // Pastel green
+$secondary: #6f7a43;   // Olive green
 $tertiary: #07211e;    // Forest
-$quaternary: #212920;  // Dark green
+// $quaternary: #07211e;  // Dark green
 $quinary: #efeeea;    // Off-white / Cream – light backgrounds (header, sections)
 $logo-light-bg: #efeeea;  // Use dark logo on this
 $logo-dark-bg: #2c2c2c;   // Use light logo on this
@@ -103,107 +103,62 @@ textarea {
   font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
 }
 
-.btn {
-  padding: 5px 8px 5px 15px;
-  text-transform: none;
-  font-weight: 600;
-  outline: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  font-size: 16px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  border-radius: 30px;
-  border: none;
-  text-decoration: none;
-  white-space: nowrap;
-  min-height: 45px;
+// .btn {
+//   --btn-bg: #{$tertiary};
+//   --btn-text: #{$quinary};
+//   --btn-shadow: #{rgba($tertiary, 0.22)};
+//   --btn-shadow-hover: #{rgba($tertiary, 0.26)};
 
-  svg {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    transition: all 0.3s ease;
-    border-radius: 100%;
-    padding: 2px;
-    width: 30px;
-    height: 30px;
-  }
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   background: var(--btn-bg);
+//   color: var(--btn-text);
+//   border-radius: 7px;
+//   border: none;
+//   padding: 9px 14px;
+//   font-family: 'Pawcinno', serif;
+//   font-size: 0.8rem;
+//   text-transform: uppercase;
+//   letter-spacing: 0.04em;
+//   text-decoration: none;
+//   font-weight: 700;
+//   width: 150px;
+//   margin: 0 auto;
+//   cursor: pointer;
+//   box-shadow: 0 10px 26px var(--btn-shadow);
+//   transition: transform 0.18s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 
-  &:hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    // transform: translateY(-2px);
-  }
+//   &:hover {
+//     opacity: 0.92;
+//     transform: translateY(-1px);
+//     box-shadow: 0 14px 34px var(--btn-shadow-hover);
+//   }
 
-  &:active {
-    transform: translateY(0);
-  }
-}
+//   &:active {
+//     transform: translateY(0);
+//   }
+// }
 
 .btn-primary {
-  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
-  color: $white;
-  box-shadow: 0 4px 12px rgba($primary, 0.3);
-
-  svg {
-    background: $white;
-    color: $primary;
-  }
-
-  &:hover {
-    background: linear-gradient(135deg, $secondary 0%, $primary 100%);
-    box-shadow: 0 6px 20px rgba($primary, 0.4);
-    color: $white;
-
-    svg {
-      transform: translateX(3px);
-    }
-  }
+  --btn-bg: #{$primary};
+  --btn-text: #{$tertiary};
+  --btn-shadow: #{rgba($tertiary, 0.14)};
+  --btn-shadow-hover: #{rgba($tertiary, 0.18)};
 }
 
 .btn-secondary {
-  background: $white;
-  color: $primary;
-  border: 2px solid $primary;
-  box-shadow: 0 4px 12px rgba($primary, 0.2);
-
-  svg {
-    background: $primary;
-    color: $white;
-  }
-
-  &:hover {
-    background: $primary;
-    color: $white;
-    border-color: $primary;
-    box-shadow: 0 6px 20px rgba($primary, 0.4);
-
-    svg {
-      transform: translateX(3px);
-      background: $white;
-      color: $primary;
-    }
-  }
+  --btn-bg: #{$secondary};
+  --btn-text: #{$primary};
+  --btn-shadow: #{rgba($tertiary, 0.16)};
+  --btn-shadow-hover: #{rgba($tertiary, 0.22)};
 }
 
-.btn-white {
-  background: $white;
-  color: $primary;
-  border: 2px solid $primary;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    background: rgba($primary, 0.05);
-    color: $primary;
-    box-shadow: 0 6px 20px rgba($primary, 0.2);
-
-    svg {
-      transform: translateX(3px);
-    }
-  }
+.btn-tertiary {
+  --btn-bg: #{$tertiary};
+  --btn-text: #{$quinary};
+  --btn-shadow: #{rgba($tertiary, 0.22)};
+  --btn-shadow-hover: #{rgba($tertiary, 0.26)};
 }
 
 // ===========================================
@@ -214,7 +169,6 @@ textarea {
 .text-primary { color: $primary !important; }
 .text-secondary { color: $secondary !important; }
 .text-tertiary { color: $tertiary !important; }
-.text-quaternary { color: $quaternary !important; }
 .text-quinary { color: $quinary !important; }
 .text-white { color: $white !important; }
 .text-black { color: $black !important; }
@@ -224,7 +178,6 @@ textarea {
 .bg-primary { background-color: $primary !important; }
 .bg-secondary { background-color: $secondary !important; }
 .bg-tertiary { background-color: $tertiary !important; }
-.bg-quaternary { background-color: $quaternary !important; }
 .bg-quinary { background-color: $quinary !important; }
 .bg-white { background-color: $white !important; }
 .bg-black { background-color: $black !important; }

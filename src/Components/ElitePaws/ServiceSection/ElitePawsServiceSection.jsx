@@ -17,8 +17,8 @@ function getServiceTags(service) {
   return items.slice(0, 4).map((x) => x.title);
 }
 
-const PRICING_BG = '#b7d6a0';
-const SERVICE_BG = '#212920';
+const PRICING_BG = '#6f7a43';
+const SERVICE_BG = '#07211e';
 
 function getSlotPosition(index, activeIndex, total) {
   const diff = ((index - activeIndex) % total + total) % total;
@@ -30,7 +30,6 @@ function getSlotPosition(index, activeIndex, total) {
 export default function ElitePawsServiceSection() {
   const sectionRef = useRef(null);
   const [activeService, setActiveService] = useState(services[0]?.id ?? null);
-  const [expandedService, setExpandedService] = useState(services[0]?.id ?? null);
 
   const { scrollYProgress: bgScrollYProgress } = useScroll({
     target: sectionRef,
@@ -55,10 +54,6 @@ export default function ElitePawsServiceSection() {
     const newId = services[idx]?.id;
     if (newId != null) setActiveService(newId);
   });
-
-  useEffect(() => {
-    if (activeService != null) setExpandedService(activeService);
-  }, [activeService]);
 
   const [showBg, setShowBg] = useState(false);
   useEffect(() => {
@@ -99,14 +94,16 @@ export default function ElitePawsServiceSection() {
         <div className="elite-paws-services-inner">
           <div className="elite-paws-services-left">
           <h2 className="elite-paws-services-heading">
-            Dedicated
+          The Good Stuff
+            {/* Dedicated
             <br />
             to Better:
             <br />
-            Pet Care.
+            Pet Care. */}
           </h2>
           <p className="elite-paws-services-desc">
-            Specialized grooming treatments designed for comfort, coat health, and stress-free care.
+            {/* Specialized grooming treatments designed for comfort, coat health, and stress-free care. */}
+            Every service your pet deserves. 
           </p>
           {/* <a href="#services" className="elite-paws-services-link">
             Explore All Services
@@ -140,7 +137,6 @@ export default function ElitePawsServiceSection() {
         <div className="elite-paws-services-right">
           {services.map((service) => {
             const isActive = activeService === service.id;
-            const isExpanded = expandedService === service.id;
 
             return (
               <div
@@ -158,27 +154,27 @@ export default function ElitePawsServiceSection() {
                 ) : null}
 
                 <div className={`elite-paws-services-item-details ${isActive ? 'is-active' : ''}`}>
+                  <div className="elite-paws-services-item-details-inner">
                   <div className="elite-paws-services-item-meta">
                     {service.price ? <span className="elite-paws-services-item-price">{service.price}</span> : null}
                     {service.duration ? <span className="elite-paws-services-item-duration">{service.duration}</span> : null}
                   </div>
 
                   {service.description ? (
-                    <p className={`elite-paws-services-item-desc ${isExpanded ? 'is-expanded' : ''}`}>
+                    <p className="elite-paws-services-item-desc">
                       {service.description}
                     </p>
                   ) : null}
 
-                  <button
+                  {/* <button
                     type="button"
                     className="elite-paws-services-item-more"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setExpandedService((prev) => (prev === service.id ? null : service.id));
-                    }}
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    {isExpanded ? 'See less' : 'See more'}
-                  </button>
+                    Show more
+                    View Details
+                  </button> */}
+                  </div>
                 </div>
 
                 {/*

@@ -28,8 +28,8 @@
 
 .elite-paws-footer-photo-card,
 .elite-paws-footer-cta-card {
-  border-radius: 18px;
-  box-shadow: 0 18px 48px rgba($tertiary, 0.22);
+  // border-radius: 18px;
+  // box-shadow: 0 18px 48px rgba($tertiary, 0.22);
 }
 
 .elite-paws-footer-photo-card {
@@ -51,7 +51,7 @@
 .elite-paws-footer-cta-card {
   z-index: 3;
   width: min(420px, 46vw);
-  background: rgba($quinary, 0.92);
+  background: rgba($quinary, 1);
   color: $tertiary;
   padding: clamp(20px, 2.8vw, 28px);
   min-height: clamp(300px, 26vh, 350px);
@@ -61,6 +61,7 @@
   transform: translateY(0) rotate(4deg);
   text-align: center;
   margin-left: -30px;
+  border-radius: 18px;
 }
 
 .elite-paws-footer-cta-kicker {
@@ -91,6 +92,7 @@
   align-items: center;
   justify-content: center;
   background: $tertiary;
+  // border: none;
   color: $quinary;
   border-radius: 7px;
   padding: 9px 14px;
@@ -158,18 +160,20 @@
   display: flex;
   gap: 12px;
   align-items: center;
+  pointer-events: auto;
 
   a {
-    display: inline-flex;
+    // display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    // width: 60px;
+    // height: 60px;
     border-radius: 12px;
     // background: rgba($quinary, 0.85);
     // border: 1px solid rgba($tertiary, 0.12);
     // box-shadow: 0 10px 26px rgba($tertiary, 0.16);
     transition: transform 0.18s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
 
     &:hover {
       opacity: 0.92;
@@ -178,8 +182,8 @@
     }
 
     img {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       object-fit: contain;
       opacity: 0.98;
     }

@@ -12,7 +12,7 @@ import './ElitePawsGroomingMenuSection.scss';
 
 
 const PLAN_IMAGES = [image1, image2];
-const PRICING_BG_COLOR = '#b7d6a0';
+const PRICING_BG_COLOR = '#6f7a43';
 const HERO_END_BG = '#07211e';
 const CARD_WIDTH = 425;
 const CARD_GAP = 20;
@@ -43,8 +43,8 @@ function CTACard({ index, scrollYProgress, totalCards }) {
           Have questions about our plans or want a customized package for your furry friend? We&rsquo;d love to help.
         </p>
         <a
-          href="https://wa.me/"
-          target="_blank"
+          href="#contact"
+          // target="_blank"
           rel="noopener noreferrer"
           className="elite-paws-pricing-cta-btn"
         >
@@ -550,14 +550,13 @@ export default function ElitePawsGroomingMenuSection() {
       <div className="elite-paws-pricing-sticky">
         <div className="elite-paws-pricing-inner">
           <div className="elite-paws-pricing-left">
-            <h2 className="elite-paws-pricing-heading">Elite Paws Grooming Menu</h2>
-            <p className="elite-paws-pricing-sub">Explore our grooming menu and pick what fits your pet best.</p>
+            <h2 className="elite-paws-pricing-heading">What Elite Looks Like</h2>
+            <p className="elite-paws-pricing-sub">Every service your pet deserves.</p>
           </div>
 
           <div className="elite-paws-pricing-cards-wrap">
             <div
               className="elite-paws-pricing-cards-stack"
-              style={{ width: totalCards * CARD_WIDTH + (totalCards - 1) * CARD_GAP }}
             >
               {groomingMenu.map((plan, index) => (
                 <StackingCard

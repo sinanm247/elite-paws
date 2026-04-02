@@ -3,13 +3,14 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionVa
 import { FaPlay, FaPause } from 'react-icons/fa';
 import { FaVolumeHigh, FaVolumeXmark } from 'react-icons/fa6';
 import './HomeHero.scss';
-import imgLeft from '../../../assets/Gallery/Image-1.jpeg';
+import imgLeft from '../../../assets/Gallery/Image-9.jpeg';
 import imgCenter from '../../../assets/Gallery/Image-24.jpeg';
-import imgRight from '../../../assets/Gallery/Image-29.jpeg';
+import imgRight from '../../../assets/Gallery/Image-1.jpeg';
 import videoLeft from '../../../assets/Videos/Video-1.mp4';
 import arrowIcon from '../../../assets/Icons/arrow-1.png';
 import section2RightImage from '../../../assets/Images/Image-1.png';
 import element1 from '../../../assets/Elements/Element-1.png';
+import element2 from '../../../assets/Elements/Element-2.png';
 
 const HOVER_MOVE = 18;
 const HOVER_ROTATE = 6;
@@ -295,7 +296,7 @@ export default function HomeHero() {
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.25, 0.38, 0.58, 0.72, 1],
-    ['#fcf2e0', '#fcf2e0', '#b7d6a0', '#b7d6a0', '#07211e', '#07211e']
+    ['#fcf2e0', '#fcf2e0', '#6f7a43', '#6f7a43', '#07211e', '#07211e']
   );
 
   // Hide sticky layers when hero has scrolled out (sticky doesn't unstick in this layout)
@@ -418,13 +419,26 @@ export default function HomeHero() {
           <div className="elite-hero-bg-text">ELITE PAWS</div>
           <div className="elite-hero-copy elite-hero-bg-copy">
             <p className="elite-hero-copy-label">Pet Grooming & Care</p>
-            <h2 className="elite-hero-copy-title">Keeping Your Pets Healthy, Happy & Groomed</h2>
+            {/* <h2 className="elite-hero-copy-title">Keeping Your Pets Healthy, Happy & Groomed</h2> */}
+            <h2 className="elite-hero-copy-title">Dubai's<br/> most attentive grooming service. At your door.</h2>
           </div>
         </div>
         <div className="elite-hero-bg-section elite-hero-bg-section-2">
           <div className="elite-hero-bg-section-2-left">
-            <p className="elite-hero-s2-line">We are the</p>
-            <p className="elite-hero-s2-line elite-hero-s2-accent">care your pet deserves.</p>
+            {/* <p className="elite-hero-s2-line">We are the</p> */}
+            {/* <p className="elite-hero-s2-line elite-hero-s2-accent">care your pet deserves.</p> */}
+            <p className="elite-hero-s2-line">Your pet is </p>
+            <p className="elite-hero-s2-line elite-hero-s2-accent">family</p>
+            <div className="elite-hero-s2-left-sticky-wrap">
+              <img
+                className="elite-hero-s2-left-image"
+                src={element2}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+              />
+              <p className="elite-hero-s2-sticky-text">Trusted by pet parents across Dubai</p>
+            </div>
           </div>
           <div className="elite-hero-bg-section-2-right">
             <img
@@ -434,7 +448,9 @@ export default function HomeHero() {
               aria-hidden="true"
               loading="lazy"
             />
-            <p className="elite-hero-s2-line">You are</p>
+            {/* <p className="elite-hero-s2-line">You are</p> */}
+            {/* <p className="elite-hero-s2-line elite-hero-s2-accent">family.</p> */}
+            <p className="elite-hero-s2-line">We treat them </p>
             <p className="elite-hero-s2-line elite-hero-s2-accent">family.</p>
           </div>
         </div>
@@ -447,13 +463,17 @@ export default function HomeHero() {
               aria-hidden="true"
               loading="lazy"
             />
-            <p className="elite-hero-s3-headline">We care for</p>
-            <p className="elite-hero-s3-headline elite-hero-s2-accent">your pets.</p>
+            {/* <p className="elite-hero-s3-headline">We care for</p> */}
+            {/* <p className="elite-hero-s3-headline elite-hero-s2-accent">your pets.</p> */}
+            <p className="elite-hero-s3-headline">All paws.</p>
+            <p className="elite-hero-s3-headline elite-hero-s2-accent">All ears. All in.</p>
           </div>
           <div className="elite-hero-bg-section-3-right">
             <div className="elite-hero-s3-para">
-              <span>At Elite Paws, we believe that pet care is not just about grooming or a quick check-up.<br/></span>
-              It&apos;s a relationship to build, trust to earn, and wellness to maintain. Our mission: to make every visit a moment of care and comfort, with your pet&apos;s health and happiness at the heart of everything we do.
+              {/* <span>At Elite Paws, we believe that pet care is not just about grooming or a quick check-up.<br/></span>
+              It&apos;s a relationship to build, trust to earn, and wellness to maintain. Our mission: to make every visit a moment of care and comfort, with your pet&apos;s health and happiness at the heart of everything we do. */}
+              <span>A full assessment dressed up as A VERY GOOD TIME.<br/></span>
+              We come to your door, see one pet at a time, and check everything - skin, coat, ears, paws, nails. All of it. Every visit. A refreshing spa day coupled with a health checkup for your furbaby.
             </div>
           </div>
         </div>

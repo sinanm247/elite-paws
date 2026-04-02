@@ -49,7 +49,7 @@ $why-card-green: $tertiary;
   font-family: 'Pawcinno', sans-serif;
   font-size: clamp(3rem, 14vw, 11rem);
   font-weight: 800;
-  color: rgba($logo-dark-bg, 0.92);
+  color: rgba($secondary, 0.92);
   text-transform: uppercase;
   letter-spacing: -0.04em;
   line-height: 0.88;
@@ -105,12 +105,31 @@ $why-card-green: $tertiary;
   border: 1px solid rgba(255, 255, 255, 0.08);
   will-change: transform, opacity;
   transform-origin: center center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('../../../assets/Patterns/Pattern-5.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 1;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .elite-paws-why-choose-card-icon {
   display: block;
-  width: clamp(64px, 6vw, 88px);
-  height: clamp(64px, 6vw, 88px);
+  width: clamp(100px, 10vw, 120px);
+  height: clamp(100px, 10vw, 120px);
   object-fit: contain;
   margin: 0 auto;
   flex-shrink: 0;

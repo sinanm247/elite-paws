@@ -9,10 +9,18 @@ export default function ElitePawsHome() {
   return (
     <Fragment>
       <Helmet title="Elite Paws - Home">
-        <HomeHero />
-        <ElitePawsGroomingMenuSection />
-        <ElitePawsServiceSection />
-        <ElitePawsWhyChooseSection />
+        <section id="home">
+          <HomeHero />
+        </section>
+        <section id="plans">
+          <ElitePawsGroomingMenuSection />
+        </section>
+        <section id="services">
+          <ElitePawsServiceSection />
+        </section>
+        <section id="why-choose">
+          <ElitePawsWhyChooseSection />
+        </section>
       </Helmet>
     </Fragment>
   );

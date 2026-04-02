@@ -1,5 +1,4 @@
 import "./AppLoader.scss";
-import logo from "../../assets/Logo/elite-paws-logo-light.png"
 import video from "../../assets/Logo/logo-animation.mp4"
 
 export default function AppLoader({ isVisible }) {
@@ -8,11 +7,11 @@ export default function AppLoader({ isVisible }) {
       {/* <img src={logo} alt="Loading" className="logo" /> */}
       <video src={video}
         autoPlay
-        loop
+        // loop
         muted
         playsInline
-        alt="Loading" 
-        className="logo" 
+        preload="auto"
+        className="logo"
       />
     </div>
   );

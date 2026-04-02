@@ -8,25 +8,29 @@
   z-index: 9999;
   overflow: hidden;
   pointer-events: none;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
+  transition: opacity 0.9s cubic-bezier(0.6, 0.06, 0.22, 1), visibility 0.9s step-end;
   opacity: 0;
   visibility: hidden;
 
   .logo {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     opacity: 0;
-    transform: scale(0.8);
-    transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+    transform: scale(1.03);
+    filter: blur(4px);
+    transition:
+      opacity 0.55s ease 0.12s,
+      transform 0.9s cubic-bezier(0.6, 0.06, 0.22, 1),
+      filter 0.55s ease 0.12s;
     z-index: 3;
 
     @media (max-width: 768px) {
-      width: 120px;
+      width: 100%;
     }
 
     @media (max-width: 480px) {
-      width: 100px;
+      width: 100%;
     }
   }
 }
@@ -39,10 +43,26 @@
   .logo {
     opacity: 1;
     transform: scale(1);
+    filter: blur(0);
   }
 }
 
 .app-loader-container.hide {
   opacity: 0;
   visibility: hidden;
+
+  .logo {
+    opacity: 0;
+    transform: scale(1.02);
+    filter: blur(2px);
+  }
+}
+
+.app-shell {
+  opacity: 0;
+  transition: opacity 0.65s ease;
+}
+
+.app-shell.is-ready {
+  opacity: 1;
 }

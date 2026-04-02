@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import icon1 from '../../../assets/Icons/whychoose-icon-1.avif';
-import icon2 from '../../../assets/Icons/whychoose-icon-2.avif';
-import icon3 from '../../../assets/Icons/whychoose-icon-3.avif';
-import icon4 from '../../../assets/Icons/whychoose-icon-4.avif';
+import icon1 from '../../../assets/Icons/WhyChooseUs-Icons/Icon1-light.png';
+import icon2 from '../../../assets/Icons/WhyChooseUs-Icons/Icon2-light.png';
+import icon3 from '../../../assets/Icons/WhyChooseUs-Icons/Icon3-light.png';
+import icon4 from '../../../assets/Icons/WhyChooseUs-Icons/Icon4-light.png';
 import './ElitePawsWhyChooseSection.scss';
 
-const SERVICE_END_BG = '#212920';
+const SERVICE_END_BG = '#07211e';
 const WHY_BG = '#fcf2e0';
 
 const REASONS = [
@@ -38,7 +38,7 @@ const REASONS = [
 
 const CARD_COUNT = REASONS.length;
 const INTRO_END = 0.1;
-const USABLE = 0.88;
+const USABLE = 0.72;
 const STEP = USABLE / CARD_COUNT;
 
 // Final layout: staggered Y + tilt like reference (L lower, ML higher, MR higher, R lower)
@@ -51,7 +51,7 @@ const CARD_LAYOUT = [
 
 function WhyChooseCard({ item, index, scrollYProgress }) {
   const start = INTRO_END + index * STEP;
-  const riseEnd = start + STEP * 0.99;
+  const riseEnd = start + STEP * 0.72;
   const layout = CARD_LAYOUT[index] ?? CARD_LAYOUT[0];
 
   const yRaw = useTransform(
@@ -60,7 +60,7 @@ function WhyChooseCard({ item, index, scrollYProgress }) {
     ['170vh', `${layout.finalY}px`]
   );
   const opacity = useTransform(scrollYProgress, [start, start + STEP * 0.12], [0, 1]);
-  const ySpring = useSpring(yRaw, { stiffness: 145, damping: 22, mass: 0.6 });
+  const ySpring = useSpring(yRaw, { stiffness: 200, damping: 18, mass: 0.55 });
 
   return (
     <motion.article

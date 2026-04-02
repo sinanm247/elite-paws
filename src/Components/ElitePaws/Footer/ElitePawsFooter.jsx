@@ -1,17 +1,20 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import teamImage from '../../../assets/Gallery/Image-8.jpeg';
+import teamImage from '../../../assets/Gallery/Image-8.webp';
 import './ElitePawsFooter.scss';
 import ElitePawsContactModal from '../ContactModal/ElitePawsContactModal';
 
-import instagramIcon from '../../../assets/Icons/instagram-icon-color.png';
-import tiktokIcon from '../../../assets/Icons/tiktok-icon-color.png';
-import pinterestIcon from '../../../assets/Icons/pinterest-icon-color.png';
-import linkedinIcon from '../../../assets/Icons/linkedin-icon-color.png';
+// Social Icons
+import instagramIcon from '../../../assets/Icons/Social-Icons/instagram-dark.png';
+import tiktokIcon from '../../../assets/Icons/Social-Icons/tiktok-dark.png';
+// import pinterestIcon from '../../../assets/Icons/Social-Icons/pinterest-dark.png';
+import linkedinIcon from '../../../assets/Icons/Social-Icons/linkedin-dark.png';
+import youtubeIcon from '../../../assets/Icons/Social-Icons/youtube-dark.png';
+import facebookIcon from '../../../assets/Icons/Social-Icons/facebook-dark.png';
 
 // Start from the end color of ElitePawsWhyChooseSection to avoid a visible jump.
 const WHYCHOICE_END_BG = '#fcf2e0';
-const FOOTER_BG = '#b7d6a0';
+const FOOTER_BG = '#6f7a43';
 
 export default function ElitePawsFooter() {
   const footerRef = useRef(null);
@@ -74,7 +77,7 @@ export default function ElitePawsFooter() {
   };
 
   return (
-    <footer ref={footerRef} className="elite-paws-footer">
+    <footer id="contact" ref={footerRef} className="elite-paws-footer">
       {showBg && (
         <motion.div
           className="elite-paws-footer-bg"
@@ -88,10 +91,12 @@ export default function ElitePawsFooter() {
         </article>
 
         <article className="elite-paws-footer-cta-card">
-          <p className="elite-paws-footer-cta-kicker">Contact</p>
-          <h3>Tell us about it.</h3>
+          <p className="elite-paws-footer-cta-kicker">Contact Us</p>
+          {/* <h3>Tell us about it.</h3> */}
+          <h3>Great Grooms Start Here</h3>
           <p className="elite-paws-footer-cta-copy">
-            A few questions, less than a minute. We receive your answers and get back to you quickly.
+            {/* A few questions, less than a minute. We receive your answers and get back to you quickly. */}
+            Tell us who they are, what they love, what they absolutely don't and we'll take it from there.
           </p>
           <button type="button" className="elite-paws-footer-cta-btn" onClick={openModal}>
             Start now
@@ -103,11 +108,13 @@ export default function ElitePawsFooter() {
 
       <div className="elite-paws-footer-meta">
         <div className="elite-paws-menu-social-footer">
-            <a href="#" aria-label="Instagram"><img src={instagramIcon} alt="" /></a>
-            <a href="#" aria-label="TikTok"><img src={tiktokIcon} alt="" /></a>
-            <a href="#" aria-label="Pinterest"><img src={pinterestIcon} alt="" /></a>
-            <a href="#" aria-label="LinkedIn"><img src={linkedinIcon} alt="" /></a>
-          </div>
+          <a href="#" aria-label="Instagram"><img src={instagramIcon} alt="" /></a>
+          <a href="#" aria-label="TikTok"><img src={tiktokIcon} alt="" /></a>
+          {/* <a href="#" aria-label="Pinterest"><img src={pinterestIcon} alt="" /></a> */}
+          <a href="#" aria-label="LinkedIn"><img src={linkedinIcon} alt="" /></a>
+          <a href="#" aria-label="YouTube"><img src={youtubeIcon} alt="" /></a>
+          <a href="#" aria-label="Facebook"><img src={facebookIcon} alt="" /></a>
+        </div>
 
         <div className="elite-paws-footer-links">
           <a href="/privacy-policy">Confidentiality</a>

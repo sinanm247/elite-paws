@@ -1,0 +1,428 @@
+@import '../../../index.scss';
+
+.elite-paws-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1300;
+  padding: 0px 50px;
+  background: transparent;
+  transition: background 0.32s cubic-bezier(0.6, 0.06, 0.22, 1);
+  height: 100px;
+
+}
+
+.elite-paws-navbar-inner {
+  // max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.elite-paws-navbar-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  // background: rgba($secondary, 1);
+  // color: $tertiary;
+  background: rgba($tertiary, 0.96);
+  color: $quinary;
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    transform 0.15s ease,
+    background 0.32s cubic-bezier(0.6, 0.06, 0.22, 1),
+    color 0.32s cubic-bezier(0.6, 0.06, 0.22, 1),
+    box-shadow 0.32s cubic-bezier(0.6, 0.06, 0.22, 1);
+  box-shadow: 0 2px 12px rgba($tertiary, 0.34);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .elite-paws-navbar-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.32s cubic-bezier(0.6, 0.06, 0.22, 1);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  // Default (light background): show light icons.
+  .elite-paws-navbar-icon--light {
+    opacity: 1;
+  }
+
+  &:hover {
+    // opacity: 0.9;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.elite-paws-navbar-btn-menu {
+  svg {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.elite-paws-navbar-btn-whatsapp {
+  text-decoration: none;
+  color: $secondary;
+
+  &.is-open {
+    transform: translate(-8px, 8px);
+    // WhatsApp modal background is fixed/dark; keep this close button styling fixed as well.
+    background: rgba($primary, 0.96) !important;
+    color: $quinary !important;
+    box-shadow: 0 1px 8px rgba($tertiary, 0.18) !important;
+  }
+}
+
+.elite-paws-navbar.is-dark-bg {
+  .elite-paws-navbar-btn {
+    background: rgba($primary, 1);
+    color: $tertiary;
+    box-shadow: 0 1px 8px rgba($tertiary, 0.18);
+  }
+
+  .elite-paws-navbar-btn .elite-paws-navbar-icon--dark {
+    opacity: 1;
+  }
+
+  .elite-paws-navbar-btn .elite-paws-navbar-icon--light {
+    opacity: 0;
+  }
+}
+
+.elite-paws-navbar-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  position: relative;
+  width: 140px;
+  height: 100px;
+}
+
+.elite-paws-navbar-logo {
+  height: 100px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  display: block;
+}
+
+.elite-paws-navbar-logo--primary,
+.elite-paws-navbar-logo--tertiary {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.32s cubic-bezier(0.6, 0.06, 0.22, 1);
+}
+
+.elite-paws-navbar:not(.is-dark-bg) .elite-paws-navbar-logo--tertiary {
+  opacity: 1;
+}
+
+.elite-paws-navbar.is-dark-bg .elite-paws-navbar-logo--primary {
+  opacity: 1;
+}
+
+.elite-paws-whatsapp-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1250;
+  pointer-events: none;
+
+  .elite-paws-whatsapp-overlay {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba($tertiary, 0.26);
+    opacity: 0;
+    transition: opacity 0.32s ease;
+  }
+
+  .elite-paws-whatsapp-card {
+    position: absolute;
+    top: 16px;
+    right: 50px;
+    width: min(310px, 84vw);
+    min-height: 600px;
+    height: auto;
+    min-width: 450px;
+    background: $tertiary;
+    border-radius: 18px;
+    color: $quinary;
+    padding: 70px 26px 24px;
+    text-align: center;
+    box-shadow: 0 22px 56px rgba(0, 0, 0, 0.28);
+    transform-origin: top right;
+    transform: translateY(-14px) scale(0.2);
+    opacity: 0;
+    transition: transform 0.42s cubic-bezier(0.6, 0.06, 0.22, 1), opacity 0.28s ease;
+
+    .elite-paws-whatsapp-qr {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      margin: 0 auto 16px;
+      // background: $quinary;
+      padding: 6px;
+      border-radius: 8px;
+    }
+
+    h3 {
+      margin: 0 0 12px;
+      font-family: 'Pawcinno', serif;
+      font-size: clamp(2rem, 3.3vw, 2.7rem);
+      text-transform: uppercase;
+      line-height: 0.94;
+    }
+
+    p {
+      margin: 0 0 18px;
+      font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      color: rgba($quinary, 0.92);
+    }
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: $secondary;
+      color: $tertiary;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  }
+
+  &.is-open {
+    pointer-events: auto;
+
+    .elite-paws-whatsapp-overlay {
+      opacity: 1;
+    }
+
+    .elite-paws-whatsapp-card {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+.elite-paws-menu-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  pointer-events: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: $primary;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: 0;
+  }
+
+}
+
+.elite-paws-menu-modal-layer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: $tertiary;
+  transition: transform 0.58s cubic-bezier(0.6, 0.06, 0.22, 1);
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.elite-paws-menu-modal-left {
+  left: 0;
+  transform: translateX(-102%);
+  padding: 20px 50px;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.elite-paws-menu-modal-right {
+  right: 0;
+  transform: translateX(102%);
+  padding: 20px 50px;
+  z-index: 3;
+}
+
+.elite-paws-menu-modal.is-open {
+  pointer-events: auto;
+
+  &::before {
+    opacity: 1;
+  }
+
+  .elite-paws-menu-modal-left {
+    transform: translateX(0);
+  }
+
+  .elite-paws-menu-modal-right {
+    transform: translateX(0);
+  }
+
+  .elite-paws-menu-join-logo {
+    opacity: 1;
+  }
+}
+
+.elite-paws-menu-join-logo {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  z-index: 8;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.elite-paws-menu-close-btn {
+  align-self: flex-start;
+  margin-bottom: 34px;
+  background: rgba($primary, 1);
+}
+
+.elite-paws-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+
+  a {
+    font-family: 'Pawcinno', serif;
+    font-size: clamp(2rem, 4vw, 7rem);
+    text-transform: uppercase;
+    color: $primary;
+    line-height: 0.95;
+    text-decoration: none;
+    transition: color 0.22s ease, opacity 0.2s ease;
+
+    &:hover {
+      color: $secondary;
+      opacity: 1;
+    }
+
+    &.is-active {
+      color: $secondary;
+    }
+  }
+}
+
+.elite-paws-menu-social-navbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  a {
+    // width: 24px;
+    // height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 6px;
+    opacity: 0.95;
+
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      // filter: brightness(0) invert(1);
+    }
+  }
+}
+
+.elite-paws-menu-connect {
+  margin: auto auto auto 22%;
+  // max-width: 400px;
+  color: $quinary;
+  text-align: center;
+
+  .elite-paws-menu-qr {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin: 0 auto 20px;
+    // background: #fff;
+    // padding: 6px;
+    border-radius: 8px;
+  }
+
+  h3 {
+    font-family: 'Pawcinno', serif;
+    font-size: clamp(1.9rem, 3vw, 2.6rem);
+    text-transform: uppercase;
+    line-height: 0.95;
+    margin: 0 0 14px;
+  }
+
+  p {
+    font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    margin: 0 0 20px;
+    color: rgba($quinary, 0.9);
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: $secondary;
+    color: $tertiary;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}

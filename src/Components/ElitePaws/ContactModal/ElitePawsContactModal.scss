@@ -71,10 +71,10 @@
   transition: opacity 0.2s ease, transform 0.15s ease, background 0.2s ease;
   box-shadow: 0 1px 6px rgba($tertiary, 0.12);
 
-  svg {
+  img {
     font-size: 1.5rem;
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
   }
 
   &:hover {
@@ -136,6 +136,19 @@
   background: $quinary;
 }
 
+.elite-paws-contact-modal-form textarea {
+  margin-top: 4px;
+  border: 1px solid rgba($tertiary, 0.14);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  color: $tertiary;
+  background: $quinary;
+  resize: vertical;
+  min-height: 120px;
+}
+
 .elite-paws-contact-modal-actions {
   margin-top: 20px;
   display: flex;
@@ -169,6 +182,105 @@
   font-weight: 700;
 }
 
+.elite-paws-contact-modal-choices {
+  width: min(520px, 92%);
+  margin: 6px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.elite-paws-contact-modal-other-title {
+  margin: -2px 0 -6px;
+  width: 100%;
+  text-align: left;
+  font-family: 'Pawcinno', serif;
+  font-size: 0.96rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  opacity: 0.9;
+}
+
+.elite-paws-contact-modal-checklist {
+  width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 12px;
+}
+
+.elite-paws-contact-modal-check {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba($tertiary, 0.16);
+  background: rgba($quinary, 0.86);
+  color: $tertiary;
+  font-weight: 800;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+  user-select: none;
+  min-height: 40px;
+
+  input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  &::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    border: 1px solid rgba($tertiary, 0.3);
+    background: transparent;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+  }
+
+  &::after {
+    content: '✓';
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.8);
+    font-weight: 900;
+    color: $tertiary;
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    opacity: 0.98;
+  }
+}
+
+.elite-paws-contact-modal-check.is-checked {
+  background: rgba($secondary, 0.85);
+  border-color: rgba($tertiary, 0.34);
+}
+
+.elite-paws-contact-modal-check.is-checked::after {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.elite-paws-contact-modal-actions--single {
+  margin-top: 18px;
+}
+
 @keyframes modalBookOpen {
   from {
     transform: scaleX(0.03) scaleY(0.92);
@@ -188,5 +300,11 @@
   to {
     transform: scaleX(0.03) scaleY(0.92);
     opacity: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .elite-paws-contact-modal-checklist {
+    grid-template-columns: 1fr;
   }
 }
