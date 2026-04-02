@@ -282,7 +282,7 @@ export default function ElitePawsNavbar() {
             >
               Why Choose Us
             </a> */}
-            {/* <Link
+            <Link
               to="/portfolio"
               className={activeMenuLink === 'portfolio' ? 'is-active' : ''}
               onClick={() => {
@@ -292,7 +292,7 @@ export default function ElitePawsNavbar() {
               }}
             >
               Portfolio
-            </Link> */}
+            </Link>
             <a
               href="#contact"
               className={activeMenuLink === 'contact' ? 'is-active' : ''}

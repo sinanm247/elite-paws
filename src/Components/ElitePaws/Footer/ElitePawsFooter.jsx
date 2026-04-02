@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import teamImage from '../../../assets/Gallery/Image-8.webp';
 import './ElitePawsFooter.scss';
 import ElitePawsContactModal from '../ContactModal/ElitePawsContactModal';
@@ -12,15 +13,17 @@ import linkedinIcon from '../../../assets/Icons/Social-Icons/linkedin-dark.png';
 import youtubeIcon from '../../../assets/Icons/Social-Icons/youtube-dark.png';
 import facebookIcon from '../../../assets/Icons/Social-Icons/facebook-dark.png';
 
-// Start from the end color of ElitePawsWhyChooseSection to avoid a visible jump.
-const WHYCHOICE_END_BG = '#fcf2e0';
+const PREV_HOME_BG = '#fcf2e0';
+const PREV_PORTFOLIO_BG = '#07211e';
 const FOOTER_BG = '#6f7a43';
 
 export default function ElitePawsFooter() {
+  const location = useLocation();
   const footerRef = useRef(null);
   const [showBg, setShowBg] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalClosing, setIsModalClosing] = useState(false);
+  const previousSectionBg = location.pathname === '/portfolio' ? PREV_PORTFOLIO_BG : PREV_HOME_BG;
 
   const { scrollYProgress: bgScrollYProgress } = useScroll({
     target: footerRef,
@@ -30,7 +33,7 @@ export default function ElitePawsFooter() {
   const backgroundColor = useTransform(
     bgScrollYProgress,
     [0, 0.6, 1],
-    [WHYCHOICE_END_BG, FOOTER_BG, FOOTER_BG]
+    [previousSectionBg, FOOTER_BG, FOOTER_BG]
   );
 
   useEffect(() => {
