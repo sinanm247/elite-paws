@@ -1,10 +1,29 @@
-import image1 from '../assets/Gallery/Image-30.jpeg';
-import image2 from '../assets/Gallery/Image-19.jpeg';
-import image3 from '../assets/Gallery/Image-13.jpeg';
+import image1 from '../assets/Services/Image-1.jpeg';
+import image2 from '../assets/Services/Image-2.jpeg';
+import image3 from '../assets/Services/Image-3.jpeg';
 
 export const services = [
   {
     id: 1,
+    title: 'Elite Ozone Therapy Treatment',
+    subtitle: 'Skin, coat & comfort support',
+    price: '250 AED + VAT',
+    duration: '20–30 mins',
+    image: image3,
+    description:
+      'Advanced treatment using ozone technology to deeply cleanse the skin, reduce odor and support overall coat and skin condition while providing a calming and relaxing effect during the grooming process.',
+    includesDetailed: [
+      { title: 'Coat support treatment', time: '5 min', desc: 'Improves coat softness and manageability.' },
+      {
+        title: 'Ozone bath application',
+        time: '8 min',
+        desc: 'Deep antibacterial and antifungal cleansing. Relaxation effect helps reduce stress—especially beneficial for senior or sensitive pets.',
+      },
+      { title: 'Light dry & brushing', time: '18 min', desc: 'Clean and refreshed finish.' },
+    ],
+  },
+  {
+    id: 2,
     title: 'Elite Puppy Introduction Groom',
     subtitle: 'First grooming experience for puppies',
     price: '231 AED + VAT',
@@ -29,7 +48,7 @@ export const services = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     title: 'Elite Coat Recovery Treatment',
     subtitle: 'Detangling & coat restoration service',
     price: '150–250 AED + VAT',
@@ -46,25 +65,6 @@ export const services = [
       { title: 'Conditioning rinse', time: '5 min', desc: 'Hydration to smooth and protect the coat.' },
       { title: 'Blow dry & brushing', time: '15–20 min', desc: 'Coat separation and volume recovery.' },
       { title: 'Coat alignment finish', time: '5 min', desc: 'Final brushing for a smooth, fluffy result.' },
-    ],
-  },
-  {
-    id: 3,
-    title: 'Elite Ozone Therapy Treatment',
-    subtitle: 'Skin, coat & comfort support',
-    price: '250 AED + VAT',
-    duration: '20–30 mins',
-    image: image3,
-    description:
-      'Advanced treatment using ozone technology to deeply cleanse the skin, reduce odor and support overall coat and skin condition while providing a calming and relaxing effect during the grooming process.',
-    includesDetailed: [
-      { title: 'Coat support treatment', time: '5 min', desc: 'Improves coat softness and manageability.' },
-      {
-        title: 'Ozone bath application',
-        time: '8 min',
-        desc: 'Deep antibacterial and antifungal cleansing. Relaxation effect helps reduce stress—especially beneficial for senior or sensitive pets.',
-      },
-      { title: 'Light dry & brushing', time: '18 min', desc: 'Clean and refreshed finish.' },
     ],
   },
 ];

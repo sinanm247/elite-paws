@@ -13,7 +13,7 @@ import { FaVolumeHigh, FaVolumeXmark } from 'react-icons/fa6';
 import './HomeHero.scss';
 
 import imgLeft from '../../../assets/New-Gallery/Image-3.jpeg';
-import imgCenter from '../../../assets/New-Gallery/Image-10.jpeg';
+import imgCenter from '../../../assets/New-Gallery/Image-10.webp';
 import imgRight from '../../../assets/New-Gallery/Image-7.jpeg';
 
 import videoLeft from '../../../assets/Videos/Video-1.mp4';
@@ -27,9 +27,31 @@ import { HERO_POST_LOADER_DELAY_MS } from '../../../constants/appLoader';
 const HOVER_MOVE = 18;
 const HOVER_ROTATE = 6;
 
-/** Whole stack rises, then sides spread — keep in sync with spread timeout below */
+/** Whole stack rises, then sides spread — no idle frame between (rise complete → spread immediately) */
 const CARD_STACK_RISE_S = 0.88;
-const CARD_SPREAD_S = 0.92;
+/** Horizontal spread duration — keep in sync with spread → done timeout below */
+const CARD_SPREAD_S = 1.02;
+const CARD_RISE_EASE = [0.22, 1, 0.42, 1];
+const CARD_SPREAD_EASE = [0.2, 0.82, 0.28, 1];
+
+/** Section 1: left/right smaller than center; sections 2–3: ramp to 1.0 to match center (no extra zoom past center) */
+const HERO_SIDE_CARD_SCALE = 0.82;
+/** Horizontal nudge at side stack (px), matches sect 1 slide-in — sects 2–3 ease from here to centered (-50%) */
+const HERO_SIDE_STACK_X = 220;
+/** Pre–translateX(-50%) focus offset (px); tuned to card width ≈ min(425px, 100vw − 48px) */
+const HERO_FOCUS_X_PX = -212;
+
+/** Cards strip width / card width — mirrors SCSS `.elite-hero-cards-wrap` and slot width */
+function getHeroCardsLayout(vw) {
+  const wrap = Math.min(vw * 0.9, 1000);
+  const cardW = Math.min(425, Math.max(0, vw - 48));
+  return { wrap, cardW };
+}
+
+function smoothStep01(t) {
+  const x = Math.min(1, Math.max(0, t));
+  return x * x * (3 - 2 * x);
+}
 
 /** Hero intro timeline (seconds) — runs after AppLoader dismisses */
 const HERO_TITLE = 'ELITE PAWS';
@@ -241,6 +263,7 @@ function LeftVideoCard({
 
 export default function HomeHero() {
   const containerRef = useRef(null);
+  const vwRef = useRef(typeof window !== 'undefined' ? window.innerWidth : 1024);
   const [hoveredCard, setHoveredCard] = useState(null);
   const prefersReducedMotion = useReducedMotion();
   const { isPageLoading } = useAppLoader();
@@ -250,7 +273,9 @@ export default function HomeHero() {
   const [heroIntroDone, setHeroIntroDone] = useState(false);
   const [titleCharsSettled, setTitleCharsSettled] = useState(false);
   const [copyRevealSettled, setCopyRevealSettled] = useState(false);
-  /** idle → rising (stack moves up) → spread (sides move out) → done (scroll-driven layout) */
+  /** True after HERO_TITLE fade-out completes — gates card stack (brand not behind cards) */
+  const [heroTextExited, setHeroTextExited] = useState(false);
+  /** idle → rising → spread (sides out) → done (scroll-driven) */
   const [cardsPhase, setCardsPhase] = useState('idle');
 
   useEffect(() => {
@@ -263,14 +288,25 @@ export default function HomeHero() {
   }, [isPageLoading]);
 
   useEffect(() => {
+    const onResize = () => {
+      vwRef.current = window.innerWidth;
+    };
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => {
     if (!introPlay) {
       setTitleCharsSettled(false);
       setCopyRevealSettled(false);
+      setHeroTextExited(false);
       return;
     }
     if (skipMotion) {
       setTitleCharsSettled(true);
       setCopyRevealSettled(true);
+      setHeroTextExited(true);
       return;
     }
     const lastI = HERO_TITLE.length - 1;
@@ -286,17 +322,20 @@ export default function HomeHero() {
     };
   }, [introPlay, skipMotion, introTiming]);
 
+  /** Letters done → exit title + start card rise in one layout pass (sync with title motion) */
   useLayoutEffect(() => {
-    if (copyRevealSettled && introPlay && !skipMotion) {
+    if (!titleCharsSettled || skipMotion) return;
+    setHeroTextExited(true);
+    if (introPlay && !skipMotion) {
       setCardsPhase((p) => (p === 'idle' ? 'rising' : p));
     }
-  }, [copyRevealSettled, introPlay, skipMotion]);
+  }, [titleCharsSettled, skipMotion, introPlay]);
 
   useEffect(() => {
-    if (skipMotion && copyRevealSettled) {
+    if (skipMotion && heroTextExited) {
       setCardsPhase('done');
     }
-  }, [skipMotion, copyRevealSettled]);
+  }, [skipMotion, heroTextExited]);
 
   useEffect(() => {
     if (isPageLoading) {
@@ -315,12 +354,12 @@ export default function HomeHero() {
       setHeroIntroDone(false);
       return;
     }
-    if (prefersReducedMotion && copyRevealSettled) {
+    if (prefersReducedMotion && heroTextExited) {
       setHeroIntroDone(true);
       return;
     }
     setHeroIntroDone(cardsPhase === 'done');
-  }, [isPageLoading, prefersReducedMotion, copyRevealSettled, cardsPhase]);
+  }, [isPageLoading, prefersReducedMotion, heroTextExited, cardsPhase]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -336,16 +375,37 @@ export default function HomeHero() {
   // Section 3: right image comes only when third section has reached the bottom (fully in view)
   const rightToCenterStart = 0.72;
   const rightToCenterEnd = 0.88;
-  const leftSlotX = useTransform(
-    scrollYProgress,
-    [0.08, slideInEnd, leftToCenterStart, leftToCenterEnd],
-    [0, 220, 220, 320]
-  );
-  const leftSlotScale = useTransform(
-    scrollYProgress,
-    [leftToCenterStart, leftToCenterEnd],
-    [1, 1.3]
-  );
+  /** Sect 1: 2% + HERO_SIDE_STACK_X. Hidden: same (beside center card). Sect 2: lerp to 50% + -50% (smooth, no wide swing). */
+  const leftSlotLeft = useTransform(scrollYProgress, (v) => {
+    if (v < slideInEnd) return '2%';
+    if (v < leftToCenterStart) return '2%';
+    if (v < leftToCenterEnd) {
+      const t = smoothStep01((v - leftToCenterStart) / (leftToCenterEnd - leftToCenterStart));
+      return `${2 + 48 * t}%`;
+    }
+    return '50%';
+  });
+  const leftSlotX = useTransform(scrollYProgress, (v) => {
+    if (v < 0.08) return 0;
+    if (v < slideInEnd) {
+      const t = (v - 0.08) / (slideInEnd - 0.08);
+      return HERO_SIDE_STACK_X * t;
+    }
+    if (v < leftToCenterStart) return HERO_SIDE_STACK_X;
+    if (v < leftToCenterEnd) {
+      const t = smoothStep01((v - leftToCenterStart) / (leftToCenterEnd - leftToCenterStart));
+      return HERO_SIDE_STACK_X * (1 - t) + HERO_FOCUS_X_PX * t;
+    }
+    return '-50%';
+  });
+  const leftSlotScale = useTransform(scrollYProgress, (v) => {
+    if (v < leftToCenterStart) return HERO_SIDE_CARD_SCALE;
+    if (v < leftToCenterEnd) {
+      const t = (v - leftToCenterStart) / (leftToCenterEnd - leftToCenterStart);
+      return HERO_SIDE_CARD_SCALE + (1 - HERO_SIDE_CARD_SCALE) * t;
+    }
+    return 1;
+  });
   const leftSlotZIndex = useTransform(
     scrollYProgress,
     [leftToCenterStart, leftToCenterEnd],
@@ -374,18 +434,42 @@ export default function HomeHero() {
     // 4) Only fades out gently once section 3 animation runs
     [1, 1, 0, 0.25, 1, 1, 1, 0]
   );
-  // Section 3: right image slides from behind to center; left fades out
-  
-  const rightSlotX = useTransform(
-    scrollYProgress,
-    [0.08, slideInEnd, rightToCenterStart, rightToCenterEnd],
-    [0, -220, -220, -320]
-  );
-  const rightSlotScale = useTransform(
-    scrollYProgress,
-    [rightToCenterStart, rightToCenterEnd],
-    [1, 1.3]
-  );
+  // Section 3: same end geometry as left. Don't animate `right` to 50% — that plus x:'-50%' is NOT centered
+  // (unlike left:50% + x:'-50%'). From rightToCenterStart: switch to left:50% + x lerp with no layout snap.
+
+  const rightSlotLeft = useTransform(scrollYProgress, (v) => {
+    if (v < rightToCenterStart) return 'auto';
+    return '50%';
+  });
+  const rightSlotRight = useTransform(scrollYProgress, (v) => {
+    if (v < slideInEnd) return '2%';
+    if (v < rightToCenterStart) return '2%';
+    return 'auto';
+  });
+  const rightSlotX = useTransform(scrollYProgress, (v) => {
+    if (v < 0.08) return 0;
+    if (v < slideInEnd) {
+      const t = (v - 0.08) / (slideInEnd - 0.08);
+      return -HERO_SIDE_STACK_X * t;
+    }
+    if (v < rightToCenterStart) return -HERO_SIDE_STACK_X;
+    if (v < rightToCenterEnd) {
+      const t = smoothStep01((v - rightToCenterStart) / (rightToCenterEnd - rightToCenterStart));
+      const { wrap, cardW } = getHeroCardsLayout(vwRef.current);
+      const xWhenLeft50 =
+        0.48 * wrap - cardW - HERO_SIDE_STACK_X;
+      return xWhenLeft50 * (1 - t) + HERO_FOCUS_X_PX * t;
+    }
+    return '-50%';
+  });
+  const rightSlotScale = useTransform(scrollYProgress, (v) => {
+    if (v < rightToCenterStart) return HERO_SIDE_CARD_SCALE;
+    if (v < rightToCenterEnd) {
+      const t = (v - rightToCenterStart) / (rightToCenterEnd - rightToCenterStart);
+      return HERO_SIDE_CARD_SCALE + (1 - HERO_SIDE_CARD_SCALE) * t;
+    }
+    return 1;
+  });
   const rightSlotZIndex = useTransform(
     scrollYProgress,
     [rightToCenterStart, rightToCenterEnd],
@@ -463,7 +547,7 @@ export default function HomeHero() {
             />
           </div>
           <div
-            className={`elite-hero-sticky-cards${copyRevealSettled ? '' : ' elite-hero-sticky-cards--pre-rise'}`}
+            className={`elite-hero-sticky-cards${heroTextExited ? '' : ' elite-hero-sticky-cards--pre-rise'}`}
           >
             <div className="elite-hero-cards-wrap">
               <motion.div
@@ -471,11 +555,11 @@ export default function HomeHero() {
                 initial={false}
                 animate={{
                   /* Must clear the full viewport height — min(72vh, 520px) capped at 520px and left cards peeking on tall screens */
-                  y: copyRevealSettled ? 0 : '105vh',
+                  y: heroTextExited ? 0 : '105vh',
                 }}
                 transition={{
                   duration: skipMotion ? 0.01 : CARD_STACK_RISE_S,
-                  ease: [0.22, 1, 0.36, 1],
+                  ease: CARD_RISE_EASE,
                 }}
                 onAnimationComplete={() => {
                   if (skipMotion) return;
@@ -489,7 +573,7 @@ export default function HomeHero() {
                   {...(cardsPhase === 'done'
                     ? {
                         style: {
-                          left: '2%',
+                          left: leftSlotLeft,
                           right: 'auto',
                           top: '50%',
                           opacity: leftSlotOpacity,
@@ -505,13 +589,13 @@ export default function HomeHero() {
                           x: cardsPhase === 'spread' ? 0 : '-50%',
                           top: '50%',
                           y: '-50%',
-                          scale: 1,
+                          scale: cardsPhase === 'spread' ? HERO_SIDE_CARD_SCALE : 1,
                           zIndex: cardsPhase === 'spread' ? 2 : 1,
                           opacity: 1,
                         },
                         transition: {
                           duration: CARD_SPREAD_S,
-                          ease: [0.2, 0.85, 0.25, 1],
+                          ease: CARD_SPREAD_EASE,
                         },
                       })}
                 >
@@ -559,8 +643,8 @@ export default function HomeHero() {
                   {...(cardsPhase === 'done'
                     ? {
                         style: {
-                          left: 'auto',
-                          right: '2%',
+                          left: rightSlotLeft,
+                          right: rightSlotRight,
                           top: '50%',
                           opacity: rightSlotOpacity,
                           x: rightSlotX,
@@ -576,13 +660,13 @@ export default function HomeHero() {
                           x: cardsPhase === 'spread' ? 0 : '-50%',
                           top: '50%',
                           y: '-50%',
-                          scale: 1,
+                          scale: cardsPhase === 'spread' ? HERO_SIDE_CARD_SCALE : 1,
                           zIndex: cardsPhase === 'spread' ? 2 : 1,
                           opacity: 1,
                         },
                         transition: {
                           duration: CARD_SPREAD_S,
-                          ease: [0.2, 0.85, 0.25, 1],
+                          ease: CARD_SPREAD_EASE,
                         },
                       })}
                 >
@@ -606,41 +690,55 @@ export default function HomeHero() {
         <div
           className={`elite-hero-bg-section elite-hero-bg-section-1${heroIntroDone ? ' elite-hero-bg-section-1--intro-done' : ''}`}
         >
-          <div
-            className={[
-              'elite-hero-bg-text',
-              introPlay ? 'elite-hero-bg-text--intro-active' : 'elite-hero-bg-text--intro-idle',
-              titleCharsSettled ? 'elite-hero-bg-text--chars-settled' : '',
-            ]
-              .filter(Boolean)
-              .join(' ')}
+          <motion.div
+            className={`elite-hero-bg-section-1-title-wrap${heroTextExited ? ' elite-hero-bg-section-1-title-wrap--gone' : ''}`}
+            initial={false}
+            aria-hidden={heroTextExited}
+            animate={{
+              opacity: skipMotion ? 0 : titleCharsSettled ? 0 : 1,
+              y: skipMotion ? 0 : titleCharsSettled ? '-100%' : 0,
+            }}
+            transition={{
+              duration: skipMotion ? 0.01 : CARD_STACK_RISE_S,
+              ease: CARD_RISE_EASE,
+            }}
           >
-            <span className="elite-hero-bg-text-sr">{HERO_TITLE}</span>
-            {HERO_TITLE.split('').map((char, i) => (
-              <span key={`${char}-${i}`} className="elite-hero-bg-text-char-wrap" aria-hidden="true">
-                <motion.span
-                  className="elite-hero-bg-text-char-inner"
-                  style={{ transformOrigin: 'bottom' }}
-                  initial={false}
-                  /* y only — block position is SCSS (.elite-hero-bg-text + section-1). Before: 100%, after: 0 */
-                  animate={
-                    skipMotion
-                      ? { y: 0, opacity: 1 }
-                      : introPlay
+            <div
+              className={[
+                'elite-hero-bg-text',
+                introPlay ? 'elite-hero-bg-text--intro-active' : 'elite-hero-bg-text--intro-idle',
+                titleCharsSettled ? 'elite-hero-bg-text--chars-settled' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+            >
+              <span className="elite-hero-bg-text-sr">{HERO_TITLE}</span>
+              {HERO_TITLE.split('').map((char, i) => (
+                <span key={`${char}-${i}`} className="elite-hero-bg-text-char-wrap" aria-hidden="true">
+                  <motion.span
+                    className="elite-hero-bg-text-char-inner"
+                    style={{ transformOrigin: 'bottom' }}
+                    initial={false}
+                    /* y only — block position is SCSS (.elite-hero-bg-text + section-1). Before: 100%, after: 0 */
+                    animate={
+                      skipMotion
                         ? { y: 0, opacity: 1 }
-                        : { y: '100%', opacity: 1 }
-                  }
-                  transition={{
-                    delay: skipMotion || !introPlay ? 0 : introTiming.letterDelayStepS * i,
-                    duration: skipMotion ? 0.01 : introTiming.letterDurationS,
-                    ease: [0.2, 0.85, 0.22, 1],
-                  }}
-                >
-                  {char === ' ' ? '\u00A0' : char}
-                </motion.span>
-              </span>
-            ))}
-          </div>
+                        : introPlay
+                          ? { y: 0, opacity: 1 }
+                          : { y: '100%', opacity: 1 }
+                    }
+                    transition={{
+                      delay: skipMotion || !introPlay ? 0 : introTiming.letterDelayStepS * i,
+                      duration: skipMotion ? 0.01 : introTiming.letterDurationS,
+                      ease: [0.2, 0.85, 0.22, 1],
+                    }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                </span>
+              ))}
+            </div>
+          </motion.div>
           <div className="elite-hero-copy elite-hero-bg-copy">
             <div
               className={`elite-hero-bg-copy-mask${copyRevealSettled ? ' elite-hero-bg-copy-mask--settled' : ''}`}
@@ -662,7 +760,7 @@ export default function HomeHero() {
                 }}
               >
                 <p className="elite-hero-copy-label">Pet Grooming & Care</p>
-                <h2 className="elite-hero-copy-title">Dubai's<br /> most attentive grooming service.</h2>
+                <h2 className="elite-hero-copy-title">ONE PET<br/> AT A TIME GROOMING<br/> SERVICE AT YOUR DOOR</h2>
               </motion.div>
             </div>
           </div>
@@ -671,8 +769,8 @@ export default function HomeHero() {
           <div className="elite-hero-bg-section-2-left">
             {/* <p className="elite-hero-s2-line">We are the</p> */}
             {/* <p className="elite-hero-s2-line elite-hero-s2-accent">care your pet deserves.</p> */}
-            <p className="elite-hero-s2-line">Your pet is </p>
-            <p className="elite-hero-s2-line elite-hero-s2-accent">family</p>
+            <p className="elite-hero-s2-line">ALL THE </p>
+            <p className="elite-hero-s2-line elite-hero-s2-accent">ATTENTION</p>
             <div className="elite-hero-s2-left-sticky-wrap">
               <img
                 className="elite-hero-s2-left-image"
@@ -681,7 +779,7 @@ export default function HomeHero() {
                 aria-hidden="true"
                 loading="lazy"
               />
-              <p className="elite-hero-s2-sticky-text">Trusted by pet parents across Dubai</p>
+              <p className="elite-hero-s2-sticky-text">None of the chaos</p>
             </div>
           </div>
           <div className="elite-hero-bg-section-2-right">
@@ -692,10 +790,14 @@ export default function HomeHero() {
               aria-hidden="true"
               loading="lazy"
             />
+            <div className="elite-hero-s2-para">
+              <span>We pull up, we set up, and your pet becomes the main character.<br/></span>
+              Ozone baths, tangle rescues, dreamy blowouts, paw balm, teeth brushing, gentle puppy first grooms, we’re bringing everything they need, nothing they don't. We only ever groom one pet at a time. With every treat, every soft word and every spritz of cologne, your furbaby gets the whole experience and the whole ❤ behind it!
+            </div>
             {/* <p className="elite-hero-s2-line">You are</p> */}
             {/* <p className="elite-hero-s2-line elite-hero-s2-accent">family.</p> */}
-            <p className="elite-hero-s2-line">We treat them </p>
-            <p className="elite-hero-s2-line elite-hero-s2-accent">family.</p>
+            {/* <p className="elite-hero-s2-line">We treat them </p>
+            <p className="elite-hero-s2-line elite-hero-s2-accent">family.</p> */}
           </div>
         </div>
         <div className="elite-hero-bg-section elite-hero-bg-section-3">
@@ -716,8 +818,11 @@ export default function HomeHero() {
             <div className="elite-hero-s3-para">
               {/* <span>At Elite Paws, we believe that pet care is not just about grooming or a quick check-up.<br/></span>
               It&apos;s a relationship to build, trust to earn, and wellness to maintain. Our mission: to make every visit a moment of care and comfort, with your pet&apos;s health and happiness at the heart of everything we do. */}
-              <span>A full assessment dressed up as A VERY GOOD TIME.<br/></span>
-              We come to your door, see one pet at a time, and check everything - skin, coat, ears, paws, nails. All of it. Every visit. A refreshing spa day coupled with a health checkup for your furbaby.
+              {/* <span>A full assessment dressed up as A VERY GOOD TIME.<br/></span>
+              We come to your door, see one pet at a time, and check everything - skin, coat, ears, paws, nails. All of it. Every visit. A refreshing spa day coupled with a health checkup for your furbaby. */}
+              <span>SHAKEN, FLUFFED & ADORED<br/></span>
+              From the first coat assessment to the final spritz of cologne, every step is intentional, every product is chosen with care and every pet gets the kind of attention that simply can't be split.
+              We get to work with ozone baths that cleanse deep down to the skin, expert brushing, nail filing, paw balm, teeth brushing, blowouts and trims done with full, unhurried attention. Just one groomer, one pet and a mobile setup stocked with everything it takes to send your furbaby home looking, and feeling, like a million dirhams. That’s what ALL IN looks like at Elite Paws.
             </div>
           </div>
         </div>

@@ -121,8 +121,19 @@
   justify-content: center;
   gap: 16px;
   height: auto;
-  min-height: 260px;
+  min-height: 220px;
   align-self: start;
+
+  .elite-paws-portfolio-card-text-title {
+    margin: 0 0 8px;
+    font-family: 'Pawcinno', serif;
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    color: rgba($tertiary, 0.98);
+  }
 
   p {
     margin: 0;

@@ -31,13 +31,21 @@ import './ElitePawsNavbar.scss';
 
 const WHATSAPP_LINK = 'https://wa.me/'; // Add number after slash e.g. 1234567890
 
+/** While scroll is in this band from the top, hero sticky bg drives contrast (avoids hysteresis dead zone + missed updates at scrollY≈0). */
+const HERO_TOP_SCROLL_PX = 120;
+/** Single threshold when forcing from hero (between dark/light hysteresis bands). */
+const HERO_LUMINANCE_MID = 0.23;
+
 export default function ElitePawsNavbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [whatsappOpen, setWhatsappOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isDarkBg, setIsDarkBg] = useState(false);
+  /** Portfolio uses same #07211e as default button fill ($tertiary) — needs is-dark-bg (cream buttons) from first paint. */
+  const [isDarkBg, setIsDarkBg] = useState(
+    () => typeof window !== 'undefined' && window.location.pathname === '/portfolio',
+  );
   const [activeMenuLink, setActiveMenuLink] = useState('home');
 
   const scrollToSection = (id) => {
@@ -97,6 +105,7 @@ export default function ElitePawsNavbar() {
   const getKnownSectionBackground = () => {
     const candidates = [
       document.querySelector('.elite-hero-bg-color'),
+      document.querySelector('.elite-paws-portfolio-bg'),
       document.querySelector('.elite-paws-services-bg'),
       document.querySelector('.elite-paws-why-choose-bg'),
       document.querySelector('.elite-paws-footer-bg'),
@@ -124,18 +133,65 @@ export default function ElitePawsNavbar() {
     return best;
   };
 
+  const getHeroStickyBackgroundRgb = () => {
+    const el = document.querySelector('.elite-hero-bg-color');
+    if (!el) return null;
+    const style = window.getComputedStyle(el);
+    const rgb = parseRgb(style.backgroundColor);
+    const opacity = Number.parseFloat(style.opacity ?? '1');
+    if (!rgb || !(Number.isFinite(opacity) ? opacity > 0.05 : true)) return null;
+    return rgb;
+  };
+
+  const getPortfolioStickyBackgroundRgb = () => {
+    const el = document.querySelector('.elite-paws-portfolio-bg');
+    if (!el) return null;
+    const style = window.getComputedStyle(el);
+    const rgb = parseRgb(style.backgroundColor);
+    const opacity = Number.parseFloat(style.opacity ?? '1');
+    if (!rgb || !(Number.isFinite(opacity) ? opacity > 0.05 : true)) return null;
+    return rgb;
+  };
+
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 24);
 
+      // Top of page: hero sticky layer is authoritative — fixes icons/logo not reverting
+      // when scrolling back (hysteresis gap 0.20–0.26 + occasional null samples at scrollY≈0).
+      if (window.scrollY < HERO_TOP_SCROLL_PX) {
+        const heroRgb = getHeroStickyBackgroundRgb();
+        if (heroRgb) {
+          const lum = luminance(heroRgb);
+          setIsDarkBg(lum < HERO_LUMINANCE_MID);
+        } else {
+          const portfolioRgb = getPortfolioStickyBackgroundRgb();
+          if (portfolioRgb) {
+            setIsDarkBg(luminance(portfolioRgb) < HERO_LUMINANCE_MID);
+          } else if (location.pathname === '/portfolio') {
+            setIsDarkBg(true);
+          } else {
+            setIsDarkBg(false);
+          }
+        }
+        return;
+      }
+
       // Prefer reading the actual section background layers.
       // Fallback to pixel sampling if those nodes aren't available yet.
-      const bg = getKnownSectionBackground()
+      const bg =
+        getKnownSectionBackground()
         ?? getBackgroundAtPoint(
           Math.floor(window.innerWidth / 2),
           Math.min(120, Math.floor(window.innerHeight * 0.25))
-        );
-      if (!bg) return;
+        )
+        ?? getHeroStickyBackgroundRgb()
+        ?? getPortfolioStickyBackgroundRgb();
+
+      if (!bg) {
+        if (location.pathname === '/portfolio') setIsDarkBg(true);
+        return;
+      }
       const lum = luminance(bg);
       // Hysteresis to avoid quick flip-flopping while section colors blend.
       // Light threshold is higher, dark threshold is lower.
@@ -155,7 +211,7 @@ export default function ElitePawsNavbar() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
-  }, []);
+  }, [location.pathname]);
 
   return (
     <>

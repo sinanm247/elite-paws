@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
-import teamImage from '../../../assets/Gallery/Image-8.webp';
+import teamImage from '../../../assets/New-Gallery/Image-5.png';
 import './ElitePawsFooter.scss';
 import ElitePawsContactModal from '../ContactModal/ElitePawsContactModal';
 

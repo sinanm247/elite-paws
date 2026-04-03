@@ -1,8 +1,8 @@
-import image1 from '../assets/Gallery/Image-6.jpeg';
-import image2 from '../assets/Gallery/Image-28.png';
-import image3 from '../assets/Gallery/Image-31.jpeg';
-import image4 from '../assets/Gallery/Image-15.jpeg';
-import image5 from '../assets/Gallery/Image-20.jpeg';
+import image1 from '../assets/Grooming/Image-1.jpeg';
+import image2 from '../assets/Grooming/Image-2.jpeg';
+import image3 from '../assets/Grooming/Image-3.jpeg';
+import image4 from '../assets/Grooming/Image-4.jpeg';
+import image5 from '../assets/Grooming/Image-5.jpeg';
 
 export const groomingMenu = [
   {

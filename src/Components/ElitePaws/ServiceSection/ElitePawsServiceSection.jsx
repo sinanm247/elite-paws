@@ -94,7 +94,7 @@ export default function ElitePawsServiceSection() {
         <div className="elite-paws-services-inner">
           <div className="elite-paws-services-left">
           <h2 className="elite-paws-services-heading">
-          The Good Stuff
+          THE SPECIALS
             {/* Dedicated
             <br />
             to Better:
@@ -103,7 +103,7 @@ export default function ElitePawsServiceSection() {
           </h2>
           <p className="elite-paws-services-desc">
             {/* Specialized grooming treatments designed for comfort, coat health, and stress-free care. */}
-            Every service your pet deserves. 
+            Each one crafted for your baby with extra love.
           </p>
           {/* <a href="#services" className="elite-paws-services-link">
             Explore All Services
@@ -117,8 +117,8 @@ export default function ElitePawsServiceSection() {
 
               const slotStyles = {
                 center: { zIndex: 3, transform: 'rotate(2deg) scale(1) translateX(0)', opacity: 1 },
-                left:   { zIndex: 1, transform: 'rotate(-5deg) scale(0.9) translateX(-20%)', opacity: 0.35 },
-                right:  { zIndex: 1, transform: 'rotate(5deg) scale(0.9) translateX(20%)', opacity: 0.35 },
+                left:   { zIndex: 1, transform: 'rotate(-5deg) scale(0.8) translateX(-20%)', opacity: 0.35 },
+                right:  { zIndex: 1, transform: 'rotate(5deg) scale(0.8) translateX(20%)', opacity: 0.35 },
               };
 
               return (

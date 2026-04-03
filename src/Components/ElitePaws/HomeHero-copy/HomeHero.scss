@@ -5,6 +5,10 @@ $hero-bg-bold: $logo-dark-bg;
 $hero-bg-mid: $tertiary;
 $hero-accent: $secondary;
 
+// Same footprint as grooming menu cards (.elite-paws-pricing-card)
+$hero-card-w: 425px;
+$hero-card-h: 650px;
+
 .elite-hero {
   position: relative;
 }
@@ -94,6 +98,19 @@ $hero-accent: $secondary;
   }
 }
 
+.elite-hero-bg-section-1-title-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.elite-hero-bg-section-1-title-wrap--gone {
+  pointer-events: none;
+}
+
 // -----------------------------------------------------------------------------
 // HERO_TITLE (“ELITE PAWS”) — layout lives ONLY here + section-1. It does not
 // move between “before” and “after”; only each .elite-hero-bg-text-char-inner
@@ -179,7 +196,7 @@ $hero-accent: $secondary;
   position: absolute;
   bottom: 0px;
   left: 4%;
-  max-width: 500px;
+  max-width: 600px;
   text-align: left;
 
   @media (max-width: 768px) {
@@ -285,7 +302,7 @@ $hero-accent: $secondary;
   right: 4%;
   top: 50%;
   transform: translateY(-50%);
-  max-width: 320px;
+  max-width: 400px;
   text-align: right;
 
   @media (max-width: 768px) {
@@ -305,6 +322,26 @@ $hero-accent: $secondary;
   border-radius: 14px;
   // box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
   // border: 1px solid rgba($quinary, 0.12);
+}
+
+.elite-hero-s2-para {
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
+  font-size: clamp(0.8rem, 1.8vw, 1rem);
+  line-height: 1.65;
+  color: $quinary;
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+
+  span {
+    color: $tertiary;
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
 }
 
 .elite-hero-s2-line {
@@ -415,7 +452,8 @@ $hero-accent: $secondary;
 .elite-hero-cards-wrap {
   position: relative;
   width: min(90vw, 1000px);
-  height: min(65vh, 520px);
+  height: $hero-card-h;
+  min-height: $hero-card-h;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -442,16 +480,16 @@ $hero-accent: $secondary;
   top: 50%;
   transform: translateY(-50%);
   transform-origin: center center;
-  width: 40%;
-  max-width: 340px;
+  width: min(#{$hero-card-w}, calc(100vw - 48px));
+  max-width: $hero-card-w;
 }
 
 .elite-hero-card-slot.elite-hero-card-center {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 52%;
-  max-width: 420px;
+  width: min(#{$hero-card-w}, calc(100vw - 48px));
+  max-width: $hero-card-w;
 }
 
 .elite-hero-card-slot.elite-hero-card-right {
@@ -459,8 +497,8 @@ $hero-accent: $secondary;
   top: 50%;
   transform: translateY(-50%);
   transform-origin: center center;
-  width: 40%;
-  max-width: 340px;
+  width: min(#{$hero-card-w}, calc(100vw - 48px));
+  max-width: $hero-card-w;
 }
 
 .elite-hero-image-card.card-left {
@@ -486,7 +524,8 @@ $hero-accent: $secondary;
 
 .elite-hero-image-card {
   width: 100%;
-  min-height: 260px;
+  height: $hero-card-h;
+  min-height: $hero-card-h;
   border-radius: inherit;
   overflow: hidden;
   will-change: transform;
@@ -494,7 +533,7 @@ $hero-accent: $secondary;
   img {
     width: 100%;
     height: 100%;
-    min-height: 260px;
+    min-height: $hero-card-h;
     object-fit: cover;
     display: block;
   }
@@ -531,7 +570,7 @@ $hero-accent: $secondary;
   height: auto;
   opacity: 0.92;
   // transform: scaleX(-1) rotate(45deg);
-  transform: rotate(deg);
+  transform: rotate(0deg);
 }
 
 .elite-hero-video-hint-text {
@@ -622,5 +661,30 @@ $hero-accent: $secondary;
 
 .elite-hero-card-slot .elite-hero-image-card {
   width: 100%;
-  min-height: 280px;
+  height: $hero-card-h;
+  min-height: $hero-card-h;
+}
+
+@media (max-width: 1024px) {
+  .elite-hero-cards-wrap {
+    height: 420px;
+    min-height: 420px;
+  }
+
+  .elite-hero-card-slot.elite-hero-card-left,
+  .elite-hero-card-slot.elite-hero-card-center,
+  .elite-hero-card-slot.elite-hero-card-right {
+    width: min(280px, calc(100vw - 48px));
+    max-width: 280px;
+  }
+
+  .elite-hero-image-card,
+  .elite-hero-card-slot .elite-hero-image-card {
+    height: 420px;
+    min-height: 420px;
+
+    img {
+      min-height: 420px;
+    }
+  }
 }

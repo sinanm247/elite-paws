@@ -38,9 +38,9 @@ function CTACard({ index, scrollYProgress, totalCards }) {
       }}
     >
       <div className="elite-paws-pricing-cta-content">
-        <h3 className="elite-paws-pricing-cta-title">Need more details?</h3>
+        <h3 className="elite-paws-pricing-cta-title">LET’S TALK</h3>
         <p className="elite-paws-pricing-cta-desc">
-          Have questions about our plans or want a customized package for your furry friend? We&rsquo;d love to help.
+        Every pet is different. So your grooming session doesn&apos;t have to be one-size-fits-all. Tell us what your baby needs and we&apos;ll build it around them.
         </p>
         <a
           href="#contact"
@@ -48,7 +48,7 @@ function CTACard({ index, scrollYProgress, totalCards }) {
           rel="noopener noreferrer"
           className="elite-paws-pricing-cta-btn"
         >
-          Contact Us
+          Get In Touch
         </a>
       </div>
     </motion.div>
