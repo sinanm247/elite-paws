@@ -191,7 +191,7 @@
     background: $tertiary;
     border-radius: 18px;
     color: $quinary;
-    padding: 70px 26px 24px;
+    // padding: 70px 26px 24px;
     text-align: center;
     box-shadow: 0 22px 56px rgba(0, 0, 0, 0.28);
     transform-origin: top right;
@@ -558,6 +558,6 @@
     min-width: 0;
     width: min(92vw, 380px);
     min-height: auto;
-    padding: 62px 18px 18px;
+    padding: 30px 18px 18px;
   }
 }

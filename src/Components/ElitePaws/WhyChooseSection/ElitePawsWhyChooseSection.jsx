@@ -43,8 +43,14 @@ const REASONS = [
 const CARD_COUNT = REASONS.length;
 const INTRO_END = 0.1;
 const USABLE = 0.72;
-const COMPACT_USABLE = 0.9;
 const STEP = USABLE / CARD_COUNT;
+
+// Compact: each card gets a rise phase, then a hold at center before the next rises.
+const COMPACT_INTRO = 0.1;
+const COMPACT_OUTRO = 0.04;
+const COMPACT_USABLE = 1 - COMPACT_INTRO - COMPACT_OUTRO;
+const COMPACT_PER_CARD = COMPACT_USABLE / CARD_COUNT;
+const COMPACT_RISE_SHARE = 0.42; // fraction of each card's scroll used for rise from bottom
 
 const CARD_LAYOUT = [
   { rotate: -7, finalY: 96 },
@@ -57,27 +63,39 @@ const ROTATE_TILTS = [-7, 7, -6, 6];
 const COMPACT_FINAL_Y = [84, -74, -62, 78];
 
 function WhyChooseCard({ item, index, scrollYProgress, isCompact }) {
-  const activeStep = isCompact ? COMPACT_USABLE / CARD_COUNT : STEP;
-  const start = INTRO_END + index * activeStep;
-  const riseEnd = start + activeStep * (isCompact ? 0.9 : 0.72);
   const desktopLayout = CARD_LAYOUT[index] ?? CARD_LAYOUT[0];
   const rotate = isCompact ? ROTATE_TILTS[index % ROTATE_TILTS.length] : desktopLayout.rotate;
   const finalY = isCompact ? COMPACT_FINAL_Y[index] ?? 0 : desktopLayout.finalY;
 
-  const yRaw = useTransform(
+  const start = INTRO_END + index * STEP;
+  const riseEnd = start + STEP * 0.72;
+
+  const compactT0 = COMPACT_INTRO + index * COMPACT_PER_CARD;
+  const compactRiseEnd = compactT0 + COMPACT_PER_CARD * COMPACT_RISE_SHARE;
+  const compactSegmentEnd = compactT0 + COMPACT_PER_CARD;
+
+  const yCompact = useTransform(
     scrollYProgress,
-    [start, riseEnd],
-    [isCompact ? '235vh' : '170vh', `${finalY}px`]
+    [compactT0, compactRiseEnd, compactSegmentEnd],
+    ['235vh', `${finalY}px`, `${finalY}px`]
   );
-  const opacity = useTransform(
+  const yDesktop = useTransform(scrollYProgress, [start, riseEnd], ['170vh', `${finalY}px`]);
+  const yRaw = useTransform([yCompact, yDesktop], ([yc, yd]) => (isCompact ? yc : yd));
+
+  const opacityCompact = useTransform(
     scrollYProgress,
-    [start, start + activeStep * (isCompact ? 0.3 : 0.12)],
+    [compactT0, compactT0 + (compactRiseEnd - compactT0) * 0.55],
     [0, 1]
   );
+  const opacityDesktop = useTransform(scrollYProgress, [start, start + STEP * 0.12], [0, 1]);
+  const opacity = useTransform([opacityCompact, opacityDesktop], ([oc, od]) =>
+    isCompact ? oc : od
+  );
+
   const ySpring = useSpring(
     yRaw,
     isCompact
-      ? { stiffness: 120, damping: 24, mass: 0.78 }
+      ? { stiffness: 95, damping: 26, mass: 0.85 }
       : { stiffness: 200, damping: 18, mass: 0.55 }
   );
 

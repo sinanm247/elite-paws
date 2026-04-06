@@ -19,8 +19,8 @@ const CARD_GAP = 20;
 const CARD_HEIGHT = 650;
 
 function getPricingCardLayout(vw) {
-  if (vw <= 768) return { width: 330, height: 500, gap: 10 };
-  if (vw <= 1024) return { width: 390, height: 580, gap: 12 };
+  if (vw <= 768) return { width: 330, height: 500, gap: 18 };
+  if (vw <= 1024) return { width: 390, height: 580, gap: 22 };
   return { width: CARD_WIDTH, height: CARD_HEIGHT, gap: CARD_GAP };
 }
 
@@ -458,12 +458,15 @@ export default function ElitePawsGroomingMenuSection() {
     target: sectionRef,
     offset: ['start start', 'end end'],
   });
+  const compactHeadingY = useTransform(scrollYProgress, [0, 0.2], [0, -110]);
+  const compactHeadingOpacity = useTransform(scrollYProgress, [0, 0.16], [1, 0]);
 
   const totalCards = groomingMenu.length + 1;
   const step = cardLayout.width + cardLayout.gap;
   const maxOffset = (totalCards - 1) * step;
   const openStart = 0.05;
   const openEnd = 0.9;
+  const isCompactPricing = cardLayout.width < CARD_WIDTH;
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     const offset = ((v - 0.05) / (0.9 - 0.05)) * maxOffset;
@@ -603,10 +606,13 @@ export default function ElitePawsGroomingMenuSection() {
       )}
       <div className="elite-paws-pricing-sticky">
         <div className="elite-paws-pricing-inner">
-          <div className="elite-paws-pricing-left">
+          <motion.div
+            className="elite-paws-pricing-left"
+            style={isCompactPricing ? { y: compactHeadingY, opacity: compactHeadingOpacity } : undefined}
+          >
             <h2 className="elite-paws-pricing-heading">What Elite Looks Like</h2>
             <p className="elite-paws-pricing-sub">Every service your pet deserves.</p>
-          </div>
+          </motion.div>
 
           <div className="elite-paws-pricing-cards-wrap">
             <div

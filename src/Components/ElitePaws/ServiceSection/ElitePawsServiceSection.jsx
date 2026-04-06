@@ -57,8 +57,13 @@ export default function ElitePawsServiceSection() {
 
   const totalServices = services.length;
 
+  // Padded mapping: slower transitions, more scroll per service (esp. mobile with tall section).
+  const SCROLL_PAD = 0.1;
+
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    const idx = Math.min(totalServices - 1, Math.floor(v * totalServices));
+    const usable = 1 - 2 * SCROLL_PAD;
+    const t = Math.max(0, Math.min(1, (v - SCROLL_PAD) / usable));
+    const idx = Math.min(totalServices - 1, Math.floor(t * totalServices));
     const newId = services[idx]?.id;
     if (newId != null) setActiveService(newId);
   });
