@@ -69,6 +69,11 @@ $hero-card-h: 650px;
   pointer-events: none;
 }
 
+/* Non-sticky mode: no overlap offset between sections */
+.elite-hero-bg-stack.elite-hero-bg-stack--mobile {
+  margin-top: 0;
+}
+
 .elite-hero-bg-stack .elite-hero-bg-section {
   pointer-events: auto;
 }
@@ -95,6 +100,55 @@ $hero-card-h: 650px;
 
   &.elite-hero-bg-section-1--intro-done {
     z-index: 1;
+  }
+
+  /* ≤1100px: title (stays visible) → inline 3-card stack → copy bottom, centered */
+  &.elite-hero-bg-section-1--mobile {
+    flex: 1 0 auto;
+    height: auto;
+    min-height: 100vh;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: clamp(24px, 6vw, 40px);
+
+    &.elite-hero-bg-section-1--intro-done {
+      z-index: 1;
+    }
+
+    .elite-hero-bg-section-1-title-wrap {
+      position: relative;
+      z-index: 5;
+      flex-shrink: 0;
+      padding-top: 50px;
+      margin-bottom: 0px;
+    }
+
+    .elite-hero-inline-cards {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 0 0 auto;
+      min-height: auto;
+      padding: 0;
+      margin-bottom: 50px;
+    }
+
+    .elite-hero-copy.elite-hero-bg-copy {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      right: auto;
+      max-width: min(92%, 520px);
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 0;
+      text-align: center;
+      z-index: 4;
+      padding: 8px 16px 0;
+    }
   }
 }
 
@@ -144,6 +198,19 @@ $hero-card-h: 650px;
   align-items: baseline;
   justify-content: center;
   line-height: 1;
+}
+
+/* Tighter than viewport-chasing 18vw so “ELITE PAWS” doesn’t read as edge-to-edge */
+@media (max-width: 1450px) {
+  .elite-hero-bg-text {
+    font-size: clamp(4rem, 11vw, 9.5rem);
+  }
+}
+
+@media (max-width: 420px) {
+  .elite-hero-bg-text {
+    font-size: clamp(2.6rem, 12vw, 3.4rem);
+  }
 }
 
 // Modifiers: --intro-idle | --intro-active | --chars-settled (see block comment above).
@@ -231,7 +298,7 @@ $hero-card-h: 650px;
 .elite-hero-copy-title {
   font-family: 'Pawcinno', serif;
   text-transform: uppercase;
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
   color: $tertiary;
   line-height: 1.2;
@@ -255,6 +322,8 @@ $hero-card-h: 650px;
   @media (max-width: 768px) {
     left: 5%;
     max-width: 85%;
+    margin-top: 30px;
+    margin-bottom: 20px;
   }
 }
 
@@ -266,6 +335,10 @@ $hero-card-h: 650px;
   width: clamp(280px, 16vw, 190px);
   aspect-ratio: 1 / 1;
   z-index: 1;
+
+  @media (max-width: 1100px) {
+    display: none;
+  }
 }
 
 .elite-hero-s2-left-image {
@@ -295,6 +368,10 @@ $hero-card-h: 650px;
   z-index: 2;
   pointer-events: none;
   margin-left: 20px;
+
+  @media (max-width: 1100px) {
+    margin-right: 20px !important;
+  }
 }
 
 .elite-hero-bg-section-2-right {
@@ -322,6 +399,14 @@ $hero-card-h: 650px;
   border-radius: 14px;
   // box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
   // border: 1px solid rgba($quinary, 0.12);
+
+  @media (max-width: 1250px) {
+    width: min(300px, 100%);
+  }
+
+  @media (max-width: 1100px) {
+    display: none;
+  }
 }
 
 .elite-hero-s2-para {
@@ -337,6 +422,16 @@ $hero-card-h: 650px;
   span {
     color: $tertiary;
     font-weight: 700;
+  }
+
+  @media (max-width: 1250px) {
+    max-width: 300px;
+    margin-right: 0px;
+  }
+
+  @media (max-width: 1100px) {
+    margin-top: 20px;
+    max-width: 900px;
   }
 
   @media (max-width: 768px) {
@@ -384,6 +479,7 @@ $hero-card-h: 650px;
   @media (max-width: 768px) {
     left: 5%;
     max-width: 85%;
+    margin-bottom: 30px;
   }
 }
 
@@ -444,8 +540,19 @@ $hero-card-h: 650px;
     font-weight: 700;
   }
 
+  @media (max-width: 1350px) {
+    max-width: 300px;
+  }
+
+  @media (max-width: 1100px) {
+    max-width: 900px;
+    padding-bottom: 30px;
+  }
+
   @media (max-width: 768px) {
     margin-left: 0;
+    margin-top: 30px;
+    padding-bottom: 50px;
   }
 }
 
@@ -457,6 +564,10 @@ $hero-card-h: 650px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.elite-hero-cards-wrap--inline {
+  pointer-events: auto;
 }
 
 /* Whole stack (center + side cards behind) translates up together — see HomeHero.jsx cardsPhase */
@@ -563,6 +674,12 @@ $hero-card-h: 650px;
   top: 50px;
   left: -40px;
   right: auto;
+
+  @media (max-width: 480px) {
+    top: auto;
+    bottom: 50px;
+    left: -30px;
+  }
 }
 
 .elite-hero-video-hint-icon {
@@ -571,6 +688,10 @@ $hero-card-h: 650px;
   opacity: 0.92;
   // transform: scaleX(-1) rotate(45deg);
   transform: rotate(0deg);
+
+  @media (max-width: 480px) {
+    width: 50px;
+  }
 }
 
 .elite-hero-video-hint-text {
@@ -586,6 +707,12 @@ $hero-card-h: 650px;
   white-space: nowrap;
   text-align: center;
   transform: rotate(15deg);
+
+  @media (max-width: 480px) {
+    top: 50px;
+    right: 10px;
+    font-size: 14px;
+  }
 }
 
 .elite-hero-video-layer {
@@ -665,7 +792,204 @@ $hero-card-h: 650px;
   min-height: $hero-card-h;
 }
 
-@media (max-width: 1024px) {
+.elite-hero-video-hint--section {
+  top: 12px;
+  right: 12px;
+  left: auto;
+
+  .elite-hero-video-hint-text {
+    position: static;
+    transform: none;
+    white-space: normal;
+    font-size: 14px;
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 1400px) {
+  /* Slightly shrink hero card footprint and side copy for laptop widths */
+  .elite-hero-cards-wrap {
+    height: 580px;
+    min-height: 580px;
+  }
+
+  .elite-hero-card-slot.elite-hero-card-left,
+  .elite-hero-card-slot.elite-hero-card-center,
+  .elite-hero-card-slot.elite-hero-card-right {
+    width: min(380px, calc(100vw - 48px));
+    max-width: 380px;
+  }
+
+  .elite-hero-image-card,
+  .elite-hero-card-slot .elite-hero-image-card {
+    height: 580px;
+    min-height: 580px;
+
+    img {
+      min-height: 580px;
+    }
+  }
+
+  .elite-hero-bg-section-2-left {
+    max-width: 280px;
+  }
+
+  .elite-hero-bg-section-2-right {
+    max-width: 360px;
+  }
+
+  .elite-hero-bg-section-3-left {
+    max-width: 320px;
+  }
+
+  .elite-hero-bg-section-3-right {
+    max-width: 400px;
+  }
+
+  .elite-hero-s2-line {
+    font-size: clamp(1.8rem, 4.3vw, 3rem);
+  }
+
+  .elite-hero-s3-headline {
+    font-size: clamp(2.2rem, 5.1vw, 3.4rem);
+  }
+
+  .elite-hero-s2-para,
+  .elite-hero-s3-para {
+    font-size: clamp(0.76rem, 1.55vw, 0.95rem);
+  }
+}
+
+@media (max-width: 1100px) {
+  /* Sections 2–3: column stack (left → center card → right); cards are in-section, not sticky */
+  .elite-hero-bg-section-2,
+  .elite-hero-bg-section-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: clamp(14px, 3.2vw, 24px) 5%;
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .elite-hero-bg-section-2-left,
+  .elite-hero-bg-section-2-right,
+  .elite-hero-bg-section-3-left,
+  .elite-hero-bg-section-3-right {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    max-width: min(100%, 520px);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding-bottom: 0;
+  }
+
+  .elite-hero-bg-section-2-center,
+  .elite-hero-bg-section-3-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-shrink: 0;
+    padding: clamp(8px, 2vw, 14px) 0;
+  }
+
+  .elite-hero-s2-left-sticky-wrap {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin: 16px auto 0;
+    width: min(280px, 80vw);
+  }
+
+  .elite-hero-s2-right-image {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .elite-hero-s2-para,
+  .elite-hero-s3-para {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .elite-hero-s3-left-image {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: 0 auto 16px;
+    display: block;
+  }
+
+  .elite-hero-bg-section-card-slot {
+    position: relative;
+    width: min(#{$hero-card-w}, calc(100vw - 48px));
+    max-width: $hero-card-w;
+    margin: 0 auto;
+    pointer-events: auto;
+  }
+
+  .elite-hero-bg-section-card-slot .elite-hero-image-card {
+    height: $hero-card-h;
+    min-height: $hero-card-h;
+
+    img {
+      min-height: $hero-card-h;
+    }
+  }
+}
+
+/* Hero cards (inline stack + section 2/3 cards): full menu size 769–1100px; compact only on phones */
+@media (max-width: 768px) {
+  .elite-hero-bg-section-1.elite-hero-bg-section-1--mobile {
+    min-height: auto;
+    padding-bottom: 12px;
+
+    .elite-hero-bg-section-1-title-wrap {
+      padding-top: 32px;
+      margin-bottom: 20px;
+    }
+
+    .elite-hero-inline-cards {
+      margin-bottom: 20px;
+    }
+  }
+
+  .elite-hero-bg-section-2,
+  .elite-hero-bg-section-3 {
+    min-height: auto;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .elite-hero-bg-section-2-center,
+  .elite-hero-bg-section-3-center {
+    padding: 2px 0;
+  }
+
+  .elite-hero-bg-section-card-slot {
+    width: min(280px, calc(100vw - 48px));
+    max-width: 280px;
+  }
+
+  .elite-hero-bg-section-card-slot .elite-hero-image-card {
+    height: 420px;
+    min-height: 420px;
+
+    img {
+      min-height: 420px;
+    }
+  }
+
   .elite-hero-cards-wrap {
     height: 420px;
     min-height: 420px;

@@ -18,13 +18,19 @@ const CARD_WIDTH = 425;
 const CARD_GAP = 20;
 const CARD_HEIGHT = 650;
 
+function getPricingCardLayout(vw) {
+  if (vw <= 768) return { width: 330, height: 500, gap: 10 };
+  if (vw <= 1024) return { width: 390, height: 580, gap: 12 };
+  return { width: CARD_WIDTH, height: CARD_HEIGHT, gap: CARD_GAP };
+}
+
 function getPlanImage(index, plan) {
   return plan?.image || PLAN_IMAGES[index % PLAN_IMAGES.length];
 }
 
-function CTACard({ index, scrollYProgress, totalCards }) {
-  const naturalX = index * (CARD_WIDTH + CARD_GAP);
-  const maxOffset = (totalCards - 1) * (CARD_WIDTH + CARD_GAP);
+function CTACard({ index, scrollYProgress, totalCards, cardWidth, cardGap }) {
+  const naturalX = index * (cardWidth + cardGap);
+  const maxOffset = (totalCards - 1) * (cardWidth + cardGap);
 
   const scrollOffset = useTransform(scrollYProgress, [0.05, 0.9], [0, maxOffset]);
   const cardX = useTransform(scrollOffset, (offset) => Math.max(0, naturalX - offset));
@@ -87,7 +93,20 @@ function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
 
-function PlanDetailsModal({ isVisible, isOpen, onClose, plan, img, anchorRect, startLeft, origin }) {
+function PlanDetailsModal({
+  isVisible,
+  isOpen,
+  onClose,
+  plan,
+  img,
+  anchorRect,
+  startLeft,
+  origin,
+  isCentered,
+  cardWidth,
+  cardHeight,
+  cardGap,
+}) {
   const ITEMS_PER_PAGE = 4;
   const [page, setPage] = useState(0);
   const [direction, setDirection] = useState(1); // 1 = next, -1 = prev
@@ -106,7 +125,8 @@ function PlanDetailsModal({ isVisible, isOpen, onClose, plan, img, anchorRect, s
     setPage(0);
   }, [isOpen, plan?.id]);
 
-  if (!isVisible || !plan || !anchorRect) return null;
+  if (!isVisible || !plan) return null;
+  if (!isCentered && !anchorRect) return null;
 
   const items = plan.includesDetailed || [];
   const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
@@ -114,16 +134,18 @@ function PlanDetailsModal({ isVisible, isOpen, onClose, plan, img, anchorRect, s
   const pageItems = items.slice(currentPage * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE + ITEMS_PER_PAGE);
   const pageKey = `${plan.id}-${currentPage}`;
 
-  const modalWidth = CARD_WIDTH * 2 + CARD_GAP;
-  const modalHeight = CARD_HEIGHT;
+  const defaultModalWidth = CARD_WIDTH * 2 + CARD_GAP;
+  const defaultModalHeight = CARD_HEIGHT;
+  const modalWidth = isCentered ? defaultModalWidth : cardWidth * 2 + cardGap;
+  const modalHeight = isCentered ? defaultModalHeight : cardHeight;
   const pad = 16;
 
   // Keep panel aligned with the card start position (x=0) as much as possible.
   // Only shift left if needed to keep the panel inside the viewport.
   const maxLeft = window.innerWidth - modalWidth - pad;
-  const desiredLeft = typeof startLeft === 'number' ? startLeft : anchorRect.left;
-  const left = clamp(Math.min(desiredLeft, maxLeft), pad, maxLeft);
-  const top = clamp(anchorRect.top, pad, window.innerHeight - modalHeight - pad);
+  const desiredLeft = typeof startLeft === 'number' ? startLeft : anchorRect?.left ?? pad;
+  const left = isCentered ? '50%' : clamp(Math.min(desiredLeft, maxLeft), pad, maxLeft);
+  const top = isCentered ? '50%' : clamp(anchorRect.top, pad, window.innerHeight - modalHeight - pad);
 
   const originStyle =
     origin && Number.isFinite(origin.x) && Number.isFinite(origin.y)
@@ -139,8 +161,14 @@ function PlanDetailsModal({ isVisible, isOpen, onClose, plan, img, anchorRect, s
         aria-label="Close plan details"
       />
       <div
-        className="elite-paws-grooming-modal-panel"
-        style={{ top, left, width: modalWidth, height: modalHeight, ...originStyle }}
+        className={`elite-paws-grooming-modal-panel${isCentered ? ' is-centered' : ''}`}
+        style={{
+          top,
+          left,
+          width: modalWidth,
+          height: modalHeight,
+          ...(isCentered ? {} : originStyle),
+        }}
       >
         <div className="elite-paws-grooming-modal-left">
           <div className="elite-paws-grooming-modal-card">
@@ -264,13 +292,13 @@ function PlanDetailsModal({ isVisible, isOpen, onClose, plan, img, anchorRect, s
   );
 }
 
-function StackingCard({ plan, index, isSelected, scrollYProgress, totalCards, onOpenDetails }) {
+function StackingCard({ plan, index, isSelected, scrollYProgress, totalCards, onOpenDetails, cardWidth, cardGap }) {
   const img = getPlanImage(index, plan);
   const rightBottomLabels = [plan.duration, plan.time].filter(Boolean);
   const [heartBursts, setHeartBursts] = useState([]);
 
-  const naturalX = index * (CARD_WIDTH + CARD_GAP);
-  const maxOffset = (totalCards - 1) * (CARD_WIDTH + CARD_GAP);
+  const naturalX = index * (cardWidth + cardGap);
+  const maxOffset = (totalCards - 1) * (cardWidth + cardGap);
 
   const scrollOffset = useTransform(scrollYProgress, [0.05, 0.9], [0, maxOffset]);
   const cardX = useTransform(scrollOffset, (offset) => Math.max(0, naturalX - offset));
@@ -395,6 +423,23 @@ export default function ElitePawsGroomingMenuSection() {
   const [anchorRect, setAnchorRect] = useState(null);
   const [startLeft, setStartLeft] = useState(null);
   const [detailsOrigin, setDetailsOrigin] = useState(null);
+  const [isCenteredModal, setIsCenteredModal] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth <= 1350
+  );
+  const [cardLayout, setCardLayout] = useState(() =>
+    getPricingCardLayout(typeof window !== 'undefined' ? window.innerWidth : 1440)
+  );
+  useEffect(() => {
+    const onResize = () => {
+      const w = window.innerWidth;
+      setIsCenteredModal(w <= 1350);
+      setCardLayout(getPricingCardLayout(w));
+    };
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   const pendingOpenRef = useRef(null);
   const openRafRef = useRef(null);
 
@@ -415,7 +460,7 @@ export default function ElitePawsGroomingMenuSection() {
   });
 
   const totalCards = groomingMenu.length + 1;
-  const step = CARD_WIDTH + CARD_GAP;
+  const step = cardLayout.width + cardLayout.gap;
   const maxOffset = (totalCards - 1) * step;
   const openStart = 0.05;
   const openEnd = 0.9;
@@ -439,6 +484,15 @@ export default function ElitePawsGroomingMenuSection() {
   }, []);
 
   const scrollCardToFrontThenOpen = (idx, plan, img) => {
+    if (isCenteredModal) {
+      setDetailsOrigin(null);
+      setDetailsPlan(plan);
+      setDetailsImg(img);
+      setDetailsVisible(true);
+      requestAnimationFrame(() => setDetailsOpen(true));
+      return;
+    }
+
     const el = sectionRef.current;
     if (!el) return;
 
@@ -469,8 +523,8 @@ export default function ElitePawsGroomingMenuSection() {
         const btn = cardEl?.querySelector?.('button[aria-label="View full details"]');
         const btnRect = btn?.getBoundingClientRect?.();
         if (r && btnRect) {
-          const modalWidth = CARD_WIDTH * 2 + CARD_GAP;
-          const modalHeight = CARD_HEIGHT;
+          const modalWidth = cardLayout.width * 2 + cardLayout.gap;
+          const modalHeight = cardLayout.height;
           const pad = 16;
           const maxLeft = window.innerWidth - modalWidth - pad;
           const desiredLeft = typeof startLeft === 'number' ? startLeft : r.left;
@@ -566,6 +620,8 @@ export default function ElitePawsGroomingMenuSection() {
                   isSelected={index === selectedIndex}
                   scrollYProgress={scrollYProgress}
                   totalCards={totalCards}
+                  cardWidth={cardLayout.width}
+                  cardGap={cardLayout.gap}
                   onOpenDetails={(idx, p, img, btnEl) => {
                     scrollCardToFrontThenOpen(idx, p, img);
                   }}
@@ -575,6 +631,8 @@ export default function ElitePawsGroomingMenuSection() {
                 index={groomingMenu.length}
                 scrollYProgress={scrollYProgress}
                 totalCards={totalCards}
+                cardWidth={cardLayout.width}
+                cardGap={cardLayout.gap}
               />
             </div>
           </div>
@@ -599,6 +657,10 @@ export default function ElitePawsGroomingMenuSection() {
         anchorRect={anchorRect}
         startLeft={startLeft}
         origin={detailsOrigin}
+        isCentered={isCenteredModal}
+        cardWidth={cardLayout.width}
+        cardHeight={cardLayout.height}
+        cardGap={cardLayout.gap}
       />
     </section>
   );

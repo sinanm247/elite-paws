@@ -53,8 +53,24 @@ function smoothStep01(t) {
   return x * x * (3 - 2 * x);
 }
 
+/** Piecewise linear interpolation for scroll keyframes (matches Framer useTransform arrays). */
+function lerpKeyframes(v, points, values) {
+  if (v <= points[0]) return values[0];
+  if (v >= points[points.length - 1]) return values[values.length - 1];
+  for (let i = 0; i < points.length - 1; i += 1) {
+    if (v >= points[i] && v <= points[i + 1]) {
+      const t = (v - points[i]) / (points[i + 1] - points[i]);
+      return values[i] + t * (values[i + 1] - values[i]);
+    }
+  }
+  return values[values.length - 1];
+}
+
 /** Hero intro timeline (seconds) — runs after AppLoader dismisses */
 const HERO_TITLE = 'ELITE PAWS';
+
+/** Below this width: title + copy stay in flow; section 1 uses inline 3-card stack; sticky cards off. */
+const MOBILE_HERO_MAX_PX = 1100;
 
 function getHeroIntroTiming(prefersReducedMotion) {
   if (prefersReducedMotion) {
@@ -146,6 +162,7 @@ function LeftVideoCard({
   onHoverEnd,
   baseRotate = 0,
   isSection2Active,
+  allowCardClickPlay = false,
 }) {
   const cardRef = useRef(null);
   const videoRef = useRef(null);
@@ -162,6 +179,7 @@ function LeftVideoCard({
   const [isHovered, setIsHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [isClickPinned, setIsClickPinned] = useState(false);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -175,10 +193,10 @@ function LeftVideoCard({
   const handleMouseLeave = () => {
     setIsHovered(false);
     onHoverEnd?.();
-    if (videoRef.current) {
+    if (videoRef.current && !isClickPinned) {
       videoRef.current.pause();
+      setIsPlaying(false);
     }
-    setIsPlaying(false);
   };
 
   const handleMouseMove = (e) => {
@@ -200,17 +218,44 @@ function LeftVideoCard({
     if (isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
+      setIsClickPinned(false);
     } else {
       videoRef.current.play().catch(() => {});
       setIsPlaying(true);
+      setIsClickPinned(true);
     }
   };
+
+  const handleCardClick = (e) => {
+    if (!allowCardClickPlay || !isSection2Active || !videoRef.current) return;
+    const target = e.target;
+    if (target instanceof Element && target.closest('.elite-hero-video-controls')) return;
+
+    if (videoRef.current.paused) {
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+      setIsClickPinned(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+      setIsClickPinned(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isSection2Active) return;
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+    setIsPlaying(false);
+    setIsClickPinned(false);
+  }, [isSection2Active]);
 
   const toggleMute = () => {
     setIsMuted((prev) => !prev);
   };
 
-  const showVideoLayer = isSection2Active && isHovered;
+  const showVideoLayer = isSection2Active && (isHovered || isClickPinned);
 
   return (
     <motion.div
@@ -218,6 +263,7 @@ function LeftVideoCard({
       className={`elite-hero-image-card ${className || ''}`}
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
+      onClick={handleCardClick}
       onMouseLeave={() => {
         handleMouseLeave();
         xSpring.set(0);
@@ -263,7 +309,12 @@ function LeftVideoCard({
 
 export default function HomeHero() {
   const containerRef = useRef(null);
-  const vwRef = useRef(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const section2Ref = useRef(null);
+  const section3Ref = useRef(null);
+  const vwRef = useRef(typeof window !== 'undefined' ? window.innerWidth : 768);
+  const [isMobileHero, setIsMobileHero] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth <= MOBILE_HERO_MAX_PX : false
+  );
   const [hoveredCard, setHoveredCard] = useState(null);
   const prefersReducedMotion = useReducedMotion();
   const { isPageLoading } = useAppLoader();
@@ -289,7 +340,9 @@ export default function HomeHero() {
 
   useEffect(() => {
     const onResize = () => {
-      vwRef.current = window.innerWidth;
+      const width = window.innerWidth;
+      vwRef.current = width;
+      setIsMobileHero(width <= MOBILE_HERO_MAX_PX);
     };
     onResize();
     window.addEventListener('resize', onResize);
@@ -416,24 +469,26 @@ export default function HomeHero() {
     [0, leftToCenterStart, leftToCenterEnd],
     [-4, -4, 0]
   );
-  const leftSlotOpacity = useTransform(
-    scrollYProgress,
-    [
-      0,
-      0.08,
-      slideInEnd,
-      leftToCenterStart,
-      leftToCenterEnd,
-      rightToCenterStart - 0.02,
-      rightToCenterStart,
-      rightToCenterEnd,
-    ],
-    // 1) Fully visible in section 1
-    // 2) Hidden when it slides behind center
-    // 3) Fades in during section 2 and stays fully visible
-    // 4) Only fades out gently once section 3 animation runs
-    [1, 1, 0, 0.25, 1, 1, 1, 0]
-  );
+  const leftSlotOpacity = useTransform(scrollYProgress, (v) => {
+    if (isMobileHero) {
+      if (v >= rightToCenterStart) return 0;
+      return 1;
+    }
+    return lerpKeyframes(
+      v,
+      [
+        0,
+        0.08,
+        slideInEnd,
+        leftToCenterStart,
+        leftToCenterEnd,
+        rightToCenterStart - 0.02,
+        rightToCenterStart,
+        rightToCenterEnd,
+      ],
+      [1, 1, 0, 0.25, 1, 1, 1, 0]
+    );
+  });
   // Section 3: same end geometry as left. Don't animate `right` to 50% — that plus x:'-50%' is NOT centered
   // (unlike left:50% + x:'-50%'). From rightToCenterStart: switch to left:50% + x lerp with no layout snap.
 
@@ -480,28 +535,79 @@ export default function HomeHero() {
     [0, rightToCenterStart, rightToCenterEnd],
     [4, 4, 0]
   );
-  const rightSlotOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.08, slideInEnd, rightToCenterStart - 0.002, rightToCenterStart, rightToCenterEnd],
-    [1, 1, 0, 0, 0.25, 1]
-  );
-  const centerOpacity = useTransform(
-    scrollYProgress,
-    [leftToCenterStart, leftToCenterEnd, rightToCenterStart],
-    [1, 0, 0]
-  );
+  const rightSlotOpacity = useTransform(scrollYProgress, (v) => {
+    if (isMobileHero) {
+      if (v >= leftToCenterStart && v < rightToCenterStart) return 0;
+      return 1;
+    }
+    return lerpKeyframes(
+      v,
+      [0, 0.08, slideInEnd, rightToCenterStart - 0.002, rightToCenterStart, rightToCenterEnd],
+      [1, 1, 0, 0, 0.25, 1]
+    );
+  });
+  const centerOpacity = useTransform(scrollYProgress, (v) => {
+    if (isMobileHero) {
+      return v < leftToCenterStart ? 1 : 0;
+    }
+    return lerpKeyframes(v, [leftToCenterStart, leftToCenterEnd, rightToCenterStart], [1, 0, 0]);
+  });
+
+  /** Mobile: section 1 uses inline stack only; sections 2–3 use cards inside each section (no sticky cards). */
+  const inlineHeroCardsOpacity = useTransform(scrollYProgress, (v) => {
+    if (!isMobileHero) return 0;
+    return v < leftToCenterStart ? 1 : 0;
+  });
 
   const [isSection2Active, setIsSection2Active] = useState(false);
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     setIsSection2Active(v >= leftToCenterStart && v < rightToCenterStart);
   });
 
-  // Smooth bg color when each section reaches the top
-  const backgroundColor = useTransform(
+  // Desktop sticky timeline color
+  const desktopBackgroundColor = useTransform(
     scrollYProgress,
     [0, 0.25, 0.38, 0.58, 0.72, 1],
     ['#fcf2e0', '#fcf2e0', '#6f7a43', '#6f7a43', '#07211e', '#07211e']
   );
+  // Mobile/non-sticky timeline color (section-triggered for reliable transitions)
+  const [mobileBackgroundColor, setMobileBackgroundColor] = useState('#fcf2e0');
+
+  useEffect(() => {
+    if (!isMobileHero) return undefined;
+
+    let raf = null;
+    const updateMobileBg = () => {
+      const section2Top = section2Ref.current?.getBoundingClientRect().top ?? Infinity;
+      const section3Top = section3Ref.current?.getBoundingClientRect().top ?? Infinity;
+      const triggerY = window.innerHeight * 0.55;
+
+      if (section3Top <= triggerY) {
+        setMobileBackgroundColor('#07211e');
+      } else if (section2Top <= triggerY) {
+        setMobileBackgroundColor('#6f7a43');
+      } else {
+        setMobileBackgroundColor('#fcf2e0');
+      }
+    };
+
+    const onScrollOrResize = () => {
+      if (raf != null) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        updateMobileBg();
+        raf = null;
+      });
+    };
+
+    updateMobileBg();
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize);
+    return () => {
+      if (raf != null) cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScrollOrResize);
+      window.removeEventListener('resize', onScrollOrResize);
+    };
+  }, [isMobileHero]);
 
   // Hide sticky layers when hero has scrolled out (sticky doesn't unstick in this layout)
   const [showStickyLayers, setShowStickyLayers] = useState(true);
@@ -540,13 +646,22 @@ export default function HomeHero() {
       {showStickyLayers && (
         <>
           <div className="elite-hero-sticky-bg">
-            <motion.div
-              className="elite-hero-bg-color"
-              style={{ backgroundColor }}
-              aria-hidden="true"
-            />
+            {isMobileHero ? (
+              <motion.div
+                className="elite-hero-bg-color"
+                style={{ backgroundColor: mobileBackgroundColor }}
+                aria-hidden="true"
+              />
+            ) : (
+              <motion.div
+                className="elite-hero-bg-color"
+                style={{ backgroundColor: desktopBackgroundColor }}
+                aria-hidden="true"
+              />
+            )}
           </div>
-          <div
+          {!isMobileHero && (
+          <motion.div
             className={`elite-hero-sticky-cards${heroTextExited ? '' : ' elite-hero-sticky-cards--pre-rise'}`}
           >
             <div className="elite-hero-cards-wrap">
@@ -563,6 +678,7 @@ export default function HomeHero() {
                 }}
                 onAnimationComplete={() => {
                   if (skipMotion) return;
+                  if (isMobileHero) return;
                   setCardsPhase((p) => (p === 'rising' ? 'spread' : p));
                 }}
               >
@@ -612,6 +728,7 @@ export default function HomeHero() {
                     className="card-left"
                     baseRotate={leftSlotRotate}
                     isSection2Active={isSection2Active}
+                    allowCardClickPlay={!isMobileHero}
                     onHoverStart={() => setHoveredCard('left')}
                     onHoverEnd={() => setHoveredCard(null)}
                   />
@@ -681,23 +798,28 @@ export default function HomeHero() {
                 </motion.div>
               </motion.div>
             </div>
-          </div>
+          </motion.div>
+          )}
         </>
       )}
 
       {/* Section texts: between bg and cards (z-order); overlap stickies so section 1 + cards show together */}
-      <div className="elite-hero-bg-stack">
+      <div className={`elite-hero-bg-stack${isMobileHero ? ' elite-hero-bg-stack--mobile' : ''}`}>
         <div
-          className={`elite-hero-bg-section elite-hero-bg-section-1${heroIntroDone ? ' elite-hero-bg-section-1--intro-done' : ''}`}
+          className={`elite-hero-bg-section elite-hero-bg-section-1${heroIntroDone ? ' elite-hero-bg-section-1--intro-done' : ''}${isMobileHero ? ' elite-hero-bg-section-1--mobile' : ''}`}
         >
           <motion.div
-            className={`elite-hero-bg-section-1-title-wrap${heroTextExited ? ' elite-hero-bg-section-1-title-wrap--gone' : ''}`}
+            className={`elite-hero-bg-section-1-title-wrap${heroTextExited && !isMobileHero ? ' elite-hero-bg-section-1-title-wrap--gone' : ''}`}
             initial={false}
-            aria-hidden={heroTextExited}
-            animate={{
-              opacity: skipMotion ? 0 : titleCharsSettled ? 0 : 1,
-              y: skipMotion ? 0 : titleCharsSettled ? '-100%' : 0,
-            }}
+            aria-hidden={isMobileHero ? false : heroTextExited}
+            animate={
+              isMobileHero
+                ? { opacity: 1, y: 0 }
+                : {
+                    opacity: skipMotion ? 0 : titleCharsSettled ? 0 : 1,
+                    y: skipMotion ? 0 : titleCharsSettled ? '-100%' : 0,
+                  }
+            }
             transition={{
               duration: skipMotion ? 0.01 : CARD_STACK_RISE_S,
               ease: CARD_RISE_EASE,
@@ -739,6 +861,143 @@ export default function HomeHero() {
               ))}
             </div>
           </motion.div>
+          {isMobileHero && (
+            <motion.div
+              className="elite-hero-inline-cards"
+              style={{ opacity: inlineHeroCardsOpacity }}
+              aria-hidden={!heroTextExited}
+            >
+              <div className="elite-hero-cards-wrap elite-hero-cards-wrap--inline">
+                <motion.div
+                  className="elite-hero-cards-riser elite-hero-cards-riser--inline"
+                  initial={false}
+                  animate={{
+                    y: heroTextExited ? 0 : '105vh',
+                  }}
+                  transition={{
+                    duration: skipMotion ? 0.01 : CARD_STACK_RISE_S,
+                    ease: CARD_RISE_EASE,
+                  }}
+                  onAnimationComplete={() => {
+                    if (skipMotion) return;
+                    if (!isMobileHero) return;
+                    setCardsPhase((p) => (p === 'rising' ? 'spread' : p));
+                  }}
+                >
+                  <motion.div
+                    key={cardsPhase === 'done' ? 'inline-left-static' : 'inline-left-intro'}
+                    className="elite-hero-card-slot elite-hero-card-left"
+                    initial={false}
+                    {...(cardsPhase === 'done'
+                      ? {
+                          animate: {
+                            left: '2%',
+                            x: 0,
+                            top: '50%',
+                            y: '-50%',
+                            scale: HERO_SIDE_CARD_SCALE,
+                            zIndex: 2,
+                            opacity: 1,
+                          },
+                          transition: { duration: 0 },
+                        }
+                      : {
+                          animate: {
+                            left: cardsPhase === 'spread' ? '2%' : '50%',
+                            x: cardsPhase === 'spread' ? 0 : '-50%',
+                            top: '50%',
+                            y: '-50%',
+                            scale: cardsPhase === 'spread' ? HERO_SIDE_CARD_SCALE : 1,
+                            zIndex: cardsPhase === 'spread' ? 2 : 1,
+                            opacity: 1,
+                          },
+                          transition: {
+                            duration: CARD_SPREAD_S,
+                            ease: CARD_SPREAD_EASE,
+                          },
+                        })}
+                  >
+                    <LeftVideoCard
+                      imgSrc={imgLeft}
+                      videoSrc={videoLeft}
+                      alt="Elite Paws care"
+                      className="card-left"
+                      baseRotate={-4}
+                      isSection2Active={false}
+                      allowCardClickPlay={false}
+                      onHoverStart={() => setHoveredCard('left')}
+                      onHoverEnd={() => setHoveredCard(null)}
+                    />
+                  </motion.div>
+                  <motion.div
+                    className="elite-hero-card-slot elite-hero-card-center"
+                    initial={false}
+                    animate={{
+                      left: '50%',
+                      top: '50%',
+                      x: '-50%',
+                      y: '-50%',
+                      zIndex: hoveredCard === 'center' ? 5 : 3,
+                      opacity: 1,
+                    }}
+                  >
+                    <ImageCard
+                      src={imgCenter}
+                      alt="Elite Paws grooming"
+                      className="card-center"
+                      baseRotate={0}
+                      onHoverStart={() => setHoveredCard('center')}
+                      onHoverEnd={() => setHoveredCard(null)}
+                    />
+                  </motion.div>
+                  <motion.div
+                    key={cardsPhase === 'done' ? 'inline-right-static' : 'inline-right-intro'}
+                    className="elite-hero-card-slot elite-hero-card-right"
+                    initial={false}
+                    {...(cardsPhase === 'done'
+                      ? {
+                          animate: {
+                            left: 'auto',
+                            right: '2%',
+                            x: 0,
+                            top: '50%',
+                            y: '-50%',
+                            scale: HERO_SIDE_CARD_SCALE,
+                            zIndex: 2,
+                            opacity: 1,
+                          },
+                          transition: { duration: 0 },
+                        }
+                      : {
+                          animate: {
+                            left: cardsPhase === 'spread' ? 'auto' : '50%',
+                            right: cardsPhase === 'spread' ? '2%' : 'auto',
+                            x: cardsPhase === 'spread' ? 0 : '-50%',
+                            top: '50%',
+                            y: '-50%',
+                            scale: cardsPhase === 'spread' ? HERO_SIDE_CARD_SCALE : 1,
+                            zIndex: cardsPhase === 'spread' ? 2 : 1,
+                            opacity: 1,
+                          },
+                          transition: {
+                            duration: CARD_SPREAD_S,
+                            ease: CARD_SPREAD_EASE,
+                          },
+                        })}
+                  >
+                    <ImageCard
+                      src={imgRight}
+                      alt="Elite Paws experience"
+                      className="card-right"
+                      baseRotate={4}
+                      onHoverStart={() => setHoveredCard('right')}
+                      onHoverEnd={() => setHoveredCard(null)}
+                    />
+                  </motion.div>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
           <div className="elite-hero-copy elite-hero-bg-copy">
             <div
               className={`elite-hero-bg-copy-mask${copyRevealSettled ? ' elite-hero-bg-copy-mask--settled' : ''}`}
@@ -765,7 +1024,7 @@ export default function HomeHero() {
             </div>
           </div>
         </div>
-        <div className="elite-hero-bg-section elite-hero-bg-section-2">
+        <div ref={section2Ref} className="elite-hero-bg-section elite-hero-bg-section-2">
           <div className="elite-hero-bg-section-2-left">
             {/* <p className="elite-hero-s2-line">We are the</p> */}
             {/* <p className="elite-hero-s2-line elite-hero-s2-accent">care your pet deserves.</p> */}
@@ -782,6 +1041,29 @@ export default function HomeHero() {
               <p className="elite-hero-s2-sticky-text">None of the chaos</p>
             </div>
           </div>
+          {isMobileHero && (
+            <div className="elite-hero-bg-section-2-center">
+              <div className="elite-hero-bg-section-card-slot elite-hero-bg-section-card-slot--video">
+                {isSection2Active && (
+                  <div className="elite-hero-video-hint elite-hero-video-hint--outside" aria-hidden="true">
+                    <img src={arrowIcon} alt="" className="elite-hero-video-hint-icon" />
+                    <span className="elite-hero-video-hint-text">Tap to<br/> play video</span>
+                  </div>
+                )}
+                <LeftVideoCard
+                  imgSrc={imgLeft}
+                  videoSrc={videoLeft}
+                  alt="Elite Paws care"
+                  className="card-left"
+                  baseRotate={-4}
+                  isSection2Active={isSection2Active}
+                  allowCardClickPlay={false}
+                  onHoverStart={() => setHoveredCard('left')}
+                  onHoverEnd={() => setHoveredCard(null)}
+                />
+              </div>
+            </div>
+          )}
           <div className="elite-hero-bg-section-2-right">
             <img
               className="elite-hero-s2-right-image"
@@ -800,7 +1082,7 @@ export default function HomeHero() {
             <p className="elite-hero-s2-line elite-hero-s2-accent">family.</p> */}
           </div>
         </div>
-        <div className="elite-hero-bg-section elite-hero-bg-section-3">
+        <div ref={section3Ref} className="elite-hero-bg-section elite-hero-bg-section-3">
           <div className="elite-hero-bg-section-3-left">
           <img
               className="elite-hero-s3-left-image"
@@ -814,6 +1096,20 @@ export default function HomeHero() {
             <p className="elite-hero-s3-headline">All paws.</p>
             <p className="elite-hero-s3-headline elite-hero-s2-accent">All ears. All in.</p>
           </div>
+          {isMobileHero && (
+            <div className="elite-hero-bg-section-3-center">
+              <div className="elite-hero-bg-section-card-slot">
+                <ImageCard
+                  src={imgRight}
+                  alt="Elite Paws experience"
+                  className="card-right"
+                  baseRotate={4}
+                  onHoverStart={() => setHoveredCard('right')}
+                  onHoverEnd={() => setHoveredCard(null)}
+                />
+              </div>
+            </div>
+          )}
           <div className="elite-hero-bg-section-3-right">
             <div className="elite-hero-s3-para">
               {/* <span>At Elite Paws, we believe that pet care is not just about grooming or a quick check-up.<br/></span>

@@ -43,9 +43,9 @@ const REASONS = [
 const CARD_COUNT = REASONS.length;
 const INTRO_END = 0.1;
 const USABLE = 0.72;
+const COMPACT_USABLE = 0.9;
 const STEP = USABLE / CARD_COUNT;
 
-// Final layout: staggered Y + tilt like reference (L lower, ML higher, MR higher, R lower)
 const CARD_LAYOUT = [
   { rotate: -7, finalY: 96 },
   { rotate: 4, finalY: -92 },
@@ -53,18 +53,33 @@ const CARD_LAYOUT = [
   { rotate: 7, finalY: 90 },
 ];
 
-function WhyChooseCard({ item, index, scrollYProgress }) {
-  const start = INTRO_END + index * STEP;
-  const riseEnd = start + STEP * 0.72;
-  const layout = CARD_LAYOUT[index] ?? CARD_LAYOUT[0];
+const ROTATE_TILTS = [-7, 7, -6, 6];
+const COMPACT_FINAL_Y = [84, -74, -62, 78];
+
+function WhyChooseCard({ item, index, scrollYProgress, isCompact }) {
+  const activeStep = isCompact ? COMPACT_USABLE / CARD_COUNT : STEP;
+  const start = INTRO_END + index * activeStep;
+  const riseEnd = start + activeStep * (isCompact ? 0.9 : 0.72);
+  const desktopLayout = CARD_LAYOUT[index] ?? CARD_LAYOUT[0];
+  const rotate = isCompact ? ROTATE_TILTS[index % ROTATE_TILTS.length] : desktopLayout.rotate;
+  const finalY = isCompact ? COMPACT_FINAL_Y[index] ?? 0 : desktopLayout.finalY;
 
   const yRaw = useTransform(
     scrollYProgress,
     [start, riseEnd],
-    ['170vh', `${layout.finalY}px`]
+    [isCompact ? '235vh' : '170vh', `${finalY}px`]
   );
-  const opacity = useTransform(scrollYProgress, [start, start + STEP * 0.12], [0, 1]);
-  const ySpring = useSpring(yRaw, { stiffness: 200, damping: 18, mass: 0.55 });
+  const opacity = useTransform(
+    scrollYProgress,
+    [start, start + activeStep * (isCompact ? 0.3 : 0.12)],
+    [0, 1]
+  );
+  const ySpring = useSpring(
+    yRaw,
+    isCompact
+      ? { stiffness: 120, damping: 24, mass: 0.78 }
+      : { stiffness: 200, damping: 18, mass: 0.55 }
+  );
 
   return (
     <motion.article
@@ -73,7 +88,7 @@ function WhyChooseCard({ item, index, scrollYProgress }) {
         y: ySpring,
         opacity,
         zIndex: index + 2,
-        rotate: layout.rotate,
+        rotate,
       }}
     >
       <img className="elite-paws-why-choose-card-icon" src={item.icon} alt="" />
@@ -86,6 +101,9 @@ function WhyChooseCard({ item, index, scrollYProgress }) {
 export default function ElitePawsWhyChooseSection() {
   const sectionRef = useRef(null);
   const [showBg, setShowBg] = useState(false);
+  const [isCompact, setIsCompact] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth <= 1024
+  );
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -102,6 +120,13 @@ export default function ElitePawsWhyChooseSection() {
     [0, 0.25, 0.4],
     [SERVICE_END_BG, WHY_BG, WHY_BG]
   );
+
+  useEffect(() => {
+    const onResize = () => setIsCompact(window.innerWidth <= 1024);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -155,6 +180,7 @@ export default function ElitePawsWhyChooseSection() {
               item={item}
               index={index}
               scrollYProgress={scrollYProgress}
+              isCompact={isCompact}
             />
           ))}
         </div>

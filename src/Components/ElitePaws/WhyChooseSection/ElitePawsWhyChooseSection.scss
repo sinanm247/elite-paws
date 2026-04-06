@@ -166,18 +166,22 @@ $why-card-green: $tertiary;
   }
 
   .elite-paws-why-choose-stack {
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: center;
-    row-gap: 20px;
+    display: block;
+    max-width: min(980px, 94vw);
     min-height: auto;
   }
 
   .elite-paws-why-choose-card {
-    flex: 0 0 calc((100% - 18px) / 2);
-    max-width: calc((100% - 18px) / 2);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(390px, calc(100vw - 42px));
     min-height: min(46vh, 420px);
     max-height: min(52vh, 480px);
+    max-width: none;
+    flex: 0 0 auto;
+    margin-left: calc(min(390px, calc(100vw - 42px)) / -2);
+    margin-top: calc(min(46vh, 420px) / -2);
   }
 }
 
@@ -186,18 +190,24 @@ $why-card-green: $tertiary;
     height: 400vh;
   }
 
+  .elite-paws-why-choose-title {
+    font-size: clamp(5rem, 20vw, 6rem);
+    line-height: 0.92;
+  }
+
   .elite-paws-why-choose-stack {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
+    display: block;
   }
 
   .elite-paws-why-choose-card {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 320px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(320px, calc(100vw - 28px));
     min-height: auto;
     max-height: none;
     padding: 22px 20px 26px;
+    margin-left: calc(min(320px, calc(100vw - 28px)) / -2);
+    margin-top: -210px;
   }
 }

@@ -110,6 +110,8 @@ export default function ElitePawsFooter() {
       <h2 className="elite-paws-footer-wordmark" aria-hidden="true">Elite Paws</h2>
 
       <div className="elite-paws-footer-meta">
+        <p className="elite-paws-footer-copy">@Elite Paws. All rights reserved.</p>
+
         <div className="elite-paws-menu-social-footer">
           <a href="https://www.instagram.com/elitepaws.ae?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram"><img src={instagramIcon} alt="" /></a>
           <a href="#" aria-label="TikTok"><img src={tiktokIcon} alt="" /></a>

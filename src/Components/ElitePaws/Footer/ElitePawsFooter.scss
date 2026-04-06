@@ -144,17 +144,26 @@
   right: clamp(14px, 2vw, 28px);
   bottom: clamp(8px, 1vh, 12px);
   z-index: 3;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 12px;
   pointer-events: auto;
+}
+
+.elite-paws-footer-copy {
+  margin: 0;
+  justify-self: start;
+  color: rgba($tertiary, 1);
+  font-size: 0.8rem;
+  font-family: 'Laripagi', 'Helvetica Neue', sans-serif;
 }
 
 .elite-paws-menu-social-footer {
   display: flex;
   gap: 12px;
   align-items: center;
+  justify-self: center;
   pointer-events: auto;
 
   a {
@@ -189,6 +198,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-self: end;
+  justify-content: flex-end;
 }
 
 .elite-paws-footer-links a {
@@ -395,15 +406,38 @@
 }
 
 @media (max-width: 860px) {
+  .elite-paws-footer {
+    min-height: auto;
+    padding-bottom: 22px;
+    overflow: visible;
+  }
+
   .elite-paws-footer-cards {
     flex-direction: column;
     align-items: center;
+    gap: 0;
   }
 
   .elite-paws-footer-photo-card,
   .elite-paws-footer-cta-card {
-    width: min(420px, 82vw);
-    transform: none;
+    width: min(360px, 76vw);
+
+  }
+
+  // Keep mobile cards overlapped like desktop reference.
+  .elite-paws-footer-photo-card {
+    transform: translateY(0) rotate(-2.5deg);
+    margin-bottom: -110px;
+    margin-left: clamp(-18px, -4vw, -8px);
+    z-index: 2;
+  }
+
+  .elite-paws-footer-cta-card {
+    transform: translateY(0) rotate(4deg);
+    margin-left: clamp(28px, 7vw, 52px);
+    z-index: 3;
+    min-height: clamp(250px, 22vh, 300px);
+    padding: clamp(16px, 2.2vw, 22px);
   }
 
   .elite-paws-footer-wordmark {
@@ -411,20 +445,101 @@
     padding: 0 6vw;
     letter-spacing: -0.05em;
     transform: scaleY(1.08);
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .elite-paws-footer-meta {
-    position: static;
-    margin-top: 18px;
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin-top: 12px;
     flex-direction: column;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    z-index: 5;
+  }
+
+  .elite-paws-footer-copy,
+  .elite-paws-footer-links {
+    justify-self: unset;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .elite-paws-footer-copy {
+    display: block !important;
+    text-align: center;
+    color: rgba($tertiary, 0.95) !important;
+    font-size: 0.84rem;
+    line-height: 1.3;
+    order: 2;
+  }
+
+  .elite-paws-footer-links {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 18px;
+    width: 100%;
+    order: 3;
+  }
+
+  .elite-paws-footer-links a {
+    display: inline-flex;
+    color: rgba($tertiary, 0.95) !important;
+    font-size: 0.82rem;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+
+  .elite-paws-menu-social-footer {
+    order: 1;
   }
 }
 
 @media (max-width: 520px) {
+  .elite-paws-footer-photo-card,
+  .elite-paws-footer-cta-card {
+    width: min(320px, 74vw);
+  }
+
+  .elite-paws-footer-photo-card {
+    margin-bottom: -100px;
+    margin-left: -50px;
+  }
+
+  .elite-paws-footer-cta-card {
+    margin-left: 50px;
+    min-height: clamp(200px, 20vh, 230px);
+    padding: 0px 10px 0px;
+
+    .elite-paws-footer-cta-kicker {
+      font-size: 12px;
+    }
+
+    h3 {
+      font-size: 22px;
+    }
+
+    .elite-paws-footer-cta-copy {
+      font-size: 10px;
+    }
+  }
+
   .elite-paws-footer-wordmark {
     font-size: clamp(3.2rem, 15vw, 5.6rem);
     padding: 0 4vw;
     letter-spacing: -0.05em;
     transform: scaleY(1.05);
+    display: block;
+    width: 100%;
+    text-align: center;
   }
 }

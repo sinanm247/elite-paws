@@ -65,6 +65,15 @@ $pricing-accent: $secondary;
   transform: translateY(0) scale(1);
 }
 
+.elite-paws-grooming-modal-panel.is-centered {
+  transform: translate(-50%, -50%) scale(0.2);
+  transform-origin: center center !important;
+}
+
+.elite-paws-grooming-modal.is-open .elite-paws-grooming-modal-panel.is-centered {
+  transform: translate(-50%, -50%) scale(1);
+}
+
 .elite-paws-grooming-modal-left {
   position: relative;
   background: $tertiary;
@@ -285,6 +294,10 @@ $pricing-accent: $secondary;
   justify-content: center;
   padding: 0;
   max-width: calc(50vw - 200px - 48px - 24px);
+
+  @media (max-width: 1024px) {
+    margin-top: 30px;
+  }
 }
 
 .elite-paws-pricing-heading {
@@ -313,6 +326,10 @@ $pricing-accent: $secondary;
   overflow-y: visible;
   display: flex;
   align-items: center;
+
+  @media (max-width: 1024px) {
+    margin-bottom: 30px;
+  }
 }
 
 .elite-paws-pricing-cards-stack {
@@ -679,25 +696,194 @@ $pricing-accent: $secondary;
 
 @media (max-width: 1024px) {
   .elite-paws-pricing {
-    height: 250vh;
+    height: 300vh;
+  }
+
+  .elite-paws-pricing-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: block;
+    padding: 0;
   }
 
   .elite-paws-pricing-inner {
+    display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 100%;
   }
 
   .elite-paws-pricing-left {
-    flex: none;
-    padding: 32px 24px 16px;
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    max-width: min(680px, calc(100vw - 40px));
+    width: 100%;
+    padding: 58px 20px 0;
+    align-items: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .elite-paws-pricing-cards-wrap {
-    padding: 0 16px 32px;
+    padding: 18px 0 24px 32px;
     height: auto;
+    flex: 1 1 auto;
+    overflow-x: hidden;
+    overflow-y: visible;
+    align-items: flex-start;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
+  }
+
+  .elite-paws-pricing-cards-stack {
+    width: 390px;
+    height: 580px;
+    margin-left: 0;
+    display: block;
   }
 
   .elite-paws-pricing-card {
-    flex: 0 0 280px;
-    min-height: 420px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 390px;
+    height: 580px;
+    max-width: 390px;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.16);
+  }
+
+  .elite-paws-pricing-cta-card {
+    width: 390px;
+    height: 580px;
+  }
+
+  .elite-paws-grooming-modal-panel.is-centered {
+    width: 870px !important;
+    height: 650px !important;
+    grid-template-columns: 425px 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .elite-paws-pricing-sticky {
+    padding: 0;
+  }
+
+  .elite-paws-pricing-inner {
+    align-items: center;
+  }
+
+  .elite-paws-pricing-left {
+    max-width: calc(100vw - 24px);
+    padding: 52px 12px 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .elite-paws-pricing-heading {
+    font-size: clamp(2rem, 8.2vw, 2.8rem);
+    margin-bottom: 8px;
+  }
+
+  .elite-paws-pricing-sub {
+    font-size: 0.9rem;
+  }
+
+  .elite-paws-pricing-cards-wrap {
+    padding: 14px 12px 12px;
+    align-items: center;
+  }
+
+  .elite-paws-pricing-cards-stack {
+    width: 350px;
+    height: 530px;
+  }
+
+  .elite-paws-pricing-card,
+  .elite-paws-pricing-cta-card {
+    width: 350px;
+    height: 530px;
+    max-width: 350px;
+  }
+
+  .elite-paws-pricing-card-name {
+    font-size: clamp(2.3rem, 10vw, 2.8rem);
+  }
+
+  .elite-paws-price-amount {
+    font-size: clamp(2.2rem, 8vw, 2.8rem);
+  }
+
+  .elite-paws-pricing-card-bottom {
+    padding: 14px 16px 16px;
+  }
+
+  .elite-paws-grooming-modal-panel.is-centered {
+    width: 870px !important;
+    height: 650px !important;
+    border-radius: 12px;
+    grid-template-columns: 425px 1fr;
+  }
+
+  .elite-paws-grooming-modal-left {
+    display: block;
+  }
+
+  .elite-paws-grooming-modal-right {
+    padding: 14px 12px 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .elite-paws-grooming-modal-panel.is-centered {
+    width: min(92vw, 540px) !important;
+    height: min(78vh, 580px) !important;
+    grid-template-columns: 1fr;
+  }
+
+  .elite-paws-grooming-modal-left {
+    display: none;
+  }
+
+  .elite-paws-grooming-modal-right {
+    padding: 16px 14px 14px;
+    gap: 10px;
+  }
+
+  .elite-paws-grooming-modal-kicker {
+    font-size: 1.1rem;
+  }
+
+  .elite-paws-grooming-modal-desc {
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+
+  .elite-paws-grooming-modal-item {
+    padding: 10px 10px 8px;
+  }
+
+  .elite-paws-grooming-modal-item-title {
+    font-size: 0.92rem;
+  }
+
+  .elite-paws-grooming-modal-item-time,
+  .elite-paws-grooming-modal-item-desc,
+  .elite-paws-grooming-modal-page {
+    font-size: 0.8rem;
+  }
+
+  .elite-paws-grooming-modal-nav,
+  .elite-paws-grooming-modal-close {
+    width: 36px;
+    height: 36px;
   }
 }

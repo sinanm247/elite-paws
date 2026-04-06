@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { services } from '../../../Datasets/services';
 import img1 from '../../../assets/New/image-1.jpeg';
 import img2 from '../../../assets/New/image-2.jpeg';
@@ -30,6 +30,11 @@ function getSlotPosition(index, activeIndex, total) {
 export default function ElitePawsServiceSection() {
   const sectionRef = useRef(null);
   const [activeService, setActiveService] = useState(services[0]?.id ?? null);
+  const [isCompactService, setIsCompactService] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth <= 1024
+  );
+  const [slideDirection, setSlideDirection] = useState(1);
+  const prevActiveIndexRef = useRef(0);
 
   const { scrollYProgress: bgScrollYProgress } = useScroll({
     target: sectionRef,
@@ -46,6 +51,9 @@ export default function ElitePawsServiceSection() {
     target: sectionRef,
     offset: ['start start', 'end end'],
   });
+
+  const compactHeadingY = useTransform(scrollYProgress, [0, 0.22], [0, -120]);
+  const compactHeadingOpacity = useTransform(scrollYProgress, [0, 0.16], [1, 0]);
 
   const totalServices = services.length;
 
@@ -81,6 +89,23 @@ export default function ElitePawsServiceSection() {
   }, []);
 
   const activeIndex = services.findIndex((s) => s.id === activeService);
+  const activeServiceData = activeIndex >= 0 ? services[activeIndex] : null;
+
+  useEffect(() => {
+    const onResize = () => setIsCompactService(window.innerWidth <= 1024);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => {
+    if (activeIndex < 0) return;
+    const prev = prevActiveIndexRef.current;
+    if (activeIndex !== prev) {
+      setSlideDirection(activeIndex > prev ? 1 : -1);
+      prevActiveIndexRef.current = activeIndex;
+    }
+  }, [activeIndex]);
 
   return (
     <section ref={sectionRef} className="elite-paws-services">
@@ -92,7 +117,10 @@ export default function ElitePawsServiceSection() {
 
       <div className="elite-paws-services-sticky">
         <div className="elite-paws-services-inner">
-          <div className="elite-paws-services-left">
+        <motion.div
+          className="elite-paws-services-left"
+          style={isCompactService ? { y: compactHeadingY, opacity: compactHeadingOpacity } : undefined}
+        >
           <h2 className="elite-paws-services-heading">
           THE SPECIALS
             {/* Dedicated
@@ -108,7 +136,7 @@ export default function ElitePawsServiceSection() {
           {/* <a href="#services" className="elite-paws-services-link">
             Explore All Services
           </a> */}
-        </div>
+        </motion.div>
 
         <div className="elite-paws-services-center">
           <div className="elite-paws-services-slider">
@@ -135,7 +163,7 @@ export default function ElitePawsServiceSection() {
         </div>
 
         <div className="elite-paws-services-right">
-          {services.map((service) => {
+          {!isCompactService && services.map((service) => {
             const isActive = activeService === service.id;
 
             return (
@@ -165,33 +193,65 @@ export default function ElitePawsServiceSection() {
                       {service.description}
                     </p>
                   ) : null}
-
-                  {/* <button
-                    type="button"
-                    className="elite-paws-services-item-more"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Show more
-                    View Details
-                  </button> */}
                   </div>
                 </div>
-
-                {/*
-                {tags.length > 0 && (
-                  <div className="elite-paws-services-tags">
-                    {tags.map((tag) => (
-                      <span key={tag} className="elite-paws-services-tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                */}
               </div>
             );
           })}
-          </div>
+
+          {isCompactService && activeServiceData ? (
+            <div className="elite-paws-services-right-compact">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={activeServiceData.id}
+                  className="elite-paws-services-item elite-paws-services-item--compact is-active"
+                  initial={{
+                    x: slideDirection > 0 ? 84 : -84,
+                    opacity: 0,
+                    scale: 0.985,
+                    filter: 'blur(2px)',
+                  }}
+                  animate={{
+                    x: 0,
+                    opacity: 1,
+                    scale: 1,
+                    filter: 'blur(0px)',
+                  }}
+                  exit={{
+                    x: slideDirection > 0 ? -84 : 84,
+                    opacity: 0,
+                    scale: 0.985,
+                    filter: 'blur(2px)',
+                  }}
+                  transition={{
+                    x: { type: 'spring', stiffness: 360, damping: 34, mass: 0.8 },
+                    opacity: { duration: 0.26, ease: 'easeOut' },
+                    scale: { duration: 0.26, ease: 'easeOut' },
+                    filter: { duration: 0.22, ease: 'easeOut' },
+                  }}
+                >
+                  <h3 className="elite-paws-services-item-title">{activeServiceData.title}</h3>
+                  {activeServiceData.subtitle ? (
+                    <p className="elite-paws-services-item-subtitle">{activeServiceData.subtitle}</p>
+                  ) : null}
+                  <div className="elite-paws-services-item-details is-active">
+                    <div className="elite-paws-services-item-details-inner">
+                      <div className="elite-paws-services-item-meta">
+                        {activeServiceData.price ? <span className="elite-paws-services-item-price">{activeServiceData.price}</span> : null}
+                        {activeServiceData.duration ? <span className="elite-paws-services-item-duration">{activeServiceData.duration}</span> : null}
+                      </div>
+                      {activeServiceData.description ? (
+                        <p className="elite-paws-services-item-desc">
+                          {activeServiceData.description}
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          ) : null}
+        </div>
         </div>
       </div>
     </section>

@@ -187,6 +187,10 @@
 }
 
 @media (max-width: 1080px) {
+  .elite-paws-portfolio {
+    padding: 96px 18px 44px;
+  }
+
   .elite-paws-portfolio-inner {
     display: block;
   }
@@ -196,17 +200,120 @@
     top: auto;
     transform: none;
     margin-bottom: 24px;
+    padding-left: 8px;
   }
 
   .elite-paws-portfolio-right {
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    gap: 12px;
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+    width: 100%;
   }
 
-  .elite-paws-portfolio-column,
-  .elite-paws-portfolio-card {
+  .elite-paws-portfolio-column {
+    flex: 1 1 0;
+    width: calc((100% - 12px) / 2);
+    max-width: none;
+    min-width: 0;
+    gap: 12px;
+  }
+
+  // Keep full desktop shuffle (image + text + metric) with smaller sizes.
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-image {
+    min-height: 300px;
+    height: 300px;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-text {
+    min-height: 180px;
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-text .elite-paws-portfolio-card-text-title {
+    font-size: 1rem;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-text p {
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-metric {
+    min-height: 140px;
+    padding: 14px 12px;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-metric h3 {
+    font-size: 0.86rem;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-metric p {
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .elite-paws-portfolio {
+    padding: 84px 12px 40px;
+  }
+
+  .elite-paws-portfolio-right {
+    gap: 10px;
+    align-items: flex-start;
+    padding-left: 0;
+    padding-right: 0;
     width: 100%;
-    max-width: 425px;
+  }
+
+  .elite-paws-portfolio-left {
+    padding-left: 10px;
+  }
+
+  .elite-paws-portfolio-column {
+    flex: 1 1 0;
+    width: calc((100% - 10px) / 2);
+    max-width: none;
+    min-width: 0;
+    gap: 10px;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-image {
+    min-height: 240px;
+    height: 240px;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-text {
+    min-height: 152px;
+    padding: 12px 10px;
+    gap: 8px;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-text .elite-paws-portfolio-card-text-title {
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-text p {
+    font-size: 0.74rem;
+    line-height: 1.3;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-metric {
+    min-height: 124px;
+    padding: 12px 8px;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-metric h3 {
+    font-size: 0.78rem;
+    margin-bottom: 6px;
+  }
+
+  .elite-paws-portfolio-right .elite-paws-portfolio-card-metric p {
+    font-size: clamp(1.7rem, 8vw, 2.4rem);
   }
 }

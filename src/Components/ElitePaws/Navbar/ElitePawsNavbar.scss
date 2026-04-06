@@ -13,6 +13,17 @@
 
 }
 
+.elite-paws-navbar.is-menu-open {
+  z-index: 1505;
+  pointer-events: none;
+
+  .elite-paws-navbar-btn-menu,
+  .elite-paws-navbar-btn-whatsapp {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 .elite-paws-navbar-inner {
   // max-width: 1200px;
   margin: 0 auto;
@@ -329,6 +340,26 @@
   background: rgba($primary, 1);
 }
 
+.elite-paws-menu-top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.elite-paws-menu-whatsapp-btn {
+  background: rgba($primary, 1);
+  color: $tertiary;
+  box-shadow: 0 1px 8px rgba($tertiary, 0.18);
+
+  .elite-paws-navbar-icon--dark {
+    opacity: 1;
+  }
+
+  .elite-paws-navbar-icon--light {
+    opacity: 0;
+  }
+}
+
 .elite-paws-menu-links {
   display: flex;
   flex-direction: column;
@@ -424,5 +455,109 @@
     font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
+  }
+}
+
+@media (max-width: 1024px) {
+  .elite-paws-navbar {
+    padding: 0 24px;
+    height: 88px;
+  }
+
+  .elite-paws-navbar-logo-wrap {
+    width: 118px;
+    height: 88px;
+  }
+
+  .elite-paws-navbar-logo {
+    height: 88px;
+    max-width: 118px;
+  }
+
+  .elite-paws-navbar-btn {
+    width: 52px;
+    height: 52px;
+
+    img {
+      width: 42px;
+      height: 42px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .elite-paws-navbar {
+    padding: 0 14px;
+    height: 74px;
+  }
+
+  .elite-paws-navbar-logo-wrap {
+    width: 98px;
+    height: 74px;
+  }
+
+  .elite-paws-navbar-logo {
+    height: 74px;
+    max-width: 98px;
+  }
+
+  .elite-paws-navbar-btn {
+    width: 44px;
+    height: 44px;
+
+    img {
+      width: 34px;
+      height: 34px;
+    }
+  }
+
+  .elite-paws-navbar-btn-whatsapp {
+    display: inline-flex;
+  }
+
+  .elite-paws-menu-modal-layer {
+    width: 100%;
+  }
+
+  .elite-paws-menu-modal-left {
+    width: 100%;
+    padding: 16px 18px 20px;
+  }
+
+  .elite-paws-menu-close-btn {
+    margin-bottom: 0;
+    align-self: auto;
+  }
+
+  .elite-paws-menu-join-logo {
+    display: none;
+  }
+
+  .elite-paws-menu-links {
+    margin-top: 10px;
+    gap: 4px;
+    padding: 0 10px;
+
+    a {
+      font-size: clamp(1.8rem, 9vw, 3rem);
+    }
+  }
+
+  .elite-paws-menu-social-navbar {
+    margin-top: 10px;
+    padding: 0 10px 10px;
+
+    a img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .elite-paws-whatsapp-modal .elite-paws-whatsapp-card {
+    right: 14px;
+    min-width: 0;
+    width: min(92vw, 380px);
+    min-height: auto;
+    padding: 62px 18px 18px;
   }
 }

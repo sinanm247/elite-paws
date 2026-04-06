@@ -47,6 +47,9 @@ export default function ElitePawsNavbar() {
     () => typeof window !== 'undefined' && window.location.pathname === '/portfolio',
   );
   const [activeMenuLink, setActiveMenuLink] = useState('home');
+  const [isCompactMenu, setIsCompactMenu] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth <= 768,
+  );
 
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
@@ -213,12 +216,19 @@ export default function ElitePawsNavbar() {
     };
   }, [location.pathname]);
 
+  useEffect(() => {
+    const onResize = () => setIsCompactMenu(window.innerWidth <= 768);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   return (
     <>
       <header
         className={`elite-paws-navbar ${scrolled ? 'elite-paws-navbar-scrolled' : ''} ${
           isDarkBg ? 'is-dark-bg' : ''
-        }`}
+        } ${menuOpen ? 'is-menu-open' : ''}`}
       >
         <div className="elite-paws-navbar-inner">
           <button
@@ -300,14 +310,46 @@ export default function ElitePawsNavbar() {
 
       <div className={`elite-paws-menu-modal ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
         <div className="elite-paws-menu-modal-layer elite-paws-menu-modal-left">
-          <button
-            type="button"
-            className="elite-paws-navbar-btn elite-paws-menu-close-btn"
-            onClick={() => setMenuOpen(false)}
-            aria-label="Close menu"
-          >
-            <img src={closeIconDark} alt="" aria-hidden="true" />
-          </button>
+          <div className="elite-paws-menu-top-actions">
+            <button
+              type="button"
+              className="elite-paws-navbar-btn elite-paws-menu-close-btn"
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close menu"
+            >
+              <img src={closeIconDark} alt="" aria-hidden="true" />
+            </button>
+            {isCompactMenu && (
+              <button
+                type="button"
+                className="elite-paws-navbar-btn elite-paws-menu-whatsapp-btn"
+                onClick={() => {
+                  setMenuOpen(false);
+                  setWhatsappOpen((v) => !v);
+                }}
+                aria-label={whatsappOpen ? 'Close WhatsApp panel' : 'Open WhatsApp panel'}
+              >
+                {whatsappOpen ? (
+                  <img src={closeIconDark} alt="" aria-hidden="true" />
+                ) : (
+                  <>
+                    <img
+                      src={whatsappIconDark}
+                      alt=""
+                      aria-hidden="true"
+                      className="elite-paws-navbar-icon elite-paws-navbar-icon--dark"
+                    />
+                    <img
+                      src={whatsappIconLight}
+                      alt=""
+                      aria-hidden="true"
+                      className="elite-paws-navbar-icon elite-paws-navbar-icon--light"
+                    />
+                  </>
+                )}
+              </button>
+            )}
+          </div>
 
           <nav className="elite-paws-menu-links">
             <a
@@ -370,17 +412,19 @@ export default function ElitePawsNavbar() {
           </div>
         </div>
 
-        <div className="elite-paws-menu-modal-layer elite-paws-menu-modal-right">
-          <div className="elite-paws-menu-connect">
-            <img src={qrCode} alt="WhatsApp QR" className="elite-paws-menu-qr" />
-            <h3>Shall we connect on WhatsApp?</h3>
-            <p>
-              Because we prefer genuine, quick and straightforward exchanges. Send your message and
-              we will reply quickly.
-            </p>
-            <a href={`${WHATSAPP_LINK}`} target="_blank" rel="noopener noreferrer">Chat with us</a>
+        {!isCompactMenu && (
+          <div className="elite-paws-menu-modal-layer elite-paws-menu-modal-right">
+            <div className="elite-paws-menu-connect">
+              <img src={qrCode} alt="WhatsApp QR" className="elite-paws-menu-qr" />
+              <h3>Shall we connect on WhatsApp?</h3>
+              <p>
+                Because we prefer genuine, quick and straightforward exchanges. Send your message and
+                we will reply quickly.
+              </p>
+              <a href={`${WHATSAPP_LINK}`} target="_blank" rel="noopener noreferrer">Chat with us</a>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import image1 from '../assets/Services/Image-1.jpeg';
-import image2 from '../assets/Services/Image-2.jpeg';
-import image3 from '../assets/Services/Image-3.jpeg';
+import image2 from '../assets/New-Gallery/Image-3.jpeg';
+import image3 from '../assets/New-Gallery/Image-1.jpeg';
 
 export const services = [
   {
@@ -9,7 +9,7 @@ export const services = [
     subtitle: 'Skin, coat & comfort support',
     price: '250 AED + VAT',
     duration: '20–30 mins',
-    image: image3,
+    image: image1,
     description:
       'Advanced treatment using ozone technology to deeply cleanse the skin, reduce odor and support overall coat and skin condition while providing a calming and relaxing effect during the grooming process.',
     includesDetailed: [
@@ -28,7 +28,7 @@ export const services = [
     subtitle: 'First grooming experience for puppies',
     price: '231 AED + VAT',
     duration: '45–55 mins',
-    image: image1,
+    image: image2,
     description:
       'Gentle grooming service designed to introduce a puppy to the grooming process in a calm and positive way.',
     includesDetailed: [
@@ -53,7 +53,7 @@ export const services = [
     subtitle: 'Detangling & coat restoration service',
     price: '150–250 AED + VAT',
     duration: '45–60 mins',
-    image: image2,
+    image: image3,
     description:
       'Specialized service for matted or tangled coats, designed to restore the coat while preserving length whenever possible.',
     includesDetailed: [
