@@ -1,6 +1,6 @@
 import image1 from '../assets/Services/Image-1.jpeg';
 import image2 from '../assets/New-Gallery/Image-3.jpeg';
-import image3 from '../assets/New-Gallery/Image-1.jpeg';
+import image3 from '../assets/New-Gallery/Image-11.jpeg';
 
 export const services = [
   {

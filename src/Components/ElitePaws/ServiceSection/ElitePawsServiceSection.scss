@@ -236,6 +236,10 @@ $service-tag-color: rgba($primary, 0.92);
   line-height: 1.55;
   color: rgba($primary, 0.82);
   max-width: 52ch;
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 }
 
 .elite-paws-services-item-more {

@@ -4,7 +4,7 @@ import image1 from '../../../assets/New-Gallery/Image-1.jpeg';
 import image2 from '../../../assets/New-Gallery/Image-2.jpeg';
 import image3 from '../../../assets/New-Gallery/Image-3.jpeg';
 import image4 from '../../../assets/New-Gallery/Image-4.jpeg';
-import image5 from '../../../assets/New-Gallery/Image-5.jpeg';
+import image5 from '../../../assets/New-Gallery/Image-11.jpeg';
 import image6 from '../../../assets/New-Gallery/Image-6.jpeg';
 import image7 from '../../../assets/New-Gallery/Image-7.jpeg';
 import image8 from '../../../assets/New-Gallery/Image-8.jpg';
