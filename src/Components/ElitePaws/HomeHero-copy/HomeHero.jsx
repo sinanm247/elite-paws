@@ -17,6 +17,7 @@ import imgCenter from '../../../assets/New-Gallery/Image-10.webp';
 import imgRight from '../../../assets/New-Gallery/Image-7.jpeg';
 
 import videoLeft from '../../../assets/Videos/Video-1.mp4';
+import videoRight from '../../../assets/Videos/Video-3.mp4';
 import arrowIcon from '../../../assets/Icons/arrow-1.png';
 import section2RightImage from '../../../assets/Images/Image-1.png';
 import element1 from '../../../assets/Elements/Element-1.png';
@@ -560,8 +561,10 @@ export default function HomeHero() {
   });
 
   const [isSection2Active, setIsSection2Active] = useState(false);
+  const [isSection3Active, setIsSection3Active] = useState(false);
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     setIsSection2Active(v >= leftToCenterStart && v < rightToCenterStart);
+    setIsSection3Active(v >= rightToCenterStart);
   });
 
   // Desktop sticky timeline color
@@ -787,11 +790,20 @@ export default function HomeHero() {
                         },
                       })}
                 >
-                  <ImageCard
-                    src={imgRight}
+                  {isSection3Active && (
+                    <div className="elite-hero-video-hint elite-hero-video-hint--outside-right" aria-hidden="true">
+                      <img src={arrowIcon} alt="" className="elite-hero-video-hint-icon" />
+                      <span className="elite-hero-video-hint-text">Click here to<br/> play video</span>
+                    </div>
+                  )}
+                  <LeftVideoCard
+                    imgSrc={imgRight}
+                    videoSrc={videoRight}
                     alt="Elite Paws experience"
                     className="card-right"
                     baseRotate={rightSlotRotate}
+                    isSection2Active={isSection3Active}
+                    allowCardClickPlay={!isMobileHero}
                     onHoverStart={() => setHoveredCard('right')}
                     onHoverEnd={() => setHoveredCard(null)}
                   />
@@ -985,11 +997,14 @@ export default function HomeHero() {
                           },
                         })}
                   >
-                    <ImageCard
-                      src={imgRight}
+                    <LeftVideoCard
+                      imgSrc={imgRight}
+                      videoSrc={videoRight}
                       alt="Elite Paws experience"
                       className="card-right"
                       baseRotate={4}
+                      isSection2Active={false}
+                      allowCardClickPlay={false}
                       onHoverStart={() => setHoveredCard('right')}
                       onHoverEnd={() => setHoveredCard(null)}
                     />
@@ -1018,8 +1033,14 @@ export default function HomeHero() {
                   ease: [0.2, 0.85, 0.22, 1],
                 }}
               >
-                <p className="elite-hero-copy-label">Pet Grooming & Care</p>
-                <h2 className="elite-hero-copy-title">ONE PET<br/> AT A TIME GROOMING<br/> SERVICE AT YOUR DOOR</h2>
+                {/* <p className="elite-hero-copy-label">Pet Grooming & Care</p> */}
+                <p className="elite-hero-copy-label">DOOR TO DOOR PET GROOMING</p>
+                {/* <h2 className="elite-hero-copy-title">ONE PET<br/> AT A TIME GROOMING<br/> SERVICE AT YOUR DOOR</h2> */}
+                {/* <h2 className="elite-hero-copy-title">DUBAI’S MOST<br/> LOVED MOBILE GROOMING</h2> */}
+                <h2 className="elite-hero-copy-title">DUBAI’S #1<br/> MOBILE PET GROOMING</h2>
+
+
+
               </motion.div>
             </div>
           </div>
@@ -1099,11 +1120,20 @@ export default function HomeHero() {
           {isMobileHero && (
             <div className="elite-hero-bg-section-3-center">
               <div className="elite-hero-bg-section-card-slot">
-                <ImageCard
-                  src={imgRight}
+                {isSection3Active && (
+                  <div className="elite-hero-video-hint elite-hero-video-hint--outside-right" aria-hidden="true">
+                    <img src={arrowIcon} alt="" className="elite-hero-video-hint-icon" />
+                    <span className="elite-hero-video-hint-text">Tap to<br/> play video</span>
+                  </div>
+                )}
+                <LeftVideoCard
+                  imgSrc={imgRight}
+                  videoSrc={videoRight}
                   alt="Elite Paws experience"
                   className="card-right"
                   baseRotate={4}
+                  isSection2Active={isSection3Active}
+                  allowCardClickPlay={false}
                   onHoverStart={() => setHoveredCard('right')}
                   onHoverEnd={() => setHoveredCard(null)}
                 />

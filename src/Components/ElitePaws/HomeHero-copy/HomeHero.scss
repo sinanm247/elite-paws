@@ -682,6 +682,34 @@ $hero-card-h: 650px;
   }
 }
 
+.elite-hero-video-hint--outside-right {
+  top: 50px;
+  right: -40px;
+  left: auto;
+
+  .elite-hero-video-hint-icon {
+    transform: scaleX(-1);
+  }
+
+  .elite-hero-video-hint-text {
+    color: $primary;
+    left: 40px;
+    right: auto;
+    transform: rotate(-15deg);
+  }
+
+  @media (max-width: 480px) {
+    top: auto;
+    bottom: 50px;
+    right: -30px;
+
+    .elite-hero-video-hint-text {
+      left: 10px;
+      right: auto;
+    }
+  }
+}
+
 .elite-hero-video-hint-icon {
   width: 70px;
   height: auto;
