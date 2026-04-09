@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 
-export default function AppRouter({ routes }) {
+export default function AppRouter({ routes, location }) {
   return (
-    <Routes>
+    <Routes location={location}>
       {routes.map(
         ({ path, element }) => {
           return (

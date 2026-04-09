@@ -33,7 +33,7 @@ $black: $logo-dark-bg;
   font-weight: 400;
 
   color: $logo-dark-bg;
-  background-color: $quinary;
+  background-color: $tertiary;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -49,6 +49,7 @@ $black: $logo-dark-bg;
 
 body {
   margin: 0;
+  background-color: $tertiary;
   font-optical-sizing: auto;
   font-weight: normal;
   font-style: normal;

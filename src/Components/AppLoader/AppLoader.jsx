@@ -1,34 +1,37 @@
 import { useEffect, useRef } from 'react';
 import "./AppLoader.scss";
-import video from "../../assets/Logo/logo-animation.mp4"
+import video from "../../assets/Logo/logo-animation.mp4";
+import logo from "../../assets/Logo/LOGO-BUTTER.png";
 
-export default function AppLoader({ isVisible }) {
+export default function AppLoader({ isVisible, showVideo = false }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    if (!isVisible || !videoRef.current) return;
+    if (!isVisible || !showVideo || !videoRef.current) return;
 
-    // Always restart loader video from frame 1 when loader is shown.
+    // Video mode: always restart from frame 1.
     videoRef.current.currentTime = 0;
     const playPromise = videoRef.current.play();
     if (playPromise && typeof playPromise.catch === 'function') {
       playPromise.catch(() => {});
     }
-  }, [isVisible]);
+  }, [isVisible, showVideo]);
 
   return (
     <div className={`app-loader-container ${isVisible ? "show" : "hide"}`}>
-      {/* <img src={logo} alt="Loading" className="logo" /> */}
-      <video
-        ref={videoRef}
-        src={video}
-        autoPlay
-        // loop
-        muted
-        playsInline
-        preload="auto"
-        className="logo"
-      />
+      {showVideo ? (
+        <video
+          ref={videoRef}
+          src={video}
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          className="logo"
+        />
+      ) : (
+        <img src={logo} alt="Elite Paws" className="logo logo-image" />
+      )}
     </div>
   );
 }
